@@ -1,5 +1,5 @@
 # Thesis
-Repository for my M.Sc. thesis, including templates for both KTH and CalPoly.
+Repository for my M.Sc. thesis document, including templates for both KTH and CalPoly.
 
 ## Build
 Build the PDFs using `make`

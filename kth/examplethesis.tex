@@ -16,7 +16,7 @@
 % set the default language to english or swedish by passing an option to the documentclass - this handles the inside tile page
 % To optimize for digital output (this changes the color palette add the option: digitaloutput
 % To use bibtex or biblatex - include one of these as an option
-\documentclass[english, bibtex]{kththesis}
+\documentclass[english, bibtex]{kth/kththesis}
 %\documentclass[swedish, biblatex]{kththesis}
 
 % \usepackage[style=numeric,sorting=none,backend=biber]{biblatex}
@@ -33,15 +33,15 @@
 
 
 % include a variety of packages that are useful
-\include{lib/includes}
-\include{lib/kthcolors}
+\input{kth/lib/includes}
+\input{kth/lib/kthcolors}
 
 %\glsdisablehyper
 %\makeglossaries
 %\makenoidxglossaries
-%\include{lib/acronyms}                %load the acronyms file
+%\include{kth/lib/acronyms}                %load the acronyms file
 
-\include{lib/defines}  % load some additional definitions to make writing more consistent
+\input{kth/lib/defines}  % load some additional definitions to make writing more consistent
 
 % The following is needed in conjunction with generating the DiVA data with abstracts and keywords using the scontents package and a modified listings environment
 %\usepackage{listings}   %  already included
@@ -123,14 +123,14 @@
 \usepackage[all]{hypcap}	%% prevents an issue related to hyperref and caption linking
 
 
-\include{lib/includes-after-hyperref}
+\input{kth/lib/includes-after-hyperref}
 
 %\glsdisablehyper
 \makeglossaries
-\include{lib/acronyms}                %load the acronyms file
+\input{kth/lib/acronyms}                %load the acronyms file
 
 % insert the configuration information with author(s), examiner, supervisor(s), ...
-\input{custom_configuration}
+\input{kth/custom_configuration}
 
 \title{This is the title in the language of the thesis}
 \subtitle{An subtitle in the language of the thesis}
@@ -165,7 +165,7 @@
 \trita{TRITA-EECS-EX}{2022:00}
 
 % Put the title, author, and keyword information into the PDF meta information
-\include{lib/pdf_related_includes}
+\input{kth/lib/pdf_related_includes}
 
 
 % the custom colors and the commands are defined in defines.tex    
@@ -208,7 +208,7 @@ eng
 \begin{scontents}[store-env=abstracts,print-env=true]
 \todo[inline, backgroundcolor=kth-lightgreen]{All theses at KTH are \textbf{required} to have an abstract in both \textit{English} and \textit{Swedish}.}
 
-\todo[inline, backgroundcolor=kth-lightgreen]{Exchange students many want to include one or more abstracts in the language(s) used in their home institutions to avoid the need to write another thesis when returning to their home institution.}
+\todo[inline, backgroundcolor=kth-lightgreen]{GLENNE HARRIE OLLESSON Exchange students many want to include one or more abstracts in the language(s) used in their home institutions to avoid the need to write another thesis when returning to their home institution.}
 
 \todo[inline]{Keep in mind that most of your potential readers are only going to read your \texttt{title} and \texttt{abstract}. This is why it is important that the abstract give them enough information that they can decide is this document relevant to them or not. Otherwise the likely default choice is to ignore the rest of your document.\\
 
@@ -546,7 +546,7 @@ at \SI{200}{Gbps}.}
 \fi
 
 \todo[inline, backgroundcolor=kth-lightgreen]{Use the glossaries package to help yourself and your readers.
-Add the acronyms and abbreviations to lib/acronyms.tex. Some examples are shown below:}
+Add the acronyms and abbreviations to kth/lib/acronyms.tex. Some examples are shown below:}
 In this thesis we will examine the use of \glspl{LAN}. In this thesis we will
 assume that \glspl{LAN} include \glspl{WLAN}, such as \gls{WiFi}.
 
@@ -1309,7 +1309,7 @@ xxxx.
     %\typeout{Biblatex current language is \currentlang}
     \printbibliography[heading=bibintoc]
 \else
-    \bibliography{references}
+    \bibliography{bibliography}
 \fi
 
 

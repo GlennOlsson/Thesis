@@ -40,7 +40,8 @@ sub glo2gls {
 #############
 @ist = glob("*.ist");
 if (scalar(@ist) > 0) {
-    $makeindex = "makeindex -s out/$ist[0] %O -o %D %S";
+    print "iST :: scalar(@ist) $ist[0] --";
+    $makeindex = "makeindex -s $ist[0] %O -o %D %S";
 }
 
 ################

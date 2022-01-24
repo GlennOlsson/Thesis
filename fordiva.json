@@ -1,0 +1,17 @@
+{
+"Author1": {"Last name": "Olsson", "First name": "Glenn", "Local User Id": "u18orpa8", "E-mail": "glennol@kth.se", "organisation": {"L1": "School of Electrical Engineering and Computer Science" }},
+ 
+"Cycle": "2", "Course code": "DA231X", "Credits": "", 
+"Degree1": {"Educational program": "Master's Programme, Computer Science, 120 credits","programcode": "TCSCM" ,"Degree": "Degree of Master (120 credits)" }, 
+"Title": {"Main title": "This is the title in the language of the thesis", "Subtitle": "An subtitle in the language of the thesis", "Language": "eng" }, "Alternative title": {"Main title": "Detta är den svenska översättningen av titeln", "Subtitle": "Detta är den svenska översättningen av undertiteln", "Language": "swe" }, 
+"Supervisor1": {"Last name": "Ghasemirahni", "First name": "Hamid", "Local User Id": "u1fz5jtv", "E-mail": "hamidgr@kth.se", "organisation": {"L1": "" ,"L2": "Computer Science" }}, 
+"Supervisor2": {"Last name": "Peterson", "First name": "Zachory", "E-mail": "znjpeterson@gmail.com", "Other organisation": "Cal Poly" }, 
+"Examiner1": {"Last name": "Maguire Jr", "First name": "Gerald Quentin", "Local User Id": "u1d13i2c", "E-mail": "maguire@kth.se", "organisation": {"L1": "" ,"L2": "Computer Science" }}, 
+"Cooperation": {"Partner_name": "Cal Poly"}, 
+"National Subject Categories": "10201", 
+"Other information": {"Year": "2022", "Number of pages": "xxxv,35" }, 
+"Series": {"Title of series": "TRITA-EECS-EX" , "No. in series": "2022:00" }, 
+"Opponents": {"Name": "A. B. Normal \& A. X. E. Normalè"}, 
+"Presentation": {"Date": "2022-03-15 13:00" ,"Language": "eng" ,"Room": "via Zoom https://kth-se.zoom.us/j/ddddddddddd" ,"Address": "Isafjordsgatan 22 (Kistagången 16)" ,"City": "Stockholm" }, 
+"Number of lang instances": "10",
+}

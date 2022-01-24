@@ -326,7 +326,7 @@
 
 
 % get all of the information about the school codes and program codes
-\input{kth/lib/schools_and_programs.ins}
+\input{templates/kth/lib/schools_and_programs.ins}
 
 \newcommand{\MONTH}{%
   \ifinswedish
@@ -416,7 +416,7 @@
 \fi
 
 \begin{textblock*}{76.2pt}(20pt, 40pt)
-\includegraphics[width=76.2pt, height=76.2pt, keepaspectratio]{kth/kth_logo.png}
+\includegraphics[width=76.2pt, height=76.2pt, keepaspectratio]{templates/kth/kth_logo.png}
 \end{textblock*}
 \begin{flushleft}
 

@@ -18,3 +18,6 @@ calpoly: | out/calpoly
 	mv out/calpoly/calpoly.pdf .
 
 all: kth calpoly
+
+clear:
+	@rm -rf out/ kth.pdf calpoly.pdf

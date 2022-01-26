@@ -12,4 +12,6 @@ The command will build using `latexmk` and the finished PDF should end up in the
 This project can also be compiled online using Overleaf (as of TeX Live Version 2021). Set the compiler as "*pdfLaTeX*" and the "*main document*" to be either `kth.tex` or `calpoly.tex` depending on which one you want to compile. To switch compiled file, you might have to clear the cache of files (as it is not possible to change the jobname on Overleaf and the output files will clash). This can be done under `logs -> clear cached files`.
 
 ## Structure
-The different institute templates are found under `templates/`. They simply use `\input` to include the actual content of the thesis, each chapter is found under `chapters/`.
+The different institute templates are found under `templates/`. They simply use `\input` to include the actual content of the thesis, each chapter is found under `chapters/`. 
+
+The root file of each school is in the root directory (`kth.tex` and `calpoly.tex`), so all paths to images, files etc. must be relative to the root of the repo. 

@@ -19,5 +19,5 @@ calpoly: | out/calpoly
 
 all: kth calpoly
 
-clear:
+clean:
 	@rm -rf out/ kth.pdf calpoly.pdf

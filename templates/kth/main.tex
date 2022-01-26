@@ -205,45 +205,29 @@ eng
 %%% entry of the meta data for your thesis.
 %%% These page(s) will be removed before the thesis is inserted into DiVA.
 \begin{scontents}[store-env=abstracts,print-env=true]
-% \todo[inline, backgroundcolor=kth-lightgreen]{All theses at KTH are \textbf{required} to have an abstract in both \textit{English} and \textit{Swedish}.}
 
-% \todo[inline, backgroundcolor=kth-lightgreen]{GLENNE HARRIE OLLESSON Exchange students many want to include one or more abstracts in the language(s) used in their home institutions to avoid the need to write another thesis when returning to their home institution.}
-
-% \todo[inline]{Keep in mind that most of your potential readers are only going to read your \texttt{title} and \texttt{abstract}. This is why it is important that the abstract give them enough information that they can decide is this document relevant to them or not. Otherwise the likely default choice is to ignore the rest of your document.\\
-
-% A abstract should stand on its own, i.e., no citations, cross references to the body of the document, acronyms must be spelled out, \ldots .\\
-
-% Write this early and revise as necessary. This will help keep you focused on what you are trying to do.}
-
-Write an abstract that is about 250 and 350 words (1/2 A4-page)  with the following components:: % key parts of the abstract
-\begin{itemize}
-  \item What is the topic area? (optional) Introduces the subject area for the project.
-  \item Short problem statement
-  \item Why was this problem worth a Bachelor's/Master’s thesis project? (\ie, why is the problem both significant and of a suitable degree of difficulty for a Bachelor's/Master’s thesis project? Why has no one else solved it yet?)
-  \item How did you solve the problem? What was your method/insight?
-  \item Results/Conclusions/Consequences/Impact: What are your key results/\linebreak[4]conclusions? What will others do based upon your results? What can be done now that you have finished - that could not be done before your thesis project was completed?
-\end{itemize}
+\input{abstract}
 
 \end{scontents}
 % \todo[inline, backgroundcolor=kth-lightgreen]{The following are some notes about what can be included (in terms of LaTeX) in your abstract.}
-Choice of typeface with \textbackslash textit, \textbackslash textbf, and \textbackslash texttt:  \textit{x}, \textbf{x}, and \texttt{x}
+% Choice of typeface with \textbackslash textit, \textbackslash textbf, and \textbackslash texttt:  \textit{x}, \textbf{x}, and \texttt{x}
 
-Text superscripts and subscripts with \textbackslash textsubscript and \textbackslash textsuperscript: A\textsubscript{x} and A\textsuperscript{x}
+% Text superscripts and subscripts with \textbackslash textsubscript and \textbackslash textsuperscript: A\textsubscript{x} and A\textsuperscript{x}
 
-Some useful symbols: \textbackslash textregistered, \textbackslash texttrademark, and \textbackslash textcopyright. For example, 
-copyright symbol: \textbackslash textcopyright Maguire 2022, and some superscripts: \textbackslash textsuperscript\{99m\}Tc, A\textbackslash textsuperscript\{*\}, A\textbackslash textsuperscript\{\textbackslash textregistered\}, and A\textbackslash texttrademark : \textcopyright Maguire 2022, and some superscripts: \textsuperscript{99m}Tc, A\textsuperscript{*}, A\textsuperscript{\textregistered}, and A\texttrademark. Another example: H\textbackslash textsubscript\{2\}O: H\textsubscript{2}O
+% Some useful symbols: \textbackslash textregistered, \textbackslash texttrademark, and \textbackslash textcopyright. For example, 
+% copyright symbol: \textbackslash textcopyright Maguire 2022, and some superscripts: \textbackslash textsuperscript\{99m\}Tc, A\textbackslash textsuperscript\{*\}, A\textbackslash textsuperscript\{\textbackslash textregistered\}, and A\textbackslash texttrademark : \textcopyright Maguire 2022, and some superscripts: \textsuperscript{99m}Tc, A\textsuperscript{*}, A\textsuperscript{\textregistered}, and A\texttrademark. Another example: H\textbackslash textsubscript\{2\}O: H\textsubscript{2}O
 
-Simple environment with begin and end: itemize and enumerate and within these \textbackslash item
+% Simple environment with begin and end: itemize and enumerate and within these \textbackslash item
 
-The following macros can be used: \textbackslash eg, \textbackslash Eg, \textbackslash ie, \textbackslash Ie, \textbackslash etc, and \textbackslash etal: \eg, \Eg, \ie, \Ie, \etc, and \etal
+% The following macros can be used: \textbackslash eg, \textbackslash Eg, \textbackslash ie, \textbackslash Ie, \textbackslash etc, and \textbackslash etal: \eg, \Eg, \ie, \Ie, \etc, and \etal
 
-The following macros for numbering with lower case roman numerals: \textbackslash first, \textbackslash second, \textbackslash third, \textbackslash fourth, \textbackslash fifth, \textbackslash sixth, \textbackslash seventh, and \textbackslash eighth: \first, \second, \third, \fourth, \fifth, \sixth, \seventh, and \eighth.
+% The following macros for numbering with lower case roman numerals: \textbackslash first, \textbackslash second, \textbackslash third, \textbackslash fourth, \textbackslash fifth, \textbackslash sixth, \textbackslash seventh, and \textbackslash eighth: \first, \second, \third, \fourth, \fifth, \sixth, \seventh, and \eighth.
 
-Equations using \textbackslash( xxxx \textbackslash) or \textbackslash[ xxxx \textbackslash] can be used in the abstract. For example: \( (C_5O_2H_8)_n \)
-or \[ \int_{a}^{b} x^2 \,dx \]
+% Equations using \textbackslash( xxxx \textbackslash) or \textbackslash[ xxxx \textbackslash] can be used in the abstract. For example: \( (C_5O_2H_8)_n \)
+% or \[ \int_{a}^{b} x^2 \,dx \]
 
 
-Even LaTeX comments can be handled, for example: \% comment at end
+% Even LaTeX comments can be handled, for example: \% comment at end
 
 \subsection*{Keywords}
 \begin{scontents}[store-env=keywords,print-env=true]
@@ -273,19 +257,9 @@ Since you should have both English and Swedish keywords - you might think of ord
 swe
 \end{scontents}
 \begin{scontents}[store-env=abstracts,print-env=true]
-% \todo[inline, backgroundcolor=kth-lightblue]{Alla avhandlingar vid KTH \textbf{måste ha} ett abstrakt på både \textit{engelska} och \textit{svenska}.\\
-% Om du skriver din avhandling på svenska ska detta göras först (och placera det som det första abstraktet) - och du bör revidera det vid behov.}
 
-% \todo[inline]{If you are writing your thesis in English, you can leave this until the draft version that goes to your opponent for the written opposition. In this way you can provide the English and Swedish abstract/summary information that can be used in the announcement for your oral presentation.\\
+\input{abstract_swe}
 
-% If you are writing your thesis in English, then this section can be a summary targeted at a more general reader. However, if you are writing your thesis in Swedish, then the reverse is true – your abstract should be for your target audience, while an English summary can be written targeted at a more general audience.\\
-
-% This means that the English abstract and Swedish sammnfattning  
-% or Swedish abstract and English summary need not be literal translations of each other.
-% }
-% \todo[inline, backgroundcolor=kth-lightred]{Do not use the \textbackslash glspl\{\} macro in an abstract that is not in English, as my programs do not know how to generate plurals in other languages. Instead you will need to spell these terms out or give the proper plural form.}
-
-% \todo[inline, backgroundcolor=kth-lightgreen]{The abstract in the language used for the thesis should be the first abstract, while the Summary/Sammanfattning in the other language can follow}
 \end{scontents}
 \subsection*{Nyckelord}
 \begin{scontents}[store-env=keywords,print-env=true]
@@ -316,6 +290,8 @@ swe
 %   grammatikkontroll kan upptäcka inte förekomma)\\
 % En dualism som måste hanteras i hela rapporten och projektet
 % }
+
+\input{acknowledgements}
 
 I would like to thank xxxx for having yyyy.\\
 
@@ -387,49 +363,8 @@ I would like to thank xxxx for having yyyy.\\
 
 
 \cleardoublepage
-\appendix
-\renewcommand{\chaptermark}[1]{\markboth{Appendix \thechapter\relax:\thinspace\relax#1}{}}
-\chapter{Something Extra}
-% \todo[inline, backgroundcolor=kth-lightblue]{svensk: Extra Material som Bilaga}
 
-\section{Just for testing KTH colors}
-\ifdigitaloutput
-    \textbf{You have selected to optimize for digital output}
-\else
-    \textbf{You have selected to optimize for print output}
-\fi
-\begin{itemize}[noitemsep]
-    \item Primary color
-    \begin{itemize}
-    \item \textcolor{kth-blue}{kth-blue \ifdigitaloutput
-    actually Deep sea
-    \fi} {\color{kth-blue} \rule{0.3\linewidth}{1mm} }\\
-
-    \item \textcolor{kth-blue80}{kth-blue80} {\color{kth-blue80} \rule{0.3\linewidth}{1mm} }\\
-\end{itemize}
-
-\item  Secondary colors
-\begin{itemize}[noitemsep]
-    \item \textcolor{kth-lightblue}{kth-lightblue \ifdigitaloutput
-    actually Stratosphere
-    \fi} {\color{kth-lightblue} \rule{0.3\linewidth}{1mm} }\\
-
-    \item \textcolor{kth-lightred}{kth-lightred \ifdigitaloutput
-    actually Fluorescence\fi} {\color{kth-lightred} \rule{0.3\linewidth}{1mm} }\\
-
-    \item \textcolor{kth-lightred80}{kth-lightred80} {\color{kth-lightred80} \rule{0.3\linewidth}{1mm} }\\
-
-    \item \textcolor{kth-lightgreen}{kth-lightgreen \ifdigitaloutput
-    actually Front-lawn\fi} {\color{kth-lightgreen} \rule{0.3\linewidth}{1mm} }\\
-
-    \item \textcolor{kth-coolgray}{kth-coolgray \ifdigitaloutput
-    actually Office\fi} {\color{kth-coolgray} \rule{0.3\linewidth}{1mm} }\\
-
-    \item \textcolor{kth-coolgray80}{kth-coolgray80} {\color{kth-coolgray80} \rule{0.3\linewidth}{1mm} }
-\end{itemize}
-\end{itemize}
-
-\textcolor{black}{black} {\color{black} \rule{\linewidth}{1mm} }
+\input{appendix-outline}
 
 %% The following label is necessary for computing the last page number of the body of the report to include in the "For DIVA" information
 \label{pg:lastPageofMainmatter}

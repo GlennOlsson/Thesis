@@ -78,11 +78,10 @@
 }{}
 
 
-
 %% definition of new command for bytefield package
-\newcommand{\colorbitbox}[3]{%
-	\rlap{\bitbox{#2}{\color{#1}\rule{\width}{\height}}}%
-	\bitbox{#2}{#3}}
+% \newcommand{\colorbitbox}[3]{%
+% 	\rlap{\bitbox{#2}{\color{#1}\rule{\width}{\height}}}%
+% 	\bitbox{#2}{#3}}
 
 %% Acronyms
 % note that nonumberlist - removes the cross references to the pages where the acronym appears
@@ -206,15 +205,15 @@ eng
 %%% entry of the meta data for your thesis.
 %%% These page(s) will be removed before the thesis is inserted into DiVA.
 \begin{scontents}[store-env=abstracts,print-env=true]
-\todo[inline, backgroundcolor=kth-lightgreen]{All theses at KTH are \textbf{required} to have an abstract in both \textit{English} and \textit{Swedish}.}
+% \todo[inline, backgroundcolor=kth-lightgreen]{All theses at KTH are \textbf{required} to have an abstract in both \textit{English} and \textit{Swedish}.}
 
-\todo[inline, backgroundcolor=kth-lightgreen]{GLENNE HARRIE OLLESSON Exchange students many want to include one or more abstracts in the language(s) used in their home institutions to avoid the need to write another thesis when returning to their home institution.}
+% \todo[inline, backgroundcolor=kth-lightgreen]{GLENNE HARRIE OLLESSON Exchange students many want to include one or more abstracts in the language(s) used in their home institutions to avoid the need to write another thesis when returning to their home institution.}
 
-\todo[inline]{Keep in mind that most of your potential readers are only going to read your \texttt{title} and \texttt{abstract}. This is why it is important that the abstract give them enough information that they can decide is this document relevant to them or not. Otherwise the likely default choice is to ignore the rest of your document.\\
+% \todo[inline]{Keep in mind that most of your potential readers are only going to read your \texttt{title} and \texttt{abstract}. This is why it is important that the abstract give them enough information that they can decide is this document relevant to them or not. Otherwise the likely default choice is to ignore the rest of your document.\\
 
-A abstract should stand on its own, i.e., no citations, cross references to the body of the document, acronyms must be spelled out, \ldots .\\
+% A abstract should stand on its own, i.e., no citations, cross references to the body of the document, acronyms must be spelled out, \ldots .\\
 
-Write this early and revise as necessary. This will help keep you focused on what you are trying to do.}
+% Write this early and revise as necessary. This will help keep you focused on what you are trying to do.}
 
 Write an abstract that is about 250 and 350 words (1/2 A4-page)  with the following components:: % key parts of the abstract
 \begin{itemize}
@@ -226,7 +225,7 @@ Write an abstract that is about 250 and 350 words (1/2 A4-page)  with the follow
 \end{itemize}
 
 \end{scontents}
-\todo[inline, backgroundcolor=kth-lightgreen]{The following are some notes about what can be included (in terms of LaTeX) in your abstract.}
+% \todo[inline, backgroundcolor=kth-lightgreen]{The following are some notes about what can be included (in terms of LaTeX) in your abstract.}
 Choice of typeface with \textbackslash textit, \textbackslash textbf, and \textbackslash texttt:  \textit{x}, \textbf{x}, and \texttt{x}
 
 Text superscripts and subscripts with \textbackslash textsubscript and \textbackslash textsuperscript: A\textsubscript{x} and A\textsuperscript{x}
@@ -253,7 +252,7 @@ Even LaTeX comments can be handled, for example: \% comment at end
 % If you did not set the EnglishKeywords earlier then simply enter the keywords here:
 % comma separate keywords, such as: Canvas Learning Management System, Docker containers, Performance tuning
 \end{scontents}
-\todo[inline, backgroundcolor=kth-lightgreen]{\textbf{Choosing good keywords can help others to locate your paper, thesis, dissertation, \ldots and related work.}}
+% \todo[inline, backgroundcolor=kth-lightgreen]{\textbf{Choosing good keywords can help others to locate your paper, thesis, dissertation, \ldots and related work.}}
 Choose the most specific keyword from those used in your domain, see for example: the ACM Computing Classification System ({\small \url{https://www.acm.org/publications/computing-classification-system/how-to-use})},
 the IEEE Taxonomy ({\small \url{https://www.ieee.org/publications/services/thesaurus-thank-you.html}}), PhySH (Physics Subject Headings)\linebreak[4] ({\small \url{https://physh.aps.org/}}), \ldots or keyword selection tools such as the  National Library of Medicine's Medical Subject Headings (MeSH)  ({\small \url{https://www.nlm.nih.gov/mesh/authors.html}}) or Google's Keyword Tool ({\small \url{https://keywordtool.io/}})\\
 
@@ -274,26 +273,26 @@ Since you should have both English and Swedish keywords - you might think of ord
 swe
 \end{scontents}
 \begin{scontents}[store-env=abstracts,print-env=true]
-\todo[inline, backgroundcolor=kth-lightblue]{Alla avhandlingar vid KTH \textbf{måste ha} ett abstrakt på både \textit{engelska} och \textit{svenska}.\\
-Om du skriver din avhandling på svenska ska detta göras först (och placera det som det första abstraktet) - och du bör revidera det vid behov.}
+% \todo[inline, backgroundcolor=kth-lightblue]{Alla avhandlingar vid KTH \textbf{måste ha} ett abstrakt på både \textit{engelska} och \textit{svenska}.\\
+% Om du skriver din avhandling på svenska ska detta göras först (och placera det som det första abstraktet) - och du bör revidera det vid behov.}
 
-\todo[inline]{If you are writing your thesis in English, you can leave this until the draft version that goes to your opponent for the written opposition. In this way you can provide the English and Swedish abstract/summary information that can be used in the announcement for your oral presentation.\\
+% \todo[inline]{If you are writing your thesis in English, you can leave this until the draft version that goes to your opponent for the written opposition. In this way you can provide the English and Swedish abstract/summary information that can be used in the announcement for your oral presentation.\\
 
-If you are writing your thesis in English, then this section can be a summary targeted at a more general reader. However, if you are writing your thesis in Swedish, then the reverse is true – your abstract should be for your target audience, while an English summary can be written targeted at a more general audience.\\
+% If you are writing your thesis in English, then this section can be a summary targeted at a more general reader. However, if you are writing your thesis in Swedish, then the reverse is true – your abstract should be for your target audience, while an English summary can be written targeted at a more general audience.\\
 
-This means that the English abstract and Swedish sammnfattning  
-or Swedish abstract and English summary need not be literal translations of each other.
-}
-\todo[inline, backgroundcolor=kth-lightred]{Do not use the \textbackslash glspl\{\} macro in an abstract that is not in English, as my programs do not know how to generate plurals in other languages. Instead you will need to spell these terms out or give the proper plural form.}
+% This means that the English abstract and Swedish sammnfattning  
+% or Swedish abstract and English summary need not be literal translations of each other.
+% }
+% \todo[inline, backgroundcolor=kth-lightred]{Do not use the \textbackslash glspl\{\} macro in an abstract that is not in English, as my programs do not know how to generate plurals in other languages. Instead you will need to spell these terms out or give the proper plural form.}
 
-\todo[inline, backgroundcolor=kth-lightgreen]{The abstract in the language used for the thesis should be the first abstract, while the Summary/Sammanfattning in the other language can follow}
+% \todo[inline, backgroundcolor=kth-lightgreen]{The abstract in the language used for the thesis should be the first abstract, while the Summary/Sammanfattning in the other language can follow}
 \end{scontents}
 \subsection*{Nyckelord}
 \begin{scontents}[store-env=keywords,print-env=true]
 % SwedishKeywords were set earlier, hence we can use alternative 2
 \InsertKeywords{swedish}
 \end{scontents}
-\todo[inline, backgroundcolor=kth-lightblue]{Nyckelord som beskriver innehållet i uppsatsen eller rapporten}
+% \todo[inline, backgroundcolor=kth-lightblue]{Nyckelord som beskriver innehållet i uppsatsen eller rapporten}
 \end{abstract}
 \babelpolyLangStop{swedish}
 
@@ -301,22 +300,22 @@ or Swedish abstract and English summary need not be literal translations of each
 
 \section*{Acknowledgments }
 \markboth{Acknowledgments}{}
-\todo[inline]{It is nice to acknowledge the people that have helped you. It is
-  also necessary to acknowledge any special permissions that you have gotten –
-  for example getting permission from the copyright owner to reproduce a
-  figure. In this case you should acknowledge them and this permission here
-  and in the figure’s caption. \\
-  Note: If you do \textbf{not} have the copyright owner’s permission, then you \textbf{cannot} use any copyrighted figures/tables/\ldots . Unless stated otherwise all figures/tables/\ldots are generally copyrighted.
-}
-\todo[inline, backgroundcolor=kth-lightblue]{I detta kapitel kan du ev nämna något om
-  din bakgrund om det påverkar rapporten på något sätt. Har du t ex inte
-  möjlighet att skriva perfekt svenska för att du är nyanländ till landet kan
-  det vara på sin plats att nämna detta här. OBS, detta får dock inte vara en
-  ursäkt för att lämna in en rapport med undermåligt språk, undermålig grammatik och
-  stavning (t ex får fel som en automatisk stavningskontroll och
-  grammatikkontroll kan upptäcka inte förekomma)\\
-En dualism som måste hanteras i hela rapporten och projektet
-}
+% \todo[inline]{It is nice to acknowledge the people that have helped you. It is
+%   also necessary to acknowledge any special permissions that you have gotten –
+%   for example getting permission from the copyright owner to reproduce a
+%   figure. In this case you should acknowledge them and this permission here
+%   and in the figure’s caption. \\
+%   Note: If you do \textbf{not} have the copyright owner’s permission, then you \textbf{cannot} use any copyrighted figures/tables/\ldots . Unless stated otherwise all figures/tables/\ldots are generally copyrighted.
+% }
+% \todo[inline, backgroundcolor=kth-lightblue]{I detta kapitel kan du ev nämna något om
+%   din bakgrund om det påverkar rapporten på något sätt. Har du t ex inte
+%   möjlighet att skriva perfekt svenska för att du är nyanländ till landet kan
+%   det vara på sin plats att nämna detta här. OBS, detta får dock inte vara en
+%   ursäkt för att lämna in en rapport med undermåligt språk, undermålig grammatik och
+%   stavning (t ex får fel som en automatisk stavningskontroll och
+%   grammatikkontroll kan upptäcka inte förekomma)\\
+% En dualism som måste hanteras i hela rapporten och projektet
+% }
 
 I would like to thank xxxx for having yyyy.\\
 
@@ -334,7 +333,7 @@ I would like to thank xxxx for having yyyy.\\
 
 \listoftables
 \cleardoublepage
-\lstlistoflistings\todo[inline, backgroundcolor=kth-lightgreen]{If you have listings in your thesis. If not, then remove this preface page.}
+\lstlistoflistings % \todo[inline, backgroundcolor=kth-lightgreen]{If you have listings in your thesis. If not, then remove this preface page.}
 \cleardoublepage
 % Align the text expansion of the glossary entries
 \newglossarystyle{mylong}{%
@@ -347,8 +346,8 @@ I would like to thank xxxx for having yyyy.\\
 %\printglossaries[type=\acronymtype, title={List of acronyms}]
 \printglossary[style=mylong, type=\acronymtype, title={List of acronyms and abbreviations}]
 %\printglossary[type=\acronymtype, title={List of acronyms and abbreviations}]
-\todo[inline, backgroundcolor=kth-lightgreen]{The list of acronyms and abbreviations should be in alphabetical order based on the spelling of the acronym or abbreviation.
-}
+% \todo[inline, backgroundcolor=kth-lightgreen]{The list of acronyms and abbreviations should be in alphabetical order based on the spelling of the acronym or abbreviation.
+% }
 %% The following label is essential to know the page number of the last page of the preface
 %% It is used to computer the data for the "For DIVA" pages
 \label{pg:lastPageofPreface}
@@ -363,14 +362,14 @@ I would like to thank xxxx for having yyyy.\\
 \input{chapter-outline}
 
 \noindent\rule{\textwidth}{0.4mm}
-\todo[inline]{In the references, let Zotero or other tool fill this
-  in for you. I suggest an extended version of the IEEE  style, to include
-  URLs, DOIs, ISBNs, etc., to make it easier for your reader to find
-  them. This will make life easier for your opponents and examiner. \\
+% \todo[inline]{In the references, let Zotero or other tool fill this
+%   in for you. I suggest an extended version of the IEEE  style, to include
+%   URLs, DOIs, ISBNs, etc., to make it easier for your reader to find
+%   them. This will make life easier for your opponents and examiner. \\
 
-  IEEE Editorial Style Manual: \url{https://www.ieee.org/content/dam/ieee-org/ieee/web/org/conferences/style_references_manual.pdf}
-}
-\todo[inline, backgroundcolor=kth-lightblue]{Låt Zotero eller annat verktyg fylla i det här för dig. Jag föreslår en utökad version av IEEE stil - att inkludera webbadresser, DOI, ISBN etc. - för att göra det lättare för läsaren att hitta dem. Detta kommer att göra livet lättare för dina opponenter och examinator.}
+%   IEEE Editorial Style Manual: \url{https://www.ieee.org/content/dam/ieee-org/ieee/web/org/conferences/style_references_manual.pdf}
+% }
+% \todo[inline, backgroundcolor=kth-lightblue]{Låt Zotero eller annat verktyg fylla i det här för dig. Jag föreslår en utökad version av IEEE stil - att inkludera webbadresser, DOI, ISBN etc. - för att göra det lättare för läsaren att hitta dem. Detta kommer att göra livet lättare för dina opponenter och examinator.}
 
 \cleardoublepage
 % Print the bibliography (and make it appear in the table of contents)
@@ -391,7 +390,7 @@ I would like to thank xxxx for having yyyy.\\
 \appendix
 \renewcommand{\chaptermark}[1]{\markboth{Appendix \thechapter\relax:\thinspace\relax#1}{}}
 \chapter{Something Extra}
-\todo[inline, backgroundcolor=kth-lightblue]{svensk: Extra Material som Bilaga}
+% \todo[inline, backgroundcolor=kth-lightblue]{svensk: Extra Material som Bilaga}
 
 \section{Just for testing KTH colors}
 \ifdigitaloutput

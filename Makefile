@@ -16,3 +16,5 @@ kth: | out/kth
 calpoly: | out/calpoly
 	-latexmk -pdf -jobname=out/calpoly/calpoly -interaction=nonstopmode calpoly.tex
 	mv out/calpoly/calpoly.pdf .
+
+all: kth calpoly

@@ -1,4 +1,4 @@
-\documentclass[12pt]{templates/calpoly/ucthesis}
+\documentclass[12pt, biblatex]{templates/calpoly/ucthesis}
 
 \usepackage{etex}
 \usepackage[morefloats=125]{morefloats}
@@ -24,6 +24,7 @@
 \usepackage[breaklinks=true,hidelinks,pdfusetitle]{hyperref}
 \usepackage{cleveref}
 \usepackage{ifthen}
+\usepackage[natbib=true,style=numeric,sorting=none,backend=biber]{biblatex}
 
 \setcounter{secnumdepth}{3}
 \setcounter{tocdepth}{3}
@@ -54,7 +55,8 @@
 \titleformat*{\paragraph}{\small\bfseries}
 \titleformat*{\subparagraph}{\small\bfseries}
 
-\bibliographystyle{abbrv}
+% \bibliographystyle{abbrv}
+\addbibresource{bibliography.bib}
 
 % Make \tindent indent pages if you have no paragraph indent
 \newlength\tindent
@@ -147,7 +149,7 @@
 
 \input{extras/chapter-outline}
 
-\bibliography{bibliography}
+\printbibliography[heading=bibintoc]
 
 % Indents Appendix in Table of Contents
 \makeatletter

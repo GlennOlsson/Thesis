@@ -16,14 +16,15 @@
 % set the default language to english or swedish by passing an option to the documentclass - this handles the inside tile page
 % To optimize for digital output (this changes the color palette add the option: digitaloutput
 % To use bibtex or biblatex - include one of these as an option
-\documentclass[english, bibtex]{templates/kth/kththesis}
-%\documentclass[swedish, biblatex]{kththesis}
+% \documentclass[english, bibtex]{templates/kth/kththesis}
+\documentclass[english, biblatex]{templates/kth/kththesis}
 
 % \usepackage[style=numeric,sorting=none,backend=biber]{biblatex}
 \ifbiblatex
     %\usepackage[language=english,bibstyle=authoryear,citestyle=authoryear, maxbibnames=99]{biblatex}
-     \usepackage[bibstyle=authoryear,citestyle=authoryear, maxbibnames=99,language=english]{biblatex}
-    \addbibresource{references.bib}
+    %  \usepackage[natbib=true,bibstyle=authoryear,citestyle=authoryear, maxbibnames=99,language=english,backend=bibtex]{biblatex}
+    \usepackage[natbib=true,style=numeric,sorting=none,backend=biber]{biblatex}
+    \addbibresource{bibliography.bib}
     %\DeclareLanguageMapping{norsk}{norwegian}
 \else
     % The line(s) below are for BibTeX
@@ -131,12 +132,12 @@
 % insert the configuration information with author(s), examiner, supervisor(s), ...
 \input{templates/kth/custom_configuration}
 
-\title{This is the title in the language of the thesis}
-\subtitle{An subtitle in the language of the thesis}
+\title{Distributed file system by advantaging online web services}
+\subtitle{An image says more than 1000 words}
 
 % give the alternative title - i.e., if the thesis is in English, then give a Swedish title
-\alttitle{Detta är den svenska översättningen av titeln}
-\altsubtitle{Detta är den svenska översättningen av undertiteln}
+\alttitle{Distrubuerat filsystem genom utnyttjande av onlinebaserade webtjänster}
+\altsubtitle{En bild säger mer än 1000 ord}
 % alternative, if the thesis is in Swedish, then give an English title
 %\alttitle{This is the English translation of the title}
 %\altsubtitle{This is the English translation of the subtitle}

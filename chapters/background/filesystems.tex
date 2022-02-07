@@ -3,7 +3,7 @@ Filesystems are used to store data on for instance a hard drive of a computer on
 
 A deniable filesystem is a system that does not expose files stored on this system without credentials - neither how many files are stored, their sizes, their content or even if there exists any files on the filesystem\cite{petersDEFYDeniableFile2014}. This is useful if for example one is to be exposed to an audit of their data by a totalitarian regim where they don't even want to disclose that they have data.
 
-A unix filesystem uses a datastructure called an \textit{inode}. An inode keeps track of the metadata for the files in the filesystem, and a directory simply contains the file names, and each files/directory's inode id. Using a lookup, the system can then learn about the file - where it is located, how bit it is etc., as can be seen in Figure~\ref{fig:inode_diag} (\textbf{CITATION NEEDED}).
+A unix filesystem uses a data structure called an \textit{inode}. An inode keeps track of the metadata for the files in the filesystem, and a directory simply contains the file names, and each files/directory's inode id. Using a lookup, the system can then learn about the file - where it is located, for instance how big it is, as can be seen in Figure~\ref{fig:inode_diag} (\textbf{CITATION NEEDED}). Each inode entry can contain any number of metadata information which might be relevant for the system, such as creation time and last updated.
 
 \begin{figure}[!ht]
 	\begin{center}
@@ -12,3 +12,5 @@ A unix filesystem uses a datastructure called an \textit{inode}. An inode keeps 
 	\caption{Basic structure of inode based filesystem}
 	\label{fig:inode_diag}
 \end{figure}
+
+Looking at the 4 main file systems of windows, they all have many, sometimes different, functionalities such as links and named streams\cite{mikbenFileSystemFunctionality} as well limits such as a defined theoretical maximum file size. This is set to 16 exbibytes for NTFS, exFAT and UDF, and for FAT32 it is set to 4 gigabytes. 

@@ -1,8 +1,6 @@
 \section{Filesystems}
 Filesystems are used to store data on for instance a hard drive of a computer in the cloud. Google Drive is a filesystem that enables users to save their data online up to 15 GB for free\cite{CloudStorageWork} using their clusters of distributed storage devices, meaning that the data is saved on their servers which can be located wherever\cite{DistributedStorageWhat}. Paying customers can achieve a higher amount of storage using the service.
 
-A deniable filesystem is a system that does not expose files stored on this system without credentials - neither how many files are stored, their sizes, their content, or even if there exist any files on the filesystem\cite{petersDEFYDeniableFile2014}. This is also known as a rubberhose filesystem because of the characteristic that the data really only can be proven with the correct encryption key which only is accessible if the person is tortured and beaten with a rubber-hose because of its simplicity compared to the complexity of breaking the key by computational techniques.
-
 A Unix filesystem uses a data structure called an \textit{inode}. An inode keeps track of the metadata for the files in the filesystem, and a directory simply contains the file names and each file or directory's inode id. Using a lookup, the system can then learn about the file - for instance where it is located and how big it is as can be seen in Figure~\ref{fig:inode_diag} (\textbf{CITATION NEEDED}). Each inode entry can contain any number of metadata information that might be relevant for the system, such as creation time and last updated.
 
 \begin{figure}[!ht]

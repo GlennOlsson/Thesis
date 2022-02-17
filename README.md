@@ -8,6 +8,8 @@ Build the PDFs using `make`
 
 The command will build using `latexmk` and the finished PDF should end up in the root directory.
 
+The thesis has perviously been built on MacOS Monterey with `GNU Make 3.81` and `Latexmk, John Collins, 20 November 2021. Version 4.76`
+
 ### Overleaf
 This project can also be compiled online using Overleaf (as of TeX Live Version 2021). Set the compiler as "*pdfLaTeX*" and the "*main document*" to be either `kth.tex` or `calpoly.tex` depending on which one you want to compile. To switch compiled file, you might have to clear the cache of files (as it is not possible to change the jobname on Overleaf and the output files will clash). This can be done under `logs -> clear cached files`.
 

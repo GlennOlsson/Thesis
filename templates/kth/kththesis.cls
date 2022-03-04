@@ -511,9 +511,9 @@
 \vfill
 \begin{textblock*}{510pt}(44pt, {\paperheight - 46pt}) % {block width} (coords) 
 \ifinswedish
-\noindent{\fontsize{8}{10}\coverlfont San Luis Obispo, Kalifornien, USA, \the\year{}}\\
+\noindent{\fontsize{8}{10}\coverlfont Stockholm, Sverige, \the\year{}}\\
   \else
-\noindent{\fontsize{8}{10}\coverlfont San Luis Obispo, California, USA, \the\year{}}\\
+\noindent{\fontsize{8}{10}\coverlfont Stockholm, Sweden, \the\year{}}\\
   \fi
 \end{textblock*}
 \begin{textblock*}{510pt}(44pt, {\paperheight - 34pt}) % {block width} (coords) 
@@ -693,7 +693,7 @@
 
 \newcommand{\acknowlegmentssignature}{
   \begin{flushleft}
-    San Luis Obispo, \MONTH\enspace\the\year\\
+    San Luis Obispo, California, USA \MONTH\enspace\the\year\\
     \@authorsFirstname\space\@authorsLastname
     \ifx\@secondAuthorsLastname\@empty\relax
     \else

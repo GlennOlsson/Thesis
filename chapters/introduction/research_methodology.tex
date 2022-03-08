@@ -5,6 +5,10 @@
 % \todo[inline]{Introduce your choice of methodology/methodologies and method/methods – and the reason why you chose them. Contrast them with and explain why you did not choose other methodologies or methods. (The details of the actual methodology and method you have chosen will be given in Chapter~\ref{ch:methods}. Note that in Chapter~\ref{ch:methods}, the focus could be research strategies, data collection, data analysis, and quality assurance.)\\
 % In this section you should present your philosophical assumption(s), research method(s), and research approach(es).}
 
-Quantitative data will be gathered from the filsystem developed as a result of this thesis, as well as different existing filesystems it will be compared against, such as Google Drive. This data will be gathered by experiments using filesystem benchmarking tools, such as fio\footnote{\url{https://fio.readthedocs.io/en/latest/fio_doc.html}}, where different variables of the benchmarking tools can be tested. 
+The filesystem created through this thesis be written in C++11 and the FUSE MacOS library\cite{HomeMacFUSE} which enables us to write a filesystem in user space rather than kernel space. The produced filesystem will be evaluated against other filesystems, both commercial distributed systems, such as Google drive, but also an APFS filesystem on a Macbook laptop. Quantitative data will be gathered from the different filesystems through the use of experiments with the filesystem benchmarking software Iozone\cite{IozoneFilesystemBenchmark}. We will look at attributes such as the difference in speed of read and write, as well as the speed of random read and random write. 
+
+\todo[inline]{Do I need to motivate the use of Iozone, as compared to Fio or FFSB? Should the attributes I will look at be motivated as well?}
+
+% Quantitative data will be gathered from the filsystem developed as a result of this thesis, as well as different existing filesystems it will be compared against, such as Google Drive. This data will be gathered by experiments using filesystem benchmarking tools, such as fio\footnote{\url{https://fio.readthedocs.io/en/latest/fio_doc.html}}, where different variables of the benchmarking tools can be tested. 
 
 % TODO: WHAT DO ADD?? FUUUCK

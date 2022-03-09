@@ -1,18 +1,39 @@
 \section{Filesystems}
 \subsection{Unix filesystems}
-A Unix filesystem uses a data structure called an \textit{inode}. An inode keeps track of the metadata for the files in the filesystem, and a directory simply contains the file names and each file or directory's inode id. Using a lookup, the system can then learn about the file - for instance where it is located and how big it is as can be seen in Figure~\ref{fig:inode_diag} % FIXME: CITATION NEEDED 
-Each inode entry can contain any metadata that might be relevant for the system, such as creation time and last update time.
+A Unix filesystem uses a data structure called an \textit{inode}. The inodes are found in an inode table and each inode keeps track of the size, blocks used for the file's data, and metadata for the files in the filesystem, and a directory simply contains the file names and each file or directory's inode id. The system can with an inode id find information about the file or directory using the inode table. Each inode can contain any metadata that might be relevant for the system, such as creation time and last update time. 
+
+Figure~\ref{fig:inode_diag} shows how example inode filesystem and how it can be visualized. The blocks of an inode entry is where in the storage device the data is stored, each block is often defines as a certain amount of bytes. Listing~\ref{lst:inode_fs} describes a simple implementation of an inode, an inode table, and directory entries. 
+
+ % TODO: Add info about how FFS will only implement some? And/or add that to delimitations too
 
 \begin{figure}[!ht]
 	\begin{center}
-	  \includegraphics[width=0.8\textwidth]{figures/inode_diagram.png}
+	  \includegraphics[width=0.5\textwidth]{figures/inode_diagram.png}
 	\end{center}
 	\caption{Basic structure of inode based filesystem}
 	\label{fig:inode_diag}
 \end{figure}
 
-Looking at the four main file systems of Microsoft's Windows, there are functionalities present in some systems that are not found in others, for instance links and named streams. There is also other trade-offs such as a defined theoretical maximum file size\cite{mikbenFileSystemFunctionality} for the filesystems. This is set to 16 exbibytes for NTFS, exFAT, and UDF, while for FAT32 it is four gigabytes.
+\begin{minipage}{\linewidth}
+\begin{lstlisting}[language=c, caption={Pseudocode of a minimalistic inode filesystem structure}, label=lst:inode_fs]
+struct inode_entry {
+	int 	length
+	int[]	blocks
+	// Metadata attributes are defined here
+}
 
+struct directory_entry {
+	char*   filename
+	int     inode
+}
+
+// Maps inode_id to a inode_entry
+map<int, inode_entry> inode_table
+
+\end{lstlisting}
+\end{minipage}
+
+Looking at the four main file systems of Microsoft's Windows, there are functionalities present in some systems that are not found in others, for instance links and named streams. There is also other trade-offs such as a defined theoretical maximum file size\cite{mikbenFileSystemFunctionality} for the filesystems. This is set to 16 exbibytes for NTFS, exFAT, and UDF, while for FAT32 it is four gigabytes.
 
 \subsection{Distributed filesystems}
 Filesystems are used to store data on for instance a hard drive of a computer locally or in the cloud. For example, Google Drive is a filesystem that enables users to save their data online with up to 15 GB for free\cite{CloudStorageWork} using their clusters of distributed storage devices, meaning that the data is saved on their servers which can be located wherever\cite{DistributedStorageWhat}. Paying customers can have a greater amount of storage using the service. Apple's iCloud and Microsoft's OneDrive are both other examples of distributed filesystems where users have the option of free-tier and paid-tier storage.
@@ -26,3 +47,4 @@ $$ceil(\frac{X}{3})$$
 pixels, where $ceil$ rounds a float to the closest larger integer. For a file of \SI{1}{\mega\byte}, i.e. $X = 1\,000\,000$ we need $333\,334$ pixels. The values of $h$ and $w$ are arbitrary but if we for instance want a square image we can set $ h\,=\,w\,=\,578$ which means that there will be $334\,084$ pixels in total, and the remaining $750$ pixels will just be fillers to make the image a reasonable size. However, we could choose $h = 1$ and $w = 333\,334$ which would mean a very wide image but would not require filler pixels. 
 
 This means that we can represent any file as a string of text or as an image, which can be posted on for instance social media. 
+

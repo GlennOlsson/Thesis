@@ -1,4 +1,17 @@
 
+@inproceedings{10.5555/1361397.1361409,
+  title = {A Web Based Covert File System},
+  booktitle = {Proceedings of the 11th {{USENIX}} Workshop on Hot Topics in Operating Systems},
+  author = {Baliga, Arati and Kilian, Joe and Iftode, Liviu},
+  date = {2007-05-07},
+  series = {{{HOTOS}}'07},
+  publisher = {{USENIX Association}},
+  location = {{USA}},
+  abstract = {We present the idea of a web based covert file system, CovertFS. This file system allows a user to store files covertly on media sharing websites while guaranteeing confidentiality and plausible deniability regarding the existence of the files. Further, it allows for selective and covert sharing of these files with other users. CovertFS can be built on top of any web based media sharing service. The files are hidden within the media using steganographic techniques. The user can plausibly deny the existence of the covert file system since the existence of it cannot be proven. The media sharing service provider is oblivious to the existence of the file system within the stored media, providing them plausible deniability as well. Since the user files are completely hidden, it gives only the user complete control over his confidential files.},
+  articleno = {12},
+  pagetotal = {6}
+}
+
 @article{badulescuCryptfsStackableVnode1998,
   title = {Cryptfs: {{A Stackable Vnode Level Encryption File System}}},
   shorttitle = {Cryptfs},
@@ -10,13 +23,6 @@
   abstract = {Data encryption has become an increasingly important factor in everyday work. Users seek a method of securing their data with maximum comfort and minimum additional requirements on their part; they want a security system that protects any files used by any of their applications, without resorting to application-specific encryption methods. Performance is an important factor to users since encryption can be time consuming. Operating system vendors want to provide this functionality but without incurring the large costs of developing a new file system. This paper describes the design and implementation of Cryptfs -- a file system that was designed as a stackable Vnode layer loadable kernel module. Cryptfs operates by 'encapsulating' a client file system with a layer of encryption transparent to the user. Being kernel resident, Cryptfs performs better than user-level or NFS based file servers such as CFS and TCFS. It is 2 to 37 times faster on micro-benchmarks such as read and write; this translates to 12-52\textbackslash\%application speedup, as exemplified by a large build. Cryptfs offers stronger security by basing its keys on process session IDs as well as user IDs, and by the fact that kernel memory is harder to access. Working at and above the vnode level, Cryptfs is more portable than a file system which works directly with native media such as disks and networks. Cryptfs can operate on top of any other native file system such as UFS/FFS and NFS. Finally, Cryptfs requires no changes to client file systems or remote servers.},
   langid = {english},
   file = {/Users/glenn/Zotero/storage/2L7RSL3J/Badulescu m. fl. - 1998 - Cryptfs A Stackable Vnode Level Encryption File S.pdf;/Users/glenn/Zotero/storage/NHTXNRM8/D82N5935.html}
-}
-
-@inproceedings{baliga2007web,
-  title = {A Web Based Covert File System.},
-  booktitle = {{{HotOS}}},
-  author = {Baliga, Arati and Kilian, Joe and Iftode, Liviu},
-  date = {2007}
 }
 
 @software{buchananTweetablepolyglotpng2022,
@@ -70,15 +76,6 @@
   abstract = {Lagra och dela dina foton, videor, filer med mera på ett säkert sätt i molnet. Med ett Google-konto är dina första 15~GB lagringsutrymme gratis.},
   langid = {swedish},
   file = {/Users/glenn/Zotero/storage/CP67T93R/drive.html}
-}
-
-@online{cuingSIMARGLStegwarePrimer2020,
-  title = {{{SIMARGL}}: {{Stegware}} Primer, Part 1},
-  author = {CUING},
-  date = {2020-02-14},
-  url = {https://cuing.eu/blog/technical/simargl-stegware-primer-part-1},
-  urldate = {2022-02-09},
-  file = {/Users/glenn/Zotero/storage/5LYB2Y46/simargl-stegware-primer-part-1.html}
 }
 
 @online{DistributedStorageWhat,
@@ -159,7 +156,7 @@
   title = {A Multi-User Steganographic File System on Untrusted Shared Storage},
   booktitle = {Proceedings of the 26th {{Annual Computer Security Applications Conference}} on - {{ACSAC}} '10},
   author = {Han, Jin and Pan, Meng and Gao, Debin and Pang, HweeHwa},
-  date = {2010},
+  date = {2010-12-06},
   pages = {317},
   publisher = {{ACM Press}},
   location = {{Austin, Texas}},
@@ -224,7 +221,7 @@
   title = {Google Hack: {{Use Gmail}} as a {{Linux}} Filesystem},
   shorttitle = {Google Hack},
   author = {Jones, Richard},
-  date = {2006-09-15T01:00-05:00},
+  date = {2006-09-15},
   url = {https://www.computerworld.com/article/2547891/google-hack--use-gmail-as-a-linux-filesystem.html},
   urldate = {2022-03-09},
   abstract = {Need some extra storage? This code lets you use a Gmail account as a 2GB networked filesystem.},
@@ -376,17 +373,6 @@
   file = {/Users/glenn/Zotero/storage/TDSSV6K8/Peters - 2014 - DEFY A Deniable File System for Flash Memory.pdf}
 }
 
-@inproceedings{petersDEFYDeniableFile2014a,
-  title = {{{DEFY}}: {{A Deniable File System}} for {{Flash Memory}}},
-  shorttitle = {{{DEFY}}},
-  booktitle = {Master's {{Theses}}},
-  author = {Peters, Timothy},
-  date = {2014-06-01},
-  doi = {10.15368/theses.2014.76},
-  url = {https://digitalcommons.calpoly.edu/theses/1230},
-  file = {/Users/glenn/Zotero/storage/DINB3WSA/Peters - 2014 - DEFY A Deniable File System for Flash Memory.pdf;/Users/glenn/Zotero/storage/MPXEAWCA/1230.html}
-}
-
 @online{PNGSpecificationFile,
   title = {{{PNG Specification}}: {{File Structure}}},
   url = {http://www.libpng.org/pub/png/spec/1.2/PNG-Structure.html},
@@ -476,13 +462,22 @@
   title = {A {{Bidirectional Diffusion Based Image Encryption Scheme}} for {{Color Images}}},
   booktitle = {2020 7th {{International Conference}} on {{Smart Structures}} and {{Systems}} ({{ICSSS}})},
   author = {Sreelakshmi, K. and Ravi, Renjith V.},
-  date = {2020-07},
+  date = {2020-07-23},
   pages = {1--6},
   doi = {10.1109/ICSSS49621.2020.9202070},
   abstract = {The goal of this work is to develop an encryption scheme for secure transmission for colour images over untrusted channel. A bidirectional diffusion based encryption technique for 8-bit RGB colour image is performed. The encryption process is used to protect the image in transit. Also the encryption steps will be conducted using a fixed block size of 8 × 8 which will enhance the robustness against cipher text only attacks. The performance analysis of encryption scheme is conducted using various tests and observed that the proposed algorithm is robust against various cryptanalytic attacks.},
   eventtitle = {2020 7th {{International Conference}} on {{Smart Structures}} and {{Systems}} ({{ICSSS}})},
   keywords = {bidirectional diffusion,Block scrambling,Color,Encryption,Histograms,image cryptography,image encryption,image inversion,image rotation,Manganese,Robustness},
   file = {/Users/glenn/Zotero/storage/XCL36GKI/Sreelakshmi och Ravi - 2020 - A Bidirectional Diffusion Based Image Encryption S.pdf;/Users/glenn/Zotero/storage/9PRSJK7L/9202070.html}
+}
+
+@online{stichtingcuingfoundationSIMARGLStegwarePrimer2020,
+  title = {{{SIMARGL}}: {{Stegware}} Primer, Part 1},
+  author = {Stichting CUING Foundation},
+  date = {2020-02-14},
+  url = {https://cuing.eu/blog/technical/simargl-stegware-primer-part-1},
+  urldate = {2022-02-09},
+  file = {/Users/glenn/Zotero/storage/5LYB2Y46/simargl-stegware-primer-part-1.html}
 }
 
 @online{TwitterImagesCan,
@@ -527,7 +522,7 @@
 @article{wangCompressionResistantSteganography2021,
   title = {A {{Compression Resistant Steganography Based}} on {{Differential Manchester Code}}},
   author = {Wang, Shuai and Zheng, Ning and Xu, Ming},
-  date = {2021-02},
+  date = {2021-01-21},
   journaltitle = {Symmetry},
   volume = {13},
   number = {2},
@@ -542,15 +537,6 @@
   langid = {english},
   keywords = {differential Manchester code,JPEG compression,robust steganography,sign of DCT coefficients},
   file = {/Users/glenn/Zotero/storage/9H6IHKKI/Wang m. fl. - 2021 - A Compression Resistant Steganography Based on Dif.pdf;/Users/glenn/Zotero/storage/JGLZWEK2/165.html}
-}
-
-@article{zadokCryptfsStackableVnode,
-  title = {Cryptfs: {{A Stackable Vnode Level Encryption File System}}},
-  author = {Zadok, Erez and Badulescu, Ion and Shender, Alex},
-  pages = {14},
-  abstract = {Data encryption has become an increasingly important factor in everyday work. Users seek a method of securing their data with maximum comfort and minimum additional requirements on their part; they want a security system that protects any files used by any of their applications, without resorting to application-specific encryption methods. Performance is an important factor to users since encryption can be time consuming. Operating system vendors want to provide this functionality but without incurring the large costs of developing a new file system.},
-  langid = {english},
-  file = {/Users/glenn/Zotero/storage/LT3CNSR3/Zadok m. fl. - Cryptfs A Stackable Vnode Level Encryption File S.pdf}
 }
 
 

@@ -1,17 +1,4 @@
 
-@inproceedings{10.5555/1361397.1361409,
-  title = {A Web Based Covert File System},
-  booktitle = {Proceedings of the 11th {{USENIX}} Workshop on Hot Topics in Operating Systems},
-  author = {Baliga, Arati and Kilian, Joe and Iftode, Liviu},
-  date = {2007-05-07},
-  series = {{{HOTOS}}'07},
-  publisher = {{USENIX Association}},
-  location = {{USA}},
-  abstract = {We present the idea of a web based covert file system, CovertFS. This file system allows a user to store files covertly on media sharing websites while guaranteeing confidentiality and plausible deniability regarding the existence of the files. Further, it allows for selective and covert sharing of these files with other users. CovertFS can be built on top of any web based media sharing service. The files are hidden within the media using steganographic techniques. The user can plausibly deny the existence of the covert file system since the existence of it cannot be proven. The media sharing service provider is oblivious to the existence of the file system within the stored media, providing them plausible deniability as well. Since the user files are completely hidden, it gives only the user complete control over his confidential files.},
-  articleno = {12},
-  pagetotal = {6}
-}
-
 @article{badulescuCryptfsStackableVnode1998,
   title = {Cryptfs: {{A Stackable Vnode Level Encryption File System}}},
   shorttitle = {Cryptfs},
@@ -23,6 +10,19 @@
   abstract = {Data encryption has become an increasingly important factor in everyday work. Users seek a method of securing their data with maximum comfort and minimum additional requirements on their part; they want a security system that protects any files used by any of their applications, without resorting to application-specific encryption methods. Performance is an important factor to users since encryption can be time consuming. Operating system vendors want to provide this functionality but without incurring the large costs of developing a new file system. This paper describes the design and implementation of Cryptfs -- a file system that was designed as a stackable Vnode layer loadable kernel module. Cryptfs operates by 'encapsulating' a client file system with a layer of encryption transparent to the user. Being kernel resident, Cryptfs performs better than user-level or NFS based file servers such as CFS and TCFS. It is 2 to 37 times faster on micro-benchmarks such as read and write; this translates to 12-52\textbackslash\%application speedup, as exemplified by a large build. Cryptfs offers stronger security by basing its keys on process session IDs as well as user IDs, and by the fact that kernel memory is harder to access. Working at and above the vnode level, Cryptfs is more portable than a file system which works directly with native media such as disks and networks. Cryptfs can operate on top of any other native file system such as UFS/FFS and NFS. Finally, Cryptfs requires no changes to client file systems or remote servers.},
   langid = {english},
   file = {/Users/glenn/Zotero/storage/2L7RSL3J/Badulescu m. fl. - 1998 - Cryptfs A Stackable Vnode Level Encryption File S.pdf;/Users/glenn/Zotero/storage/NHTXNRM8/D82N5935.html}
+}
+
+@inproceedings{baliga2007web,
+  title = {A Web Based Covert File System},
+  booktitle = {Proceedings of the 11th {{USENIX}} Workshop on Hot Topics in Operating Systems},
+  author = {Baliga, Arati and Kilian, Joe and Iftode, Liviu},
+  date = {2007-05-07},
+  series = {{{HOTOS}}'07},
+  publisher = {{USENIX Association}},
+  location = {{USA}},
+  abstract = {We present the idea of a web based covert file system, CovertFS. This file system allows a user to store files covertly on media sharing websites while guaranteeing confidentiality and plausible deniability regarding the existence of the files. Further, it allows for selective and covert sharing of these files with other users. CovertFS can be built on top of any web based media sharing service. The files are hidden within the media using steganographic techniques. The user can plausibly deny the existence of the covert file system since the existence of it cannot be proven. The media sharing service provider is oblivious to the existence of the file system within the stored media, providing them plausible deniability as well. Since the user files are completely hidden, it gives only the user complete control over his confidential files.},
+  articleno = {12},
+  pagetotal = {6}
 }
 
 @software{buchananTweetablepolyglotpng2022,
@@ -387,6 +387,17 @@
   file = {/Users/glenn/Zotero/storage/QBII8HPM/REC-PNG-20031110.html}
 }
 
+@online{RetrievingOlder302018,
+  title = {Retrieving Older than 30 Days {{Direct Messages}} (Direct\_messages/Events/List) - {{Twitter API}} / {{Standard APIs}} v1.1},
+  date = {2018-04-27T01:43:44+00:00},
+  url = {https://twittercommunity.com/t/retrieving-older-than-30-days-direct-messages-direct-messages-events-list/104901},
+  urldate = {2022-03-11},
+  abstract = {Hello Twitter Community,  Referring to the new endpoint for retrieving direct messages GET direct\_messages/events/list, which going to be the only way of retreiving past direct messages on June 19. 2018 after deprecating totally GET direct\_messages.  The documentation describes the endpoint as it’s…   Returns all Direct Message events (both sent and received) within the last 30 days. Sorted in reverse-chronological order.   Is it possible in anyway to retrieve older than 30 days direct messages? ...},
+  langid = {english},
+  organization = {{Twitter Developers}},
+  file = {/Users/glenn/Zotero/storage/KJAWEV8Y/104901.html}
+}
+
 @online{robinsonObjectStorageFuse2021,
   title = {Object {{Storage}} via {{Fuse Filesystems}}},
   author = {Robinson, Joshua},
@@ -508,6 +519,15 @@
   urldate = {2022-02-15},
   langid = {english},
   file = {/Users/glenn/Zotero/storage/F9ATZ8KV/privacy.html}
+}
+
+@online{UnderstandingTwitterLimits,
+  title = {Understanding {{Twitter}} Limits | {{Twitter Help}}},
+  url = {https://help.twitter.com/en/rules-and-policies/twitter-limits},
+  urldate = {2022-03-11},
+  abstract = {Learn about account limits for things like API, updates, messages, and following, and find out why limits are used.},
+  langid = {english},
+  file = {/Users/glenn/Zotero/storage/MI4UPYGT/twitter-limits.html}
 }
 
 @online{viksoeViksoeDkGMail2004,

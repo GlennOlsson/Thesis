@@ -17,3 +17,19 @@ This project can also be compiled online using Overleaf (as of TeX Live Version 
 The different institute templates are found under `templates/`. They simply use `\input` to include the actual content of the thesis, each chapter is found under `chapters/`. 
 
 The root file of each school is in the root directory (`kth.tex` and `calpoly.tex`), so all paths to images, files etc. must be relative to the root of the repo.  
+
+## Pre-hook
+A script named [make_decision.zsh](make_decision.zsh) exists to check if the current built PDFs are up to date with the written text. This can be used in a pre-commit hook on git by adding this to the local `.git/hooks/pre-commit` file:
+```sh
+#!/bin/sh
+#
+# Script to check that the PDFs are up-to-date, otherwise fail commit
+
+zsh make_decision.zsh
+if [[ "$?" != "0" ]]; then
+		cat <<\EOF
+Can't commit, must first rebuild PDFs
+EOF
+	exit 1
+fi 
+```

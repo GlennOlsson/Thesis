@@ -1,6 +1,6 @@
 \section{FFS}
 % TODO: Fix this section in relation to what the email comments said on march 8th
-The artifact that will be developed as a result of this thesis is the Fejk FileSystem (FFS) which uses online services to store the data but behaves as a mountable filesystem for the users. The filesystem will however be very basic and not support all functionalities that other filesystems do, such as links. The reasoning is that these behaviors are not required for a useable system, and when comparing the system to distributed filesystems such as Google Drive, many of these other filesystems also often do not support links.
+The artifact that will be developed as a result of this thesis is the Fejk FileSystem (FFS). It uses online services to store the data but behaves as a mountable filesystem for the users. The filesystem will be minimal and not support all functionalities that other filesystems do, such as links. The reasoning is that these behaviors are not required for a useable system, and when comparing the system to distributed filesystems such as Google Drive, many of these other filesystems also often do not support links.
 
 Figure~\ref{fig:ffs_inode_diag} presents the basic outline of FFS and a example content of the filesystem. FFS is based on the idea of inode filesystems but instead of an inode pointing to specific blocks in a disk, the inodes of FFS will instead keep track of the id numbers of the posts on the online services where the file is located. 
 

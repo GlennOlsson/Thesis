@@ -1,5 +1,5 @@
 \section{Related filesystems}
-% FIXME: The discussion of other FUSE based filesystems seems really minimal.
+% FIXME: Chip: "The discussion of other FUSE based filesystems seems really minimal."
 
 In 2007, \citeauthor{baliga2007web} presented an idea of a covert filesystem that hides the file data in images and uploads them to web services, named CovertFS\,\cite{baliga2007web}. The paper lacks implementation of the filesystem but they present an implementation plan which includes using FUSE. They limit the filesystem such that each image posted will only store a maximum of \SI{4}{\kilo\byte} of steganographic file data and the images posted on the web services will be actual images. This is different from the idea of FFS where the images will be purely the encrypted file data and will therefore not be an image that represents anything but will instead look like random color noise. An implementation of CovertFS has been attempted by \citeauthor{sosaSuperSecretFile2007} which also used Tor to further anonymize the users\,\cite{sosaSuperSecretFile2007}.
 
@@ -11,4 +11,4 @@ Timothy \citeauthor{petersDEFYDeniableFile2014} created a deniable filesystem us
 
 \citeauthor{badulescuCryptfsStackableVnode1998} created Cryptfs, a stackable Vnode filesystem that encrypted the underlying, potentially unencrypted, filesystem\,\cite{badulescuCryptfsStackableVnode1998}. By making the filesystem stackable, any layer can be added on top of any other, and the abstraction occurs by each Vnode layer communicating with the one beneath. There is a potential to further stack additional layers by using tools such as FiST\,\cite{FiSTStackableFile}. This approach enables one to create not only an encrypted file system but also to provide redundancy by replicating data to different
 underlying file systems. If these file systems are independent, then potentially this increases availability and reliability.
-% FIXME: While you mention CryptFS and FiST you do not say why you do not build your systems to use a stackable filesystem (as this would make adding redundancy much easier)
+% FIXME: Chip: "While you mention CryptFS and FiST you do not say why you do not build your systems to use a stackable filesystem (as this would make adding redundancy much easier)"

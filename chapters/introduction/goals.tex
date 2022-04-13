@@ -5,14 +5,13 @@
 
 % \todo[inline]{State the goal/goals of this degree project.}
 
-The project aims to create a secure, mountable filesystem that stores its data via online web services by taking advantage of the storage provided to its users. This can be split into the following subgoals:
+The project aims to create a secure, deniable filesystem that stores its data on online web services by taking advantage of the storage provided to its users. This can be split into the following subgoals:
 \begin{enumerate}
-\item to create a free mountable filesystem where files can be stored, read, and deleted,
+\item to create a mountable filesystem where files can be stored, read, and deleted,
 \item for the system to be secure in the sense that even with access to the uploaded files and the software, the data is not readable without the correct decryption key, 
-\item to analyze the write and read speed, storage capacity, and reliability of the filesystem and compare it to commercial distributed filesystems, and,
+\item to provide the user of the filesystem with reasonable deniability of its data in the sense that it is not possible to associate the user with FFS if the filesystem is not mounted,
+\item to analyze the write and read speed, storage capacity, and reliability of the filesystem and compare it to commercial distributed filesystems and local filesystems, and,
 \item to analyze and discuss environmental and ethical aspects of the filesystem.
 \end{enumerate}
-
-A side effect of such a filesystem that creates posts that are, while encrypted, publicly available is a steganographic filesystem in the sense that the data is hidden in plain sight. Therefore, an additional subgoal is to achieve and analyze the deniability of the filesystem. This could make the filesystem useful for persons who need to hide their data, such as spies, journalists, and political actors where freedom of speech is non-existent.
 
 % \todo[inline]{In addition to presenting the goal(s), you might also state what the deliverables and results of the project are.}

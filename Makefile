@@ -19,5 +19,9 @@ calpoly: | out/calpoly
 
 all: kth calpoly
 
+txt:
+	pandoc -f latex -i kth.tex -t markdown+hard_line_breaks -o kth.txt
+	pandoc -f latex -i calpoly.tex -t markdown+hard_line_breaks -o calpoly.txt
+
 clean:
 	@rm -rf out/ kth.pdf calpoly.pdf

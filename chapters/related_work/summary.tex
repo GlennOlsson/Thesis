@@ -15,22 +15,40 @@
 
 % TODO: Present table with features of FFS here? Compared to other filesystems etc. 
 
-As presented, different filesystems provide different features and drawbacks. Here we display a summary of characteristics and features of some filesystems mentioned above and how FFS compares.
+As presented, different filesystems provide different features and drawbacks. 
+In Table~\ref{tbl:fs_comp} we display a summary of characteristics and features 
+of some filesystems mentioned above and how FFS compares. As can be seen, FFS 
+mainly lacks in regards to certain filesystem operations which are not the focus of
+FFS as it is a proof of concept. 
 
-\begin{center}
-	\begin{tabular}{ c || c | c | c }
-		
-		\hline
-		\hspace{1mm} & 		ext4 & 			DEFY & 				FFS\\
-		
-		\hline
-		\hline
-		
-		Storage device & 	HDD or SSD 	& 	Built for SSD & 	Online Web Services
+\begin{table}[!ht]
+	\begin{center}
+		\begin{tabular}{ l || c | c | c | c | c | c }
+			
+			\hline
+\hspace{1mm} 						& \textbf{ext4} 	& \textbf{Google drive} & \textbf{DEFY} 	& \textbf{TweetFS} 	& \textbf{FFS}\\
+			
+			\hline
+			\hline
+			
+Mountable							& 	X 				& 	X					& 	X 				& 	-				& 	X\\
+Read/Write/Remove file				& 	X 				& 	X					& 	X 				& 	X				& 	X\\
+Read/Write/Remove directory 		& 	X 				& 	X					& 	X 				& 	X				& 	X\\
+Hard links 							& 	X 				& 	-					& 	X 				& 	-				& 	-\\
+Soft links 							& 	X 				& 	-					& 	X 				& 	-				& 	-\\
+File and directory access control 	& 	X 				& 	X					& 	- 				& 	X				& 	-\\
 
-		\hline
+Encrypted							&	X				&	X$^{*}$				&	X				&	-				&	X\\
+Steganographic						&	-				&	-					&	X				&	X				&	X\\
+Cloud-based							&	-				&	X					&	-				&	X				&	X\\
 
-		
+			\hline		
 
-	\end{tabular}
-\end{center}
+		\multicolumn{3}{l}{$^{*}$\footnotesize{As mentioned, the user has no control over this encryption}} \\
+
+		\end{tabular}
+		\caption{Comparison between features present in related filesystems and FFS. X means that the feature is supported and - means that it is not supported}
+		\label{tbl:fs_comp}
+	\end{center}
+
+\end{table}

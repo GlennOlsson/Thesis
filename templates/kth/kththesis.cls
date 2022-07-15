@@ -1146,7 +1146,7 @@
         \fi
         \ifx\@presentationAddress\@empty\relax
         \else
-        ,\"Address": \"\@presentationAddress"\par
+        ,"Address": "\@presentationAddress"\par
         \fi
         \ifx\@presentationCity\@empty\relax
         \else

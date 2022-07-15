@@ -1,0 +1,70 @@
+\appendix
+\renewcommand{\chaptermark}[1]{\markboth{Appendix \thechapter\relax:\thinspace\relax#1}{}}
+\label{app:inode_dir_code}
+\chapter{Directory, InodeTable and InodeEntry class and attributes representation}
+\begin{lstlisting}[language=c++, caption={The attributes classes representing directories and the inode table in FFS}, label=lst:dir_itable_classes,breaklines=true]
+/**
+* @brief Describes a directory in FFS. Keeps track of the filename and inode of each file
+*/
+class Directory {
+public:
+	/**
+	* @brief Map of (filename, inode id) describing the content of the directory
+	*/
+	std::map<std::string, inode_id> entries;
+	
+	/**
+	* @brief Returns the size of the directory object in terms of bytes
+	* 
+	* @return uint32_t the amount of bytes required by object
+	*/
+	uint32_t size();
+};
+
+/**
+* @brief Describes and entry in the inode table, representing a file or directory
+*/
+class InodeEntry {
+public:
+	/**
+	* @brief The size of the file (not used for directories) 
+	*/
+	uint32_t length;
+
+	/**
+	* @brief True if the entry describes a directory, false if it describes a file
+	*/
+	uint8_t is_dir;
+
+	/**
+	* @brief A list representing the posts of the file or directory. 
+	*/
+	std::vector<post_id> post_blocks;
+	
+	/**
+	 * @brief Returns the size of the object in terms of bytes
+	 * 
+	 * @return uint32_t the amount of bytes occupied by object
+	 */
+	uint32_t size();
+};
+
+/**
+* @brief Describes the inode table of the filesystem. The table consists of multiple inode entries
+*/
+class InodeTable {
+public:
+	/**
+	* @brief Map of (inode id, Inode entry) describing the content of the inode table
+	*/
+	std::map<inode_id, InodeEntry> entries;
+
+	/**
+	 * @brief Returns the size of the object in terms of bytes
+	 * 
+	 * @return uint32_t the amount of bytes occupied by object
+	 */
+	uint32_t size();
+};
+
+\end{lstlisting}

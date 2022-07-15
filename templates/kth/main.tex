@@ -23,7 +23,7 @@
 \ifbiblatex
     %\usepackage[language=english,bibstyle=authoryear,citestyle=authoryear, maxbibnames=99]{biblatex}
     %  \usepackage[natbib=true,bibstyle=authoryear,citestyle=authoryear, maxbibnames=99,language=english,backend=bibtex]{biblatex}
-    \usepackage[style=ieee,citestyle=numeric-comp,sorting=none,backend=biber,maxbibnames=99,maxcitenames=3,maxnames=3,minbibnames=2,mincitenames=2,minnames=2]{biblatex}
+    \usepackage[style=ieee,citestyle=numeric-comp,sorting=none,backend=biber,maxbibnames=99]{biblatex}
     \addbibresource{bibliography.bib}
     %\DeclareLanguageMapping{norsk}{norwegian}
 \else
@@ -54,7 +54,6 @@
 \let\endverbatimsc\@undefined
 \lst@AddToHook{Init}{\hyphenpenalty=50\relax}
 \makeatother
-
 
 \lstnewenvironment{verbatimsc}
     {

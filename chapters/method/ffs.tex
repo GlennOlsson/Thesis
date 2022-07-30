@@ -1,8 +1,8 @@
 \section{FFS}
-The artifact that was developed as a result of this thesis is the Fejk FileSystem (FFS). It used online services to store the data but behaved as a mountable filesystem for the users. The filesystem will be minimal and not support all functionalities that other filesystems do, such as links. The reasoning is that these behaviors are not required for a useable system, and when comparing the system to distributed filesystems such as Google Drive, many of these other filesystems also often do not support links.
+The artifact that was developed as a result of this thesis is the Fejk FileSystem (FFS). It uses an online web service (OWS) to store the data but behaved as a mountable filesystem for the users. The filesystem is a proof-of-concept and does not support all functionalities that other filesystems do, such as links or access permissions. The reasoning is that these behaviors are not required for a useable system, and when comparing the filesystem to distributed filesystems such as Google Drive, many of these other filesystems also often do not support functionality such as links.
 
 \subsection{Design overview}
-FFS uses images to store the data of files, directories and the inode table of the filesystem. These images will are uploaded to online web services, such as Flickr, as image posts. As mentioned in Section~\ref{sec:twitter}, there can be limitations to these posts for certain online web services. To support file sizes bigger than these limitations, bigger files will be split into multiple posts, requiring FFS to keep track of a list of posts. Figure~\ref{fig:ffs_inode_diag} presents the basic outline of FFS and a example content of the filesystem. FFS is based on the idea of inode filesystems and uses a inode table to store information about the files and directories in the filesystem. However, instead of an inode pointing to specific blocks in a disk, the inode table of FFS will instead keep track of the id numbers of the posts on the online services where the file or directory is located. The inode table entry for each file or directory will also contain metadata about the entry, such as its size and a boolean indicating if the entry is a directory or not.
+FFS uses images to store the data of files, directories and the inode table of the filesystem. These images will are uploaded to the OWS, such as Flickr, as image posts. As mentioned in Section~\ref{sec:twitter}, there can be limitations to these posts for certain OWSs. To support file sizes bigger than these limitations, bigger files will be split into multiple posts, requiring FFS to keep track of a list of posts. Figure~\ref{fig:ffs_inode_diag} presents the basic outline of FFS and a example content of the filesystem. FFS is based on the idea of inode filesystems and uses a inode table to store information about the files and directories in the filesystem. However, instead of an inode pointing to specific blocks in a disk, the inode table of FFS will instead keep track of the id numbers of the posts on the OWS where the file or directory is located. The inode table entry for each file or directory will also contain metadata about the entry, such as its size and a boolean indicating if the entry is a directory or not.
 
 \begin{figure}[!ht]
 	\begin{center}
@@ -12,15 +12,21 @@ FFS uses images to store the data of files, directories and the inode table of t
 	\label{fig:ffs_inode_diag}
 \end{figure}
 
-The directories and inode table are represented as classes in C++. Appendix~\ref{lst:dir_itable_classes} visualizes the main attributes of the \texttt{Directory}, \texttt{InodeTable}, and \texttt{InodeEntry} classes. There can be multiple \texttt{Directory} and \texttt{InodeEntry} objects in the computers' memory and in the filesystem, but there will only exist one \texttt{InodeTable} instance which is relevant. The \texttt{Directory} class is a data structure that stores mappings between filenames and the files' and directories' inode for all files and directories stored in that directory. The \texttt{InodeTable} stores a mapping between an inode and the files' \texttt{InodeEntry}. The \texttt{InodeEntry} is a data structure that keeps track of a file or directory's information, such as where the data is stored and its metadata, such as size and creation timestamp. To read the content of a known file in a directory therefore has three steps:
-\begin{itemize}
+The directories and inode table are represented as classes in C++. Appendix~\ref{app:inode_dir_code} visualizes the main attributes of the \texttt{Directory}, \texttt{InodeTable}, and \texttt{InodeEntry} classes. There can be multiple \texttt{Directory} and \texttt{InodeEntry} objects in the computers' memory and in the filesystem, but there will only exist one \texttt{InodeTable} instance which is relevant. The \texttt{Directory} class is a data structure that stores mappings between filenames and the files' and directories' inode for all files and directories stored in that directory. The \texttt{InodeEntry} is a data structure that keeps track of a file's or directory's information, such as where the data is stored and its metadata, such as size and creation timestamp. The \texttt{InodeTable} stores a mapping between an inode and the files' \texttt{InodeEntry}, and stores all the \texttt{InodeEntry} objects. The \texttt{InodeTable} always has at least one entry which is the root directory. This entry has a constant inode value of 0 for simplicity to look up the root directory. With the help of the root directory, all the files lower in the directory hierarchy can be found. The inode of all files and directories other than the root directory has a unique inode greater than 0. The \texttt{InodeTable} is saved on the OWS through such means that it can easily be found, for instance by tagging the image post it with a unique string so it can be found by a search.
+
+To read the content of a known file in a directory has three steps:
+\begin{enumerate}
 	\item The \texttt{Directory} object of the directory provides the inode of the given filename.
 	\item The inode is used to get the \texttt{InodeEntry} from the \texttt{InodeTable}.
-	\item Using the inode entry, the location of the file can be located.
-\end{itemize}
-The location of a file or directory is an ordered list of unique IDs of the image posts on online web services. The data received by downloading these images, decoding them (as described in Subsection~\ref{subsec:file_enc_dec}), and concatenating them, can be read as a file or represented as a \texttt{Directory} object, depending on if the \texttt{InodeEntry} was marked as a file or a directory.
+	\item Using the inode entry, the the file can be located.
+\end{enumerate}
+The location of a file or directory is an ordered list of unique IDs of the image posts on the OWS. The data received by downloading these images, decoding them (as described in Subsection~\ref{subsec:file_enc_dec}), and concatenating them, can be read as a file or represented as a \texttt{Directory} object, depending on if the \texttt{InodeEntry} was marked as a file or a directory. 
 
-FFS does not support all filesystem operations that are implementable through FUSE, instead FFS implements a subset of them. The implemented functions are shown in Table~\ref{tbl:fs_impl_op}. The implemented operations are the most vital operations required for a working filesystem. Operations such as \texttt{chown} provides extended capabilities of the filesystem but these are not required for a proof-of-concept filesystem\textbf{REF FUSE CHEAT SHEET BY PROF.}. The functionality of the filesystem operations implemented by FFS and their implementation details are described in Subsection~\ref{subsec:file_op} .
+As directories only know the filenames inode, the \texttt{Directory} object does not have to be saved again (and thus uploaded) when a file or directory in it is edited, for instance adding data. Only the \texttt{InodeEntry}, and thus the \texttt{InodeTable}, needs to be updated with the new post IDs of the new file or directory. This saves computation time as every request to the OWS takes time.
+
+When a new file or directory is created, it is saved in its parent directory with its filename and an inode. The same inode is used in the inode table to keep track of the file's or directory's inode entry. As shown in Appendix~\ref{app:inode_dir_code}, the inode is represented as a unsigned 32-bit integer. The inode is calculated by adding one to the currently greatest inode. This means that new files and directories will always receive a higher greater inode than the ones currently in the inode table. This naïve approach to inode generation does not take in to account that there might be an available inode less than the greatest inode in the inode table (for instance, due to deletion of a previously created file). However, this inode generation approach is fast and will not be a problem until the integer overflows. As the inode is represented using a 32-bit integer, FFS would need to have saved over four billion files before the inode value would overflow. This scenario is not in the scope of this proof-of-concept filesystem.
+
+FFS does not support all filesystem operations that are implementable through FUSE, instead FFS implements a subset of them. The implemented functions are shown in Table~\ref{tbl:fs_impl_op}. The implemented operations are the most vital operations required for a working filesystem\,\cite{kuenningCS135FUSEDocumentation2010}. Operations such as \texttt{chown} provides extended capabilities of the filesystem but these are not required for a proof-of-concept filesystem. The functionality of the filesystem operations implemented by FFS and their implementation details are described in Subsection~\ref{subsec:file_op}. A file, directory or the inode table has to be uploaded to the OWS when it is modified to save its current information. As it takes time to make requests to the OWS, FFS is created to make as few requests as possible while still saving the data required. Therefor, only the directory and/or file affected by a change is uploaded to the system, while the ones unaffected can remain the same. The inode table has to be updated with every change of a file or directory as it contains the location of the file or directory.
 
 \begin{table}[!ht]
 	\begin{center}
@@ -28,25 +34,25 @@ FFS does not support all filesystem operations that are implementable through FU
 		\begin{tabular}{| c | c |}
 			
 			\hline
-			\textbf{Filesystem operation} 	& \textbf{Implemented}\\
+			\textbf{Filesystem operation} 	& \textbf{Implemented by FFS}\\
 			\hline
 			\hline
-			\texttt{getattr} & Yes\\
-			\texttt{fgetattr} & Yes\\
+			\texttt{create} & Yes\\
+			\texttt{mkdir} & Yes\\
 			\texttt{read} & Yes\\
 			\texttt{readdir} & Yes\\
 			\texttt{write} & Yes\\
-			\texttt{create} & Yes\\
-			\texttt{mkdir} & Yes\\
-			\texttt{unlink} & Yes\\
-			\texttt{rmdir} & Yes\\
 			\texttt{rename} & Yes\\
 			\texttt{truncate} & Yes\\
 			\texttt{ftruncate} & Yes\\
+			\texttt{unlink} & Yes\\
+			\texttt{rmdir} & Yes\\
+			\texttt{getattr} & Yes\\
+			\texttt{fgetattr} & Yes\\
 			\texttt{statfs} & Yes\\
 			\texttt{access} & Yes\\
-			\texttt{flush} & Yes\\
 			\texttt{utimens} & Yes\\
+			\texttt{flush} & No\\
 			\texttt{readlink} & No\\
 			\texttt{opendir} & No\\
 			\texttt{symlink} & No\\
@@ -72,14 +78,125 @@ FFS does not support all filesystem operations that are implementable through FU
 	\end{center}
 \end{table}
 
+\subsection{Cache}
+FFS implements a simple cache for the content downloaded. The cache consists of two data structures: 
+\begin{itemize}
+	\item a Cache Map providing a mapping between a post ID and its image data, and
+	\item a Cache Queue consisting of a queue keeping track of the cached post IDs
+\end{itemize}
+The cache stores a maximum of 20 image posts, and each image cannot be bigger than \SI{5}{\mega\byte}. These constrains are set so that the memory used by the program does not become to large. Each time a image is uploaded or downloaded, it is added to the Cache Map with its post ID as the key. The post ID is also added to the beginning of the Cache Queue. If the Cache Queue is too big, the last element of the queue is removed. When a file or directory is removed, all its cached data is also removed.
+
+Before a post with a specified post ID is downloaded from the OWS, the cache is checked if it is storing the post ID. If it is, the stored image is returned. Otherwise, the download process continues by downloading the image from the OWS. When the thesis mentions that a file or directory is downloaded, it is implied that the cache is also checked and the data is possibly returned by the cache instead of requiring to download the data from teh OWS.
+
+FFS also caches the root directory and the inode table separately. As both of these data structures are used in many of the filesystem operations, it is important that they can be accessed quickly and not be removed from the cache. Their cache entries are updated when the files are uploaded to the OWS.
+
 \subsection{Encoding and decoding objects}
 \label{subsec:file_enc_dec}
-Objects that FFS store, and therefore also encode and decode, are: files, directories and the inode table. All of these objects are stored on online web services using images. The inode table and the directories are represented as C++ objects in memory, but are serialized into a binary representation during runtime before encoded into images. The files saved to FFS are also read in to memory in a binary format before being encoded and uploaded to the online web services.
+Objects that FFS store, and therefore also encode and decode, are: files, directories and the inode table. All of these objects are stored on the OWS using images. The inode table and the directories are represented as C++ objects in memory, but are serialized into a binary representation during runtime before encoded into images. The files saved to FFS are also read in to memory in a binary format before being encoded and uploaded to the OWS.
 
-All FFS images are encoded in the same way, using a defined header in the beginning to inform the decoder of, among other things, the size of the encoded data. The decoder expects the header and will return an error if it is not correct. Further, the \texttt{Directory}, \texttt{InodeTable}, and \texttt{InodeEntry} classes are serialized into a binary format before they are uploaded to online web services. The binary data can be deserialized into the same object at a later time. A detailed description of these binary formats is described in Appendix~\ref{app:binary_rep}.
+All FFS images are encoded in the same way, using a defined header in the beginning to inform the decoder of, among other things, the size of the encoded data. The decoder expects the header and will return an error if it is not correct. Further, the \texttt{Directory}, \texttt{InodeTable}, and \texttt{InodeEntry} classes are serialized into a binary format before they are uploaded to the OWS. The binary data can be deserialized into the same object at a later time. A detailed description of these binary formats is described in Appendix~\ref{app:binary_rep}.
+
+\textbf{MENTION ENCRYPTION HERE}
+% TODO: Encrytpion details
 
 
-\subsection{Implemented filesystem operation}
+\textbf{DESCRIBE OWS HERE}
+% TODO: Describe the OWS here
+
+
+\subsection{Implemented filesystem operations}
 \label{subsec:file_op}
+Following is a detailed description of all the FUSE operations implemented by FFS, and how they are implemented by FFS. Further explanations can be found in \,\cite{kuenningCS135FUSEDocumentation2010}. 
+
+The path of a file is sometimes provided for the filesystem operation and traversed by FFS to understand the requested location. An example path is \texttt{/foo/bar/buz.txt} or \texttt{/foo/bar/baz/}. A path is traversed like the following pseudo code:
+\begin{lstlisting}[language=python, caption={Pseudocode of traversing a given path, returning the \texttt{Directory} and the filename}, label=lst:traverse_path,breaklines=true]
+# Traverse a given path and return the parent directory object
+#  and filename of the path
+traverse_path(path) -> (Directory, string):
+	# Fetches inode table from the OWS
+	inode_table := get_inode_table()
+	
+	split_path := path.split("/")
+	# The filename could be either the name of a file 
+	#  or the name of a directory
+	filename := split_path.last
+	dirs := split_path.remove_last()
+
+	# Get the root dir from cache
+	curr_dir = cache.get_root_dir()
+
+	# While there are still directories to traverse,
+	#  get the next directory in the list from current
+	#  directory
+	while(!dirs.empty())
+		dir_name := dirs.pop_first()
+		inode := curr_dir.inode_of(filename=dir_name)
+		inode_entry = inode_table.entry_of(inode=inode)
+		# Download the image posts defined by the 
+		#  post IDs in the inode entry
+		curr_dir = download_as_dir(inode_entry)
+	
+	return (curr_dir, filename)
+
+\end{lstlisting}
+By traversing a path, FFS has to fetch all parent directories in the hierarchy. The file or directory with the filename is not fetched during while traversing the path, as it might not be necessary for the operation. It is implied that all operations that work with a path has to download all parent directories of the path. However, remember that they could be cached and therefore not required to be downloaded from the OWS.
+
+It is implied that after every operation that modifies the inode table, the inode table is uploaded to the OWS and cached. Therefore, it can be assumed that the inode table is always up to date in memory and on the OWS as long as there are not multiple FFS instances working with the same OWS account at the same time. This scenario has undefined behavior. 
+
+\subsubsection{create}
+This operation creates an empty file in the filesystem given a path. The file not uploaded to the OWS. A new entry is added to the parent directory with the filename and a generated inode. An inode entry is also created in the inode table, representing this empty file. As the parent directory is modified, it is uploaded to the OWS, and the old versions of it on the OWS is deleted.
+
+\subsubsection{mkdir}
+This operation creates an empty directory in the filesystem given a path. The directory, similar to \textt{create}, is not uploaded to the OWS. The parent directory is modified so it is uploaded to the OWS, and the old versions of them are deleted on the OWS.
+
+\subsubsection{read}
+This operation reads a number of bytes, starting from a set offset, from the file specified by the path. The data is read into a provided buffer. The full file is downloaded and read into memory, even if just a small part of the file is requested. The file is also cached so that subsequential requests for the same file are faster. 
+
+\subsubsection{readdir}
+This operation reads the filenames of the directory specified by path. Includes all filenames in the directory, and the special \textt{"."} and \textt{".."} directories. All directories in the path has to be downloaded.
+
+\subsubsection{write}
+This operation writes a number of bytes, starting at the provided offset, to the existing file at the provided path. The current file is read in to memory, and all the data until the offset is written to a new buffer. The new data is then appended to the new buffer. The data in the buffer is then uploaded to the OWS as the new file, and the old posts are removed from the OWS. As the inode stays the same, only the inode table has to be updated with the new post IDs. The parent directory does not have to modified. 
+
+\subsubsection{rename}
+This operation renames a file or directory to a new path. The current parent directory is downloaded and the inode of the entry for the old filename is fetched. The old filename entry is then removed from the old parent directory. The new parent directory is downloaded, and an entry with the new filename and the same inode is inserted. Both the old parent directory and the new parent directory are uploaded to the OWS, and the old versions of them are removed from the OWS. The inode table is updated with the new post IDs of the directories. Following, the inode table is updated in the OWS.
+
+The new path could be in the same directory as the file or directory currently is in. This will not affect the process mentioned above.
+
+\subsubsection{truncate}
+This operation truncates or extends the file in the given path, to the provided size $S$ . The full current file is downloaded into memory. The data of the current file is read into a new buffer until either the file is fully read, or until $S$ bytes have been read. If the current files size is smaller than $S$, the remaining amount of bytes is added as the NULL character. The data of the buffer is then used to create a new file in the filesystem. Only the inode table has to be updated as the inode remains the same as the file had before the operation.
+
+\subsubsection{ftruncate}
+This operation is the same as \texttt{truncate}, but is called from a user program context. \texttt{ftruncate} simply calls \texttt{truncate} and returns whatever \texttt{truncate} returns.
+
+\subsubsection{unlink}
+This operation removes a file given the filepath. This is done by first reading the inode from the parent directory, and then deleting the entry for the file in the parent directory. The inode is then used to fetch the inode entry of the file, and its post IDs, after which the entry of the inode in the inode table is removed. The post IDs are used to remove the file from the OWS. The last step is not necessary for a working filesystem, however to save space on the OWS, this is done. If the OWS would permit unlimited images and sizes, this step could be omitted to save time.
+
+\subsubsection{rmdir}
+Similar to \texttt{unlink}, this removes the directory at the path. To save computation time, the subdirectories and files inside the directory are not removed. Instead, only the directory's image posts are removed from the OWS and the inode table. The subdirectories and files still have entries in the inode table and their images still exists on the OWS. However, as the directory's entry is removed from its parent, and there is no way to access a file or directory through its inode, there is no way to access these files or directories.
+
+\subsubsection{getattr}
+This operations returns attributes about a file or directory given a path. This includes permissions, number of entries (if the provided path points to a directory), and a few timestamps. However, as mentioned previously, FFS does not implement all features, such as permissions. Instead of keeping track of a file's or directory's permissions, all calls to valid path will return full read, write, and execute permissions for everyone. However, timestamps for last time accessed, time created, and last time modified are stored in FFS. The file or directory pointed to by the path does not need to be downloaded, all the metadata that FFS stores is accessible through the inode entry in the inode table.
+
+\subsubsection{fgetattr}
+This operation is the same as \texttt{getattr}, but is called from a user program context. \texttt{fgetattr} simply calls \texttt{getattr} and returns whatever \texttt{getattr} returns.
+
+\subsubsection{statfs}
+This operation returns metadata information about FFS. This includes the amount of free blocks, the maximum filename size, and the filesystem ID. The operation has a short computation time as it does not have to download or upload any files.
+
+\subsubsection{access}
+This operation, given a path, returns wether or not the path can be accessed. As long as the path is valid, this always returns that it can be accessed.
+
+\subsubsection{utimens}
+This operation updates the last created timestamp and/or the last modified timestamp of the file or directory at the given path. The file or directory does not have to be downloaded. However, the inode entry for the file's or directory's inode is updated with the new timestamps if they are newer than the previous timestamps but not greater than the current time since epoch.
+
+\subsection{Unimplemented filesystem operations}
+\textbf{DESCRIBE FUNCTIONALITY OF UNIMPLEMENTED OPERATIONS (AND WHY THEY ARE NOT NEEDED?)}
+% TODO: ^
+
+\subsection{Web services}
+\textbf{DESCRIBE HOW FLICKR IS USED. DESCRIBE PROBLEM WITH TWITTER}
+% TODO: ^
+
 % As a deniable filesystem, you should not be able to gain any information about the filesystem without the correct credentials. Using incorrect credentials, the filesystem will just show an empty filesystem meaning that the adversary will not know wether the credentials provided were correct and that the filesystem is empty, or if the credentials were incorrect. Only when the correct credentials are provided will FFS show the filesystem contents of the user.
 

@@ -2,6 +2,10 @@
 \chapter{Directory, InodeTable and InodeEntry class and attributes representation}
 \label{app:inode_dir_code}
 \begin{lstlisting}[language=c++, caption={The attributes classes representing directories and the inode table in FFS}, label=lst:dir_itable_classes,breaklines=true]
+
+// inode_id is an unsigned 32-bit integer
+#typedef inode_id uint32_t
+
 /**
 * @brief Describes a directory in FFS. Keeps track of the filename and inode of each file
 */

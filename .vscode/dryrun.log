@@ -1,0 +1,5 @@
+make --dry-run --always-make --keep-going --print-directory
+make: Entering directory `/Users/glenn/Documents/KTH/CalPoly/Thesis/doc'
+mkdir out
+make: Leaving directory `/Users/glenn/Documents/KTH/CalPoly/Thesis/doc'
+ 

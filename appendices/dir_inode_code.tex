@@ -1,7 +1,6 @@
-\appendix
 \renewcommand{\chaptermark}[1]{\markboth{Appendix \thechapter\relax:\thinspace\relax#1}{}}
-\label{app:inode_dir_code}
 \chapter{Directory, InodeTable and InodeEntry class and attributes representation}
+\label{app:inode_dir_code}
 \begin{lstlisting}[language=c++, caption={The attributes classes representing directories and the inode table in FFS}, label=lst:dir_itable_classes,breaklines=true]
 /**
 * @brief Describes a directory in FFS. Keeps track of the filename and inode of each file

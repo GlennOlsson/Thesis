@@ -1442,19 +1442,21 @@
 \immediate\write\jsonfile{"National Subject Categories": "\@nationalsubjectcategories",
 }
 \fi
-% \ifx\@hostorganization\@empty\relax\else Host organization: \@hostorganization\\\fi
-% "\pageref{pg:lastPageofPreface},\pageref{pg:lastPageofMainmatter}" \@charrb,
+%\ifx\@hostorganization\@empty\relax
+%\else Host organization: \@hostorganization\\
+%\fi
+%"\pageref{pg:lastPageofPreface},\pageref%{pg:lastPageofMainmatter}" \@charrb,
 \immediate\write\jsonfile{"Other information": \@charlb"Year": "\the\year", "Number of pages": 
     "\getpagerefnumber{pg:lastPageofPreface},\getpagerefnumber{pg:lastPageofMainmatter}" \@charrb,
 }
 \immediate\write\jsonfile{"Series": \@charlb
     \ifx\@thesisSeries\@empty\relax,
-        \else
-        	"Title of series": "\@thesisSeries"
-        	\ifx\@thesisSeriesNumber\@empty\relax
-            \else
-            , "No. in series": "\@thesisSeriesNumber"
-             \fi
+    \else
+      "Title of series": "\@thesisSeries"
+      \ifx\@thesisSeriesNumber\@empty\relax
+      \else
+        , "No. in series": "\@thesisSeriesNumber"
+      \fi
     \fi
     \@charrb,
 }

@@ -92,17 +92,15 @@ FFS also caches the root directory and the inode table separately. As both of th
 
 \subsection{Encoding and decoding objects}
 \label{subsec:file_enc_dec}
+% TODO: Add figure describing the FFS encoding and decoding. Maybe_
+% File --> FFS ENCODER --> FFS Encoded File --> OWS
+% OWS --> FFS Encoded File --> FFS DECODER --> File
 Objects that FFS store, and therefore also encode and decode, are: files, directories and the inode table. All of these objects are stored on the OWS using images. The inode table and the directories are represented as C++ objects in memory, but are serialized into a binary representation during runtime before encoded into images. The files saved to FFS are also read in to memory in a binary format before being encoded and uploaded to the OWS.
 
 All FFS images are encoded in the same way, using a defined header in the beginning to inform the decoder of, among other things, the size of the encoded data. The decoder expects the header and will return an error if it is not correct. Further, the \texttt{Directory}, \texttt{InodeTable}, and \texttt{InodeEntry} classes are serialized into a binary format before they are uploaded to the OWS. The binary data can be deserialized into the same object at a later time. A detailed description of these binary formats is described in Appendix~\ref{app:binary_rep}.
 
 \textbf{MENTION ENCRYPTION HERE}
 % TODO: Encrytpion details
-
-
-\textbf{DESCRIBE OWS HERE}
-% TODO: Describe the OWS here
-
 
 \subsection{Implemented filesystem operations}
 \label{subsec:file_op}
@@ -147,13 +145,13 @@ It is implied that after every operation that modifies the inode table, the inod
 This operation creates an empty file in the filesystem given a path. The file not uploaded to the OWS. A new entry is added to the parent directory with the filename and a generated inode. An inode entry is also created in the inode table, representing this empty file. As the parent directory is modified, it is uploaded to the OWS, and the old versions of it on the OWS is deleted.
 
 \subsubsection{mkdir}
-This operation creates an empty directory in the filesystem given a path. The directory, similar to \textt{create}, is not uploaded to the OWS. The parent directory is modified so it is uploaded to the OWS, and the old versions of them are deleted on the OWS.
+This operation creates an empty directory in the filesystem given a path. The directory, similar to \texttt{create}, is not uploaded to the OWS. The parent directory is modified so it is uploaded to the OWS, and the old versions of them are deleted on the OWS.
 
 \subsubsection{read}
 This operation reads a number of bytes, starting from a set offset, from the file specified by the path. The data is read into a provided buffer. The full file is downloaded and read into memory, even if just a small part of the file is requested. The file is also cached so that subsequential requests for the same file are faster. 
 
 \subsubsection{readdir}
-This operation reads the filenames of the directory specified by path. Includes all filenames in the directory, and the special \textt{"."} and \textt{".."} directories. All directories in the path has to be downloaded.
+This operation reads the filenames of the directory specified by path. Includes all filenames in the directory, and the special \texttt{"."} and \texttt{".."} directories. All directories in the path has to be downloaded.
 
 \subsubsection{write}
 This operation writes a number of bytes, starting at the provided offset, to the existing file at the provided path. The current file is read in to memory, and all the data until the offset is written to a new buffer. The new data is then appended to the new buffer. The data in the buffer is then uploaded to the OWS as the new file, and the old posts are removed from the OWS. As the inode stays the same, only the inode table has to be updated with the new post IDs. The parent directory does not have to modified. 
@@ -194,9 +192,18 @@ This operation updates the last created timestamp, the last modified timestamp, 
 \textbf{DESCRIBE FUNCTIONALITY OF UNIMPLEMENTED OPERATIONS (AND WHY THEY ARE NOT NEEDED?)}
 % TODO: ^
 
-\subsection{Web services}
-\textbf{DESCRIBE HOW FLICKR IS USED. DESCRIBE PROBLEM WITH TWITTER}
-% TODO: ^
+\subsection{Used Online web services}
+As FFS is a proof-of-concept filesystem, it only uses one OWS as its storage medium. However, for a production filesystem, multiple OWSs would be preferable. This would enable features such as replication over multiple OWSs in case one would stop working.
 
-% As a deniable filesystem, you should not be able to gain any information about the filesystem without the correct credentials. Using incorrect credentials, the filesystem will just show an empty filesystem meaning that the adversary will not know wether the credentials provided were correct and that the filesystem is empty, or if the credentials were incorrect. Only when the correct credentials are provided will FFS show the filesystem contents of the user.
+The initial intention of FFS was to use Twitter as the OWS. Initial research found that it was possible to upload a file and download the same file without any data loss. However, it was later found that this was not a reliable conclusion. Some images uploaded to Twitter were converted to another image format when downloaded. Other images where compressed or recoded which led to data loss when downloading the image. As the decoder of FFS images relies on a specific binary representation of the image, this meant that the images could not be decoded into the previously uploaded file. 
 
+However, as Flickr saves the original version of the uploaded image, it can be used to download the same image as was uploaded. This also means that a file that is encoded into a FFS-encoded image can be uploaded, downloaded, and decoded into the same file as before. 
+
+As mentioned previously, Flickr provides the ability to tag an image with a number of custom tags. Every tag is a string that the user defines. By tagging the inode table
+
+Flickr provides an extensive free API for non-commercial use. However, FFS only uses a few of the provided capabilities. FFS needs:
+\begin{itemize}
+	\item To be able to upload an image with a defined tag and return a post ID,
+	\item To be able to search for a tag of an image and return an ID,
+	\item To be able to f
+\end{itemize}

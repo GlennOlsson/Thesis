@@ -52,16 +52,15 @@ FFS does not support all filesystem operations that are implementable through FU
 			\texttt{statfs} & Yes\\
 			\texttt{access} & Yes\\
 			\texttt{utimens} & Yes\\
-			\texttt{flush} & No\\
-			\texttt{readlink} & No\\
+			\texttt{open} & No\\
 			\texttt{opendir} & No\\
+			\texttt{release} & No\\
+			\texttt{releasedir} & No\\
+			\texttt{readlink} & No\\
 			\texttt{symlink} & No\\
 			\texttt{link} & No\\
 			\texttt{chmod} & No\\
 			\texttt{chown} & No\\
-			\texttt{open} & No\\
-			\texttt{release} & No\\
-			\texttt{released} & No\\
 			\texttt{fsync} & No\\
 			\texttt{fsyncdir} & No\\
 			\texttt{lock} & No\\
@@ -70,6 +69,7 @@ FFS does not support all filesystem operations that are implementable through FU
 			\texttt{getxattr} & No\\
 			\texttt{listxatt} & No\\
 			\texttt{ioctl} & No\\
+			\texttt{flush} & No\\
 			\texttt{poll} & No\\
 			\hline
 
@@ -95,9 +95,17 @@ FFS also caches the root directory and the inode table separately. As both of th
 % TODO: Add figure describing the FFS encoding and decoding. Maybe_
 % File --> FFS ENCODER --> FFS Encoded File --> OWS
 % OWS --> FFS Encoded File --> FFS DECODER --> File
-Objects that FFS store, and therefore also encode and decode, are: files, directories and the inode table. All of these objects are stored on the OWS using images. The inode table and the directories are represented as C++ objects in memory, but are serialized into a binary representation during runtime before encoded into images. The files saved to FFS are also read in to memory in a binary format before being encoded and uploaded to the OWS.
+Objects that FFS store, and therefore also encode and decode, are: files, directories and the inode table. All of these objects are stored on the OWS using images. The inode table and the directories are represented as C++ objects in memory, but are serialized into a binary representation during runtime before encoded into images. The files saved to FFS are also read in to memory in a binary format before being encoded and uploaded to the OWS. Figure~\ref{fig:file_enc_dec} describes the encoder and decoder for files saved in FFS.
 
 All FFS images are encoded in the same way, using a defined header in the beginning to inform the decoder of, among other things, the size of the encoded data. The decoder expects the header and will return an error if it is not correct. Further, the \texttt{Directory}, \texttt{InodeTable}, and \texttt{InodeEntry} classes are serialized into a binary format before they are uploaded to the OWS. The binary data can be deserialized into the same object at a later time. A detailed description of these binary formats is described in Appendix~\ref{app:binary_rep}.
+
+\begin{figure}[!ht]
+	\begin{center}
+	  \includegraphics[width=0.8\textwidth]{figures/encoder_decoder.png}
+	\end{center}
+	\caption{Simple description of the functionality of the FFS encoder and decoder}
+	\label{fig:file_enc_dec}
+\end{figure}
 
 \textbf{MENTION ENCRYPTION HERE}
 % TODO: Encrytpion details
@@ -188,9 +196,8 @@ This operation, given a path, returns wether or not the path can be accessed. As
 \subsubsection{utimens}
 This operation updates the last created timestamp, the last modified timestamp, or both, of the file or directory at the given path. The file or directory does not have to be downloaded. However, the inode entry for the file's or directory's inode is updated with the new timestamps if they are newer than the previous timestamps but not greater than the current time since epoch.
 
-\subsection{Unimplemented filesystem operations}
-\textbf{DESCRIBE FUNCTIONALITY OF UNIMPLEMENTED OPERATIONS (AND WHY THEY ARE NOT NEEDED?)}
-% TODO: ^
+% \subsection{Unimplemented filesystem operations}
+% FIXME: Is this needed? ^ 
 
 \subsection{Used Online web services}
 As FFS is a proof-of-concept filesystem, it only uses one OWS as its storage medium. However, for a production filesystem, multiple OWSs would be preferable. This would enable features such as replication over multiple OWSs in case one would stop working.
@@ -199,11 +206,22 @@ The initial intention of FFS was to use Twitter as the OWS. Initial research fou
 
 However, as Flickr saves the original version of the uploaded image, it can be used to download the same image as was uploaded. This also means that a file that is encoded into a FFS-encoded image can be uploaded, downloaded, and decoded into the same file as before. 
 
-As mentioned previously, Flickr provides the ability to tag an image with a number of custom tags. Every tag is a string that the user defines. By tagging the inode table
+As mentioned previously, Flickr provides the ability to tag an image with a number of custom tags. Every tag is a string that the user defines. By tagging the inode table with a unique string, and deleting old inode table when it is updated, we can find the inode table easily. 
 
-Flickr provides an extensive free API for non-commercial use. However, FFS only uses a few of the provided capabilities. FFS needs:
+Flickr provides an extensive free REST API for non-commercial use. A user can create applications and generate access tokens for the application. These application tokens are later used to request tokens from users who authenticate using Flickr's web interface, and allow the application to do requests for the user. The application will then receive access tokens for the user, which are used to authenticate with the API for the API calls that require authentication.
+
+While the API is extensive in its functionality, FFS only uses a few of the provided capabilities. FFS needs:
 \begin{itemize}
 	\item To be able to upload an image with a defined tag and return a post ID,
-	\item To be able to search for a tag of an image and return an ID,
-	\item To be able to f
+	\item To be able to search for a tag of an image and return a post ID,
+	\item To be able to get the original image given a post ID, and
+	\item To be able to remove an image given a post ID.
 \end{itemize}
+All these features are supported by the Flickr API. Further, when searching for an image with a specific tag, the owner of the image post can also be specified. This helps FFS avoid finding some other user's image that might be posted with the same tag. 
+
+The request to get the original image given a post consists of two requests:
+\begin{itemize}
+	\item Getting the URL to the original image using the post ID
+	\item Downloading the image at the URL received from the previous request.
+\end{itemize}
+The second request does not require authentication as the previous request returns a public URL to the image. 

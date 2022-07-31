@@ -79,25 +79,25 @@ FFS does not support all filesystem operations that are implementable through FU
 \end{table}
 
 \subsection{Cache}
-FFS implements a simple cache for the content downloaded. The cache consists of two data structures: 
+FFS implements a simple cache for the downloaded content. The cache consists of two data structures: 
 \begin{itemize}
 	\item a Cache Map providing a mapping between a post ID and its image data, and
-	\item a Cache Queue consisting of a queue keeping track of the cached post IDs
+	\item a Cache Queue - a queue keeping track of the cached post IDs.
 \end{itemize}
 The cache stores a maximum of 20 image posts, and each image cannot be bigger than \SI{5}{\mega\byte}. These constrains are set so that the memory used by the program does not become to large. Each time a image is uploaded or downloaded, it is added to the Cache Map with its post ID as the key. The post ID is also added to the beginning of the Cache Queue. If the Cache Queue is too big, the last element of the queue is removed. When a file or directory is removed, all its cached data is also removed.
 
-Before a post with a specified post ID is downloaded from the OWS, the cache is checked if it is storing the post ID. If it is, the stored image is returned. Otherwise, the download process continues by downloading the image from the OWS. When the thesis mentions that a file or directory is downloaded, it is implied that the cache is also checked and the data is possibly returned by the cache instead of requiring to download the data from teh OWS.
+Before a post with a specified post ID is downloaded from the OWS, the cache is checked to see if it is storing this post ID. If it is, the stored image is returned. Otherwise, the download process continues by downloading the image from the OWS. When the thesis states that a file or directory is downloaded, it is implied that the cache is also checked and the data is possibly returned by the cache instead of requiring to download the data from the OWS.
 
-FFS also caches the root directory and the inode table separately. As both of these data structures are used in many of the filesystem operations, it is important that they can be accessed quickly and not be removed from the cache. Their cache entries are updated when the files are uploaded to the OWS.
+FFS separately caches both the root directory and the inode table. As both of these data structures are used in many of the filesystem operations, it is important that they can be accessed quickly and not be removed from the cache. Their cache entries are updated when the files are uploaded to the OWS.
 
 \subsection{Encoding and decoding objects}
 \label{subsec:file_enc_dec}
 % TODO: Add figure describing the FFS encoding and decoding. Maybe_
 % File --> FFS ENCODER --> FFS Encoded File --> OWS
 % OWS --> FFS Encoded File --> FFS DECODER --> File
-Objects that FFS store, and therefore also encode and decode, are: files, directories and the inode table. All of these objects are stored on the OWS using images. The inode table and the directories are represented as C++ objects in memory, but are serialized into a binary representation during runtime before encoded into images. The files saved to FFS are also read in to memory in a binary format before being encoded and uploaded to the OWS. Figure~\ref{fig:file_enc_dec} describes the encoder and decoder for files saved in FFS.
+Objects that FFS stores, and therefore also encodes and decodes, are: files, directories, and the inode table. All of these objects are stored on the OWS using images. The inode table and the directories are represented as C++ objects in memory, but are serialized into a binary representation during runtime before encoded into images. The files saved to FFS are also read in to memory in a binary format before being encoded and uploaded to the OWS. Figure~\ref{fig:file_enc_dec} describes the encoder and decoder for files saved in FFS.
 
-All FFS images are encoded in the same way, using a defined header in the beginning to inform the decoder of, among other things, the size of the encoded data. The decoder expects the header and will return an error if it is not correct. Further, the \texttt{Directory}, \texttt{InodeTable}, and \texttt{InodeEntry} classes are serialized into a binary format before they are uploaded to the OWS. The binary data can be deserialized into the same object at a later time. A detailed description of these binary formats is described in Appendix~\ref{app:binary_rep}.
+All FFS images are encoded in the same way, using a defined header in the beginning to inform the decoder of, among other things, the size of the encoded data. The decoder expects this header and will return an error if it is incorrect. Further, the \texttt{Directory}, \texttt{InodeTable}, and \texttt{InodeEntry} classes are serialized into a binary format before they are uploaded to the OWS. The binary data can be deserialized into the same object at a later time. A detailed description of these binary formats is described in Appendix~\ref{app:binary_rep}.
 
 \begin{figure}[!ht]
 	\begin{center}
@@ -109,6 +109,33 @@ All FFS images are encoded in the same way, using a defined header in the beginn
 
 \textbf{MENTION ENCRYPTION HERE}
 % TODO: Encrytpion details
+
+\subsection{Used Online web services}
+As FFS is a proof-of-concept filesystem, it only uses one OWS as its storage medium. However, for a production filesystem, multiple OWSs would be preferable. This would enable features such as replication over multiple OWSs in case one would stop working.
+
+The initial intention of FFS was to use Twitter as the OWS. Initial research found that it was possible to upload a file and download the same file without any data loss. However, it was later found that this was not a reliable conclusion. Some images uploaded to Twitter were converted to another image format when downloaded. Other images where compressed or recoded which led to data loss when downloading the image. As the decoder of FFS images relies on a specific binary representation of the image, this meant that the images could not be decoded into the previously uploaded file. 
+
+However, as Flickr saves the original version of the uploaded image, it can be used to download the same image as was uploaded. This also means that a file that is encoded into a FFS-encoded image can be uploaded, downloaded, and decoded into the same file as before. 
+
+As mentioned previously, Flickr provides the ability to tag an image with a number of custom tags. Every tag is a string that the user defines. By tagging the inode table with a unique string, and deleting old inode table when it is updated, we can find the inode table easily. 
+
+Flickr provides an extensive free REST API for non-commercial use. A user can create applications and generate access tokens for the application. These application tokens are later used to request tokens from users who authenticate using Flickr's web interface, and allow the application to do requests for the user. The application will then receive access tokens for the user, which are used to authenticate with the API for the API calls that require authentication.
+
+While the API is extensive in its functionality, FFS only uses a few of the provided capabilities. FFS needs:
+\begin{itemize}
+	\item To be able to upload an image with a defined tag and return a post ID,
+	\item To be able to search for a tag of an image and return a post ID,
+	\item To be able to get the original image given a post ID, and
+	\item To be able to remove an image given a post ID.
+\end{itemize}
+All these features are supported by the Flickr API. Further, when searching for an image with a specific tag, the owner of the image post can also be specified. This helps FFS avoid finding some other user's image that might be posted with the same tag. 
+
+The request to get the original image given a post consists of two requests:
+\begin{itemize}
+	\item Getting the URL to the original image using the post ID
+	\item Downloading the image at the URL received from the previous request.
+\end{itemize}
+The second request does not require authentication as the previous request returns a public URL to the image. 
 
 \subsection{Implemented filesystem operations}
 \label{subsec:file_op}
@@ -145,41 +172,45 @@ traverse_path(path) -> (Directory, string):
 	return (curr_dir, filename)
 
 \end{lstlisting}
-By traversing a path, FFS has to fetch all parent directories in the hierarchy. The file or directory with the filename is not fetched during while traversing the path, as it might not be necessary for the operation. It is implied that all operations that work with a path has to download all parent directories of the path. However, remember that they could be cached and therefore not required to be downloaded from the OWS. 
+By traversing a path, FFS has to fetch all parent directories in the hierarchy. The file or directory with the filename is not fetched during while traversing the path, as it might not be necessary for the operation. This implies that all operations that work with a path has to download all parent directories of the path. However, these directories could be cached and therefore not require a download from the OWS. 
 
-It is implied that after every operation that modifies the inode table, the inode table is uploaded to the OWS and cached. Therefore, it can be assumed that the inode table is always up to date in memory and on the OWS as long as there are not multiple FFS instances working with the same OWS account at the same time. This scenario has undefined behavior. 
+This also implies that after every operation that modifies the inode table, the inode table is uploaded to the OWS and cached. Therefore, it is assumed that the inode table is always up to date in memory and on the OWS. This will be true as long as there are not multiple FFS instances working with the same OWS account at the same time. This scenario has undefined behavior as there is no locking implemented for FFS.
+
+All filesystem operations are synchronous unless specified.
 
 \subsubsection{create}
-This operation creates an empty file in the filesystem given a path. The file not uploaded to the OWS. A new entry is added to the parent directory with the filename and a generated inode. An inode entry is also created in the inode table, representing this empty file. As the parent directory is modified, it is uploaded to the OWS, and the old versions of it on the OWS is deleted.
+This operation creates an empty file in the filesystem given a path. The empty file will not be uploaded to the OWS. A new entry is added to the parent directory with the filename and a generated inode. An inode entry is also created in the inode table, representing this empty file. As the parent directory is modified, the modified directory is uploaded to the OWS, and the old versions of this directory on the OWS is deleted.
 
 \subsubsection{mkdir}
-This operation creates an empty directory in the filesystem given a path. The directory, similar to \texttt{create}, is not uploaded to the OWS. The parent directory is modified so it is uploaded to the OWS, and the old versions of them are deleted on the OWS.
+This operation creates an empty directory in the filesystem given a path. The directory, similar to \texttt{create}, is not uploaded to the OWS. The parent directory is modified so it is uploaded to the OWS, and the old versions of the directory is deleted on the OWS.
 
 \subsubsection{read}
 This operation reads a number of bytes, starting from a set offset, from the file specified by the path. The data is read into a provided buffer. The full file is downloaded and read into memory, even if just a small part of the file is requested. The file is also cached so that subsequential requests for the same file are faster. 
 
 \subsubsection{readdir}
-This operation reads the filenames of the directory specified by path. Includes all filenames in the directory, and the special \texttt{"."} and \texttt{".."} directories. All directories in the path has to be downloaded.
+This operation reads the filenames of the directory specified by path. Includes all filenames in the directory, and the special \texttt{"."} and \texttt{".."} directories. All directories in the path have to be downloaded.
 
 \subsubsection{write}
 This operation writes a number of bytes, starting at the provided offset, to the existing file at the provided path. The current file is read in to memory, and all the data until the offset is written to a new buffer. The new data is then appended to the new buffer. The data in the buffer is then uploaded to the OWS as the new file, and the old posts are removed from the OWS. As the inode stays the same, only the inode table has to be updated with the new post IDs. The parent directory does not have to modified. 
 
 \subsubsection{rename}
-This operation renames a file or directory to a new path. The current parent directory is downloaded and the inode of the entry for the old filename is fetched. The old filename entry is then removed from the old parent directory. The new parent directory is downloaded, and an entry with the new filename and the same inode is inserted. Both the old parent directory and the new parent directory are uploaded to the OWS, and the old versions of them are removed from the OWS. The inode table is updated with the new post IDs of the directories. Following, the inode table is updated in the OWS.
+This operation renames a file or directory to a new path. The current parent directory is downloaded and the inode of the entry for the old filename is fetched. The old filename entry is then removed from the old parent directory. The new parent directory is downloaded, and an entry with the new filename and the same inode is inserted. Both the old parent directory and the new parent directory are uploaded to the OWS, and the old versions of them are removed from the OWS. The inode table is updated with the new post IDs of the directories. Following this, the inode table is updated in the OWS.
 
 The new path could be in the same directory as the file or directory currently is in. This will not affect the process mentioned above.
 
 \subsubsection{truncate}
-This operation truncates or extends the file in the given path, to the provided size $S$ . The full current file is downloaded into memory. The data of the current file is read into a new buffer until either the file is fully read, or until $S$ bytes have been read. If the current files size is smaller than $S$, the remaining amount of bytes is added as the NULL character. The data of the buffer is then used to create a new file in the filesystem. Only the inode table has to be updated as the inode remains the same as the file had before the operation.
+This operation truncates or extends the file in the given path, to the provided size $S$ . The full current file is downloaded into memory. The data of the current file is read into a new buffer until either the file is fully read, or until $S$ bytes have been read. If the current file's size is smaller than $S$, the remaining amount of bytes is added as the NULL character. The data of the buffer is then used to create a new file in the filesystem. Only the inode table has to be updated as the inode remains the same as the file had before the operation.
 
 \subsubsection{ftruncate}
 This operation is the same as \texttt{truncate}, but is called from a user program context. \texttt{ftruncate} simply calls \texttt{truncate} and returns whatever \texttt{truncate} returns.
 
 \subsubsection{unlink}
-This operation removes a file given the filepath. This is done by first reading the inode from the parent directory, and then deleting the entry for the file in the parent directory. The inode is then used to fetch the inode entry of the file, and its post IDs, after which the entry of the inode in the inode table is removed. The post IDs are used to remove the file from the OWS. The last step is not necessary for a working filesystem, however to save space on the OWS, this is done. If the OWS would permit unlimited images and sizes, this step could be omitted to save time.
+This operation removes a file given the filepath. This is done by first reading the inode from the parent directory, and then deleting the entry for the file in the parent directory. The inode is then used to fetch the inode entry of the file, and its post IDs, after which the entry of the inode in the inode table is removed. The post IDs are used to remove the file from the OWS. The last step is not necessary for a working filesystem; however, to save space on the OWS, this is done. If the OWS permits unlimited images and sizes, this step could be omitted to save time.
 
 \subsubsection{rmdir}
 Similar to \texttt{unlink}, this removes the directory at the path. To save computation time, the subdirectories and files inside the directory are not removed. Instead, only the directory's image posts are removed from the OWS and the inode table. The subdirectories and files still have entries in the inode table and their images still exists on the OWS. However, as the directory's entry is removed from its parent, and there is no way to access a file or directory through its inode, there is no way to access these files or directories.
+
+% FIXME: Update if implementation to remove these files is made!
 
 \subsubsection{getattr}
 This operations returns attributes about a file or directory given a path. This includes permissions, number of entries (if the provided path points to a directory), and a few timestamps. However, as mentioned previously, FFS does not implement all features, such as permissions. Instead of keeping track of a file's or directory's permissions, all calls to valid path will return full read, write, and execute permissions for everyone. However, timestamps for last time accessed, time created, and last time modified are stored in FFS. The file or directory pointed to by the path does not need to be downloaded, all the metadata that FFS stores is accessible through the inode entry in the inode table.
@@ -188,7 +219,7 @@ This operations returns attributes about a file or directory given a path. This 
 This operation is the same as \texttt{getattr}, but is called from a user program context. \texttt{fgetattr} simply calls \texttt{getattr} and returns whatever \texttt{getattr} returns.
 
 \subsubsection{statfs}
-This operation returns metadata information about FFS. This includes the amount of free blocks, the maximum filename size, and the filesystem ID. The operation has a short computation time as it does not have to download or upload any files.
+This operation returns metadata information about FFS. This includes, among other things, the maximum filename size and the filesystem ID. The operation has a short computation time as it does not have to download or upload any files.
 
 \subsubsection{access}
 This operation, given a path, returns wether or not the path can be accessed. As long as the path is valid, this always returns that it can be accessed.
@@ -199,29 +230,6 @@ This operation updates the last created timestamp, the last modified timestamp, 
 % \subsection{Unimplemented filesystem operations}
 % FIXME: Is this needed? ^ 
 
-\subsection{Used Online web services}
-As FFS is a proof-of-concept filesystem, it only uses one OWS as its storage medium. However, for a production filesystem, multiple OWSs would be preferable. This would enable features such as replication over multiple OWSs in case one would stop working.
-
-The initial intention of FFS was to use Twitter as the OWS. Initial research found that it was possible to upload a file and download the same file without any data loss. However, it was later found that this was not a reliable conclusion. Some images uploaded to Twitter were converted to another image format when downloaded. Other images where compressed or recoded which led to data loss when downloading the image. As the decoder of FFS images relies on a specific binary representation of the image, this meant that the images could not be decoded into the previously uploaded file. 
-
-However, as Flickr saves the original version of the uploaded image, it can be used to download the same image as was uploaded. This also means that a file that is encoded into a FFS-encoded image can be uploaded, downloaded, and decoded into the same file as before. 
-
-As mentioned previously, Flickr provides the ability to tag an image with a number of custom tags. Every tag is a string that the user defines. By tagging the inode table with a unique string, and deleting old inode table when it is updated, we can find the inode table easily. 
-
-Flickr provides an extensive free REST API for non-commercial use. A user can create applications and generate access tokens for the application. These application tokens are later used to request tokens from users who authenticate using Flickr's web interface, and allow the application to do requests for the user. The application will then receive access tokens for the user, which are used to authenticate with the API for the API calls that require authentication.
-
-While the API is extensive in its functionality, FFS only uses a few of the provided capabilities. FFS needs:
-\begin{itemize}
-	\item To be able to upload an image with a defined tag and return a post ID,
-	\item To be able to search for a tag of an image and return a post ID,
-	\item To be able to get the original image given a post ID, and
-	\item To be able to remove an image given a post ID.
-\end{itemize}
-All these features are supported by the Flickr API. Further, when searching for an image with a specific tag, the owner of the image post can also be specified. This helps FFS avoid finding some other user's image that might be posted with the same tag. 
-
-The request to get the original image given a post consists of two requests:
-\begin{itemize}
-	\item Getting the URL to the original image using the post ID
-	\item Downloading the image at the URL received from the previous request.
-\end{itemize}
-The second request does not require authentication as the previous request returns a public URL to the image. 
+\subsection{FFS limitations}
+% TODO: Limitations, both in number of bytes, files etc
+% Also what it lacks, such as filesystem operations and speed(!)

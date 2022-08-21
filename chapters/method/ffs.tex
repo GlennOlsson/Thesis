@@ -210,12 +210,17 @@ This operation reads a number of bytes, starting from a set offset, from the fil
 This operation reads the filenames inside the directory specified by a file handle. The result includes all filenames in the directory, and the special \texttt{"."} and \texttt{".."} directories.
 
 \subsubsection{write}
-This operation writes $s$ bytes, starting at the provided offset $o$, to the existing file at the provided file handle. All the data of the current file is read in to memory. Starting from the offset, the new data overwrites the current data of the file, until $s$ bytes have been written. If $o + s$ is greater than the file's size, the file size is set to $o + s$. If 
-$o + s$ is less than the file's size, the data from position $o + s$ and forward remains the same, and the file size is not modified. The parent directory does not have to modified. 
+This operation writes $s$ bytes, starting at the provided offset $o$, to the existing file at the provided file handle. All the data of the current file is read in to memory. Starting from the offset, the new data overwrites the current data of the file, until $s$ bytes have been written. If $o + s$ is greater than the file's size, the file size is set to $o + s$. If $o + s$ is less than the file's size, the data from position $o + s$ and forward remains the same, and the file size is not modified. See Figure~\ref{fig:write_flow} for a visualization. The parent directory does not have to modified. 
 
 The file and inode table are not updated to the OWS, this occurs instead in the subsequent \texttt{release} call.
 
-\textbf{FIGURE DESCRIBING ABOVE FLOW}
+\begin{figure}[!ht]
+	\begin{center}
+	  \includegraphics[width=1.0\textwidth]{figures/write_flow.png}
+	\end{center}
+	\caption{Visualization of how the write operation handles different offsets.}
+	\label{fig:write_flow}
+\end{figure}
 
 \subsubsection{rename}
 This operation renames a file or directory to a new path. Both the old path and the new path have to be traversed to located the parent directories and the file or directory to rename. The file or directory entry in the old parent directory is removed, and the old parent directory is updated to the OWS. A new entry is created in the new parent directory, with the new filename. The new parent directory is updated to the OWS. The inode entry of the renamed file or directory does not have to be modified. However, as both the old parent directories and the new parent directory are updated in the OWS, their inode entries need to be updated with the new posts. The inode table is updated to the OWS and the old table is removed from the OWS. The old posts associated with the old parent directory and the new parent directory are removed from the OWS.

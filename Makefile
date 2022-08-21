@@ -12,10 +12,12 @@ out/calpoly: | out
 kth: | out/kth
 	-latexmk -pdf -f -jobname=out/kth/kth -interaction=nonstopmode kth.tex
 	mv out/kth/kth.pdf .
+	notify Compiled KTH
 
 calpoly: | out/calpoly
 	-latexmk -pdf -jobname=out/calpoly/calpoly -interaction=nonstopmode calpoly.tex
 	mv out/calpoly/calpoly.pdf .
+	notify Compiled KTH
 
 all: kth calpoly
 

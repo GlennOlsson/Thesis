@@ -7,7 +7,7 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 
 # This program built for i386-apple-darwin11.3.0
 
-# Make data base, printed on Sat Jul 30 10:39:52 2022
+# Make data base, printed on Sun Aug 21 09:58:36 2022
 
 # Variables
 
@@ -48,13 +48,13 @@ ANDROID_HOME = /Users/glenn/Library/Android/sdk
 # default
 .FEATURES := target-specific order-only second-expansion else-if archives jobserver check-symlink
 # environment
-SSH_AUTH_SOCK = /private/tmp/com.apple.launchd.jAvZvteedH/Listeners
+SSH_AUTH_SOCK = /private/tmp/com.apple.launchd.vI0rExYlpr/Listeners
 # automatic
 %F = $(notdir $%)
 # environment
 GOBIN = /Users/glenn/go/bin
 # environment
-DISPLAY = /private/tmp/com.apple.launchd.yjxQndbUTM/org.macosforge.xquartz:0
+DISPLAY = /private/tmp/com.apple.launchd.DOxPGpFTeb/org.macosforge.xquartz:0
 # environment
 MODUS_KEYS_DIR = /Users/glenn/Documents/KTH/Mjukvarukonstruktion, DD1393/keys
 # environment
@@ -70,7 +70,7 @@ MAKEFILEPATH = $(shell /usr/bin/xcode-select -print-path 2>/dev/null || echo /De
 # environment
 VSCODE_CLI = 1
 # environment
-VSCODE_CODE_CACHE_PATH = /Users/glenn/Library/Application Support/Code/CachedData/3b889b090b5ad5793f524b5d1d39fda662b96a2a
+VSCODE_CODE_CACHE_PATH = /Users/glenn/Library/Application Support/Code/CachedData/6d9b74a70ca9c7733b29f0456fd8195364076dda
 # environment
 LOGNAME = glenn
 # environment
@@ -100,7 +100,7 @@ USER = glenn
 # makefile
 .DEFAULT_GOAL := out/
 # environment
-TERM_SESSION_ID = CE1502B3-D8CA-4C95-92B2-2F8E4D65399C
+TERM_SESSION_ID = F32B2317-0449-4930-A859-09C67FCE0B35
 # environment
 CLASSPATH = /Users/glenn/Documents/KTH/INDA-asse/junit-4.12.jar:/Users/glenn/Documents/KTH/INDA-asse/hamcrest-core-1.3.jar:.
 # automatic
@@ -116,7 +116,7 @@ TMPDIR = /var/folders/sm/h2597q853wdbtzkb5j5_px1m0000gn/T/
 # automatic
 *F = $(notdir $*)
 # environment
-VSCODE_IPC_HOOK = /Users/glenn/Library/Application Support/Code/1.69.2-main.sock
+VSCODE_IPC_HOOK = /Users/glenn/Library/Application Support/Code/1.70.1-main.sock
 # environment
 MallocNanoZone = 0
 # makefile
@@ -126,9 +126,9 @@ MFLAGS = -Rrqp
 # automatic
 *D = $(patsubst %/,%,$(dir $*))
 # environment
-TERM_PROGRAM_VERSION = 444
+TERM_PROGRAM_VERSION = 445
 # environment
-XPC_SERVICE_NAME = application.com.microsoft.VSCode.8731421921.8731421927.D727AAC7-4FC1-497E-B21B-9DA2CE879F99
+XPC_SERVICE_NAME = application.com.microsoft.VSCode.8734626122.8734626128.740709EF-014A-4439-8211-0F222F7A35EB
 # automatic
 +D = $(patsubst %/,%,$(dir $+))
 # environment
@@ -162,7 +162,7 @@ LANG = C
 # environment
 TERM = xterm-256color
 # environment
-VSCODE_PID = 49293
+VSCODE_PID = 2767
 # variable set hash-table stats:
 # Load=76/1024=7%, Rehash=0, Collisions=1/102=1%
 
@@ -184,7 +184,7 @@ VSCODE_PID = 49293
 
 out/kth: | out
 #  Implicit rule search has not been done.
-#  Last modified 2022-07-15 11:03:32
+#  Last modified 2022-08-20 13:22:08
 #  File has been updated.
 #  Successfully updated.
 # variable set hash-table stats:
@@ -219,7 +219,7 @@ all: kth calpoly
 # Not a target:
 Makefile:
 #  Implicit rule search has been done.
-#  Last modified 2022-04-25 05:20:07
+#  Last modified 2022-08-20 13:21:47
 #  File has been updated.
 #  Successfully updated.
 # variable set hash-table stats:
@@ -236,7 +236,7 @@ out/:
 # Not a target:
 out:
 #  Implicit rule search has been done.
-#  Last modified 2022-07-15 11:03:39
+#  Last modified 2022-08-20 13:22:08
 #  File has been updated.
 #  Successfully updated.
 # variable set hash-table stats:
@@ -246,9 +246,10 @@ calpoly: | out/calpoly
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
-#  commands to execute (from `Makefile', line 17):
+#  commands to execute (from `Makefile', line 18):
 	-latexmk -pdf -jobname=out/calpoly/calpoly -interaction=nonstopmode calpoly.tex
 	mv out/calpoly/calpoly.pdf .
+	notify Compiled KTH
 	
 
 # Not a target:
@@ -261,7 +262,7 @@ clean:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
-#  commands to execute (from `Makefile', line 27):
+#  commands to execute (from `Makefile', line 29):
 	@rm -rf out/ kth.pdf calpoly.pdf
 	
 
@@ -292,18 +293,19 @@ kth: | out/kth
 #  commands to execute (from `Makefile', line 13):
 	-latexmk -pdf -f -jobname=out/kth/kth -interaction=nonstopmode kth.tex
 	mv out/kth/kth.pdf .
+	notify Compiled KTH
 	
 
 txt:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
-#  commands to execute (from `Makefile', line 23):
+#  commands to execute (from `Makefile', line 25):
 	pandoc -f latex -i kth.tex -t markdown+hard_line_breaks -o kth.txt
+ 
 	pandoc -f latex -i calpoly.tex -t markdown+hard_line_breaks -o calpoly.txt
 	
 
- 
 # files hash-table stats:
 # Load=12/1024=1%, Rehash=0, Collisions=0/32=0%
 # VPATH Search Paths
@@ -317,6 +319,6 @@ txt:
 # strcache size: total = 4096 / max = 4096 / min = 4096 / avg = 4096
 # strcache free: total = 4087 / max = 4087 / min = 4087 / avg = 4087
 
-# Finished Make data base on Sat Jul 30 10:39:52 2022
+# Finished Make data base on Sun Aug 21 09:58:36 2022
 
  

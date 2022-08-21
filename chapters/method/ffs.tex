@@ -37,6 +37,10 @@ FFS does not support all filesystem operations that are implementable through FU
 			\textbf{Filesystem operation} 	& \textbf{Implemented by FFS}\\
 			\hline
 			\hline
+			\texttt{open} & Yes\\
+			\texttt{opendir} & Yes\\
+			\texttt{release} & Yes\\
+			\texttt{releasedir} & Yes\\
 			\texttt{create} & Yes\\
 			\texttt{mkdir} & Yes\\
 			\texttt{read} & Yes\\
@@ -52,10 +56,6 @@ FFS does not support all filesystem operations that are implementable through FU
 			\texttt{statfs} & Yes\\
 			\texttt{access} & Yes\\
 			\texttt{utimens} & Yes\\
-			\texttt{open} & No\\
-			\texttt{opendir} & No\\
-			\texttt{release} & No\\
-			\texttt{releasedir} & No\\
 			\texttt{readlink} & No\\
 			\texttt{symlink} & No\\
 			\texttt{link} & No\\
@@ -97,7 +97,7 @@ FFS separately caches both the root directory and the inode table. As both of th
 % OWS --> FFS Encoded File --> FFS DECODER --> File
 Objects that FFS stores, and therefore also encodes and decodes, are: files, directories, and the inode table. All of these objects are stored on the OWS using images. The inode table and the directories are represented as C++ objects in memory, but are serialized into a binary representation during runtime before encoded into images. The files saved to FFS are also read in to memory in a binary format before being encoded and uploaded to the OWS. Figure~\ref{fig:file_enc_dec} describes the encoder and decoder for files saved in FFS.
 
-All FFS images are encoded in the same way, using a defined header in the beginning to inform the decoder of, among other things, the size of the encoded data. The decoder expects this header and will return an error if it is incorrect. Further, the \texttt{Directory}, \texttt{InodeTable}, and \texttt{InodeEntry} classes are serialized into a binary format before they are uploaded to the OWS. The binary data can be deserialized into the same object at a later time. A detailed description of these binary formats is described in Appendix~\ref{app:binary_rep}.
+All FFS images are encoded in the same way, using a defined header in the beginning to inform the decoder of, among other things, the size of the encoded data. The decoder expects this header and will return an error if it is incorrect. The FFS header has a constant size of \SI{16}{\byte}. Further, the \texttt{Directory}, \texttt{InodeTable}, and \texttt{InodeEntry} classes are serialized into a binary format before they are uploaded to the OWS. The binary data can be deserialized into the same object at a later time. A detailed description of these binary formats is described in Appendix~\ref{app:binary_rep}.
 
 \begin{figure}[!ht]
 	\begin{center}
@@ -115,7 +115,7 @@ As FFS is a proof-of-concept filesystem, it only uses one OWS as its storage med
 
 The initial intention of FFS was to use Twitter as the OWS. Initial research found that it was possible to upload a file and download the same file without any data loss. However, it was later found that this was not a reliable conclusion. Some images uploaded to Twitter were converted to another image format when downloaded. Other images where compressed or recoded which led to data loss when downloading the image. As the decoder of FFS images relies on a specific binary representation of the image, this meant that the images could not be decoded into the previously uploaded file. 
 
-However, as Flickr saves the original version of the uploaded image, it can be used to download the same image as was uploaded. This also means that a file that is encoded into a FFS-encoded image can be uploaded, downloaded, and decoded into the same file as before. 
+However, as Flickr saves the original version of the uploaded image, it can be used to download the same image as was uploaded. This also means that a file that is encoded into a FFS-encoded image can be uploaded, downloaded, and decoded into the same file as before. While they do not assure that they will always support original images, they also do not indicate that this would change. Therefore, Flickr can be used at this moment for the proof-of-concept filesystem that FFS is. A free-tier Flickr account is therefore used for FFS. 
 
 As mentioned previously, Flickr provides the ability to tag an image with a number of custom tags. Every tag is a string that the user defines. By tagging the inode table with a unique string, and deleting old inode table when it is updated, we can find the inode table easily. 
 
@@ -139,7 +139,7 @@ The second request does not require authentication as the previous request retur
 
 \subsection{Implemented filesystem operations}
 \label{subsec:file_op}
-Following is a detailed description of all the FUSE operations implemented by FFS, and how they are implemented by FFS. Further explanations can be found in \,\cite{kuenningCS135FUSEDocumentation2010}. 
+Following is a detailed description of all the FUSE operations implemented by FFS, and how they are implemented by FFS. Further explanations about the intended functionality of the operations can be found in \,\cite{kuenningCS135FUSEDocumentation2010}. 
 
 The path of a file is sometimes provided for the filesystem operation and traversed by FFS to understand the requested location. An example path is \texttt{/foo/bar/buz.txt} or \texttt{/foo/bar/baz/}. A path is traversed like the following pseudo code:
 \begin{lstlisting}[language=python, caption={Pseudocode of traversing a given path, returning the \texttt{Directory} and the filename}, label=lst:traverse_path,breaklines=true]
@@ -172,60 +172,86 @@ traverse_path(path) -> (Directory, string):
 	return (curr_dir, filename)
 
 \end{lstlisting}
-By traversing a path, FFS has to fetch all parent directories in the hierarchy. The file or directory with the filename is not fetched during while traversing the path, as it might not be necessary for the operation. This implies that all operations that work with a path has to download all parent directories of the path. However, these directories could be cached and therefore not require a download from the OWS. 
 
-This also implies that after every operation that modifies the inode table, the inode table is uploaded to the OWS and cached. Therefore, it is assumed that the inode table is always up to date in memory and on the OWS. This will be true as long as there are not multiple FFS instances working with the same OWS account at the same time. This scenario has undefined behavior as there is no locking implemented for FFS.
+By traversing a path, FFS has to fetch all parent directories in the hierarchy. The file or directory with the filename is not fetched during while traversing the path, as it might not be necessary for the operation. This implies that all operations that relies on the path of the file or directory has to download all parent directories of the path. However, the directories in the path could be cached and therefore not require a download from the OWS. Further, \texttt{open}, \texttt{opendir}, and \texttt{create} can associate a file handle with a file or directory, so that certain other operations can use the file handle instead of traversing the string path. This saves time because the path traversing result is saved in the filesystem state.
 
-All filesystem operations are synchronous unless specified.
+After every operation that modifies the inode table, the inode table is uploaded to the OWS and cached. Therefore, it is assumed that the inode table is always up to date in memory and on the OWS. This will be true as long as there are not multiple FFS instances working with the same OWS account at the same time. This scenario has undefined behavior as there is no locking implemented for FFS.
+
+All filesystem operations are synchronous unless specified. Further, FUSE is running in single-thread mode meaning that a filesystem operation call must complete before another can begin. This helps limiting the risk of data races as two processes cannot call different operations that, for instance, modify the inode table at the same time.
+
+\subsubsection{open}
+Given a path to a file, the file is associated with a file handle. The file handle is used in subsequent operations to avoid traversing the filepath. The file is not downloaded from the OWS, only the parent directories are downloaded during the path traversing as explained above. An \texttt{open} call must, eventually, be followed by a \texttt{release} call. Although, multiple other operation calls can occur between these events.
+
+\subsubsection{release}
+Given a file handle, this operation closes the file in the filesystem, disassociating the file handle with the file. The current states of the file and the inode table are saved to the OWS, and the previous versions of the file and inode table are deleted from the OWS. Subsequent operations for the file will require path traversing as the file handle can no longer be used.
+
+The file must have a file handle associated with it before \texttt{release} is called. This requires a preceding \texttt{open} or \texttt{create} call for the file.
+
+\subsubsection{opendir}
+Given a path to a directory, the directory and associated with a file handle. The file handle is used in subsequent operations to avoid traversing the filepath. The directory is not downloaded from the OWS, only the parent directories are downloaded during the path traversing as explained above. An \texttt{opendir} call must, eventually, be followed by a \texttt{releasedir} call. Although, multiple other operation calls can occur between these events.
+
+\subsubsection{releasedir}
+Given a file handle, this operation closes the directory in the filesystem, disassociating the file handle with the directory. The current states of the directory and the inode table are saved to the OWS, and the previous versions of the directory and inode table are deleted from the OWS. Subsequent operations for the file will require path traversing as the file handle can no longer be used.
+
+The directory must have a file handle associated with it before \texttt{releasedir} is called. This requires a preceding \texttt{opendir} call.
 
 \subsubsection{create}
-This operation creates an empty file in the filesystem given a path. The empty file will not be uploaded to the OWS. A new entry is added to the parent directory with the filename and a generated inode. An inode entry is also created in the inode table, representing this empty file. As the parent directory is modified, the modified directory is uploaded to the OWS, and the old versions of this directory on the OWS is deleted.
+This operation creates an empty file in the filesystem given a path, and associates a file handle with the file, similar to \texttt{open}. The empty file will not be uploaded to the OWS as it has no data associated with it. A new entry is added to the parent directory with the filename and a generated inode, and the parent directory is uploaded to the OWS. The new posts representing the parent directory in the OWS is associated with the inode entry of the parent directory in the inode table, and the old posts are deleted in the OWS. An new inode entry is also created in the inode table, representing the new, empty, file.
 
 \subsubsection{mkdir}
-This operation creates an empty directory in the filesystem given a path. The directory, similar to \texttt{create}, is not uploaded to the OWS. The parent directory is modified so it is uploaded to the OWS, and the old versions of the directory is deleted on the OWS.
+This operation creates an empty directory in the filesystem given a path. The directory is not uploaded to the OWS as it has no data associated with it. The parent directory is modified so it is uploaded to the OWS, and the old versions of the parent directory is deleted on the OWS. The parent directory entry in the inode table is modified with the new posts, and a new entry is created for the new directory. The inode table is updated in the OWS.
+
+As opposed to \texttt{create} for files, this operation does not associate a file handle with the directory.
 
 \subsubsection{read}
-This operation reads a number of bytes, starting from a set offset, from the file specified by the path. The data is read into a provided buffer. The full file is downloaded and read into memory, even if just a small part of the file is requested. The file is also cached so that subsequential requests for the same file are faster. 
+This operation reads a number of bytes, starting from a set offset, from the file specified by the file handle. The data is read into a provided buffer. The full file is downloaded and read into memory, even if just a small part of the file is requested. The file is also cached so that subsequential requests for the same file are faster. 
 
 \subsubsection{readdir}
-This operation reads the filenames of the directory specified by path. Includes all filenames in the directory, and the special \texttt{"."} and \texttt{".."} directories. All directories in the path have to be downloaded.
+This operation reads the filenames inside the directory specified by a file handle. The result includes all filenames in the directory, and the special \texttt{"."} and \texttt{".."} directories.
 
 \subsubsection{write}
-This operation writes a number of bytes, starting at the provided offset, to the existing file at the provided path. The current file is read in to memory, and all the data until the offset is written to a new buffer. The new data is then appended to the new buffer. The data in the buffer is then uploaded to the OWS as the new file, and the old posts are removed from the OWS. As the inode stays the same, only the inode table has to be updated with the new post IDs. The parent directory does not have to modified. 
+This operation writes $s$ bytes, starting at the provided offset $o$, to the existing file at the provided file handle. All the data of the current file is read in to memory. Starting from the offset, the new data overwrites the current data of the file, until $s$ bytes have been written. If $o + s$ is greater than the file's size, the file size is set to $o + s$. If 
+$o + s$ is less than the file's size, the data from position $o + s$ and forward remains the same, and the file size is not modified. The parent directory does not have to modified. 
+
+The file and inode table are not updated to the OWS, this occurs instead in the subsequent \texttt{release} call.
+
+\textbf{FIGURE DESCRIBING ABOVE FLOW}
 
 \subsubsection{rename}
-This operation renames a file or directory to a new path. The current parent directory is downloaded and the inode of the entry for the old filename is fetched. The old filename entry is then removed from the old parent directory. The new parent directory is downloaded, and an entry with the new filename and the same inode is inserted. Both the old parent directory and the new parent directory are uploaded to the OWS, and the old versions of them are removed from the OWS. The inode table is updated with the new post IDs of the directories. Following this, the inode table is updated in the OWS.
+This operation renames a file or directory to a new path. Both the old path and the new path have to be traversed to located the parent directories and the file or directory to rename. The file or directory entry in the old parent directory is removed, and the old parent directory is updated to the OWS. A new entry is created in the new parent directory, with the new filename. The new parent directory is updated to the OWS. The inode entry of the renamed file or directory does not have to be modified. However, as both the old parent directories and the new parent directory are updated in the OWS, their inode entries need to be updated with the new posts. The inode table is updated to the OWS and the old table is removed from the OWS. The old posts associated with the old parent directory and the new parent directory are removed from the OWS.
 
-The new path could be in the same directory as the file or directory currently is in. This will not affect the process mentioned above.
+The new path could be in the same directory as the file or directory currently is in. This will not affect the process mentioned above, however the path will only have to be traversed once.
 
 \subsubsection{truncate}
-This operation truncates or extends the file in the given path, to the provided size $S$ . The full current file is downloaded into memory. The data of the current file is read into a new buffer until either the file is fully read, or until $S$ bytes have been read. If the current file's size is smaller than $S$, the remaining amount of bytes is added as the NULL character. The data of the buffer is then used to create a new file in the filesystem. Only the inode table has to be updated as the inode remains the same as the file had before the operation.
+This operation truncates or extends the file in the given path, to the provided size $s$ . The full current file is downloaded into memory. The data of the current file is read into a new buffer until either the file is fully read, or until $s$ bytes have been read. If the current file's size is smaller than $s$, the remaining amount of bytes are added as the NULL character. The new file data is uploaded to the OWS, and the old data is removed from the OWS. The inode table entry is updated with the new posts and uploaded to the OWS. The old inode table is removed from the OWS.
 
 \subsubsection{ftruncate}
-This operation is the same as \texttt{truncate}, but is called from a user program context. \texttt{ftruncate} simply calls \texttt{truncate} and returns whatever \texttt{truncate} returns.
+This operation is similar to \texttt{truncate}, but is called from a user context which means it has a file handle associated with it. The operation truncates or extends the file in the given file handle, to the provided integer $s$. The full current file is downloaded into memory. The data of the current file is read into a new buffer until either the file is fully read, or until $s$ bytes have been read. If the current file's size is smaller than $s$, the remaining amount of bytes are added as the NULL character.
+
+The file and inode table are not updated to the OWS, this occurs instead in the subsequent \texttt{release} call.
 
 \subsubsection{unlink}
-This operation removes a file given the filepath. This is done by first reading the inode from the parent directory, and then deleting the entry for the file in the parent directory. The inode is then used to fetch the inode entry of the file, and its post IDs, after which the entry of the inode in the inode table is removed. The post IDs are used to remove the file from the OWS. The last step is not necessary for a working filesystem; however, to save space on the OWS, this is done. If the OWS permits unlimited images and sizes, this step could be omitted to save time.
+This operation removes a file given the filepath. The file is removed from the parent directory, and the parent directory is updated to the OWS. The old parent directory data is removed on the OWS. The removed file's entry in the inode table is also removed, and the inode table updates the entry for the parent directory with its new posts. The inode table is then updated on the OWS and the old inode table is removed on the OWS. Finally, the data of the removed file is removed from the OWS. The last step is not necessary for a working filesystem; however, to save space on the OWS, this is done. If the OWS permits unlimited images and sizes, this step could be omitted to execution save time.
 
 \subsubsection{rmdir}
-Similar to \texttt{unlink}, this removes the directory at the path. To save computation time, the subdirectories and files inside the directory are not removed. Instead, only the directory's image posts are removed from the OWS and the inode table. The subdirectories and files still have entries in the inode table and their images still exists on the OWS. However, as the directory's entry is removed from its parent, and there is no way to access a file or directory through its inode, there is no way to access these files or directories.
+Similar to \texttt{unlink}, this operation removes the directory at the path. The directory and all its subdirectories are traversed, and the post IDs of these files and directories are recorded for deletion in the OWS later. Following, the entry of the removed directory is removed from the parent directory. The inode entry for the removed directory is removed. The parent directory is updated to the OWS, and the inode table is updated with the new posts of the parent directory. Following, the inode table is updated to the OWS. The old parent directory and the old inode table are removed from the OWS.
 
-% FIXME: Update if implementation to remove these files is made!
+The operation also starts a new thread, where all the posts of files and subdirectories inside the removed directory, are removed from the OWS. This occurs to save space on the OWS, and a separate thread is used to save computation time for subsequent file operations. There is no data race involved as the API is thread safe, and the posts are no longer associated with any data structures on the main thread.
 
 \subsubsection{getattr}
-This operations returns attributes about a file or directory given a path. This includes permissions, number of entries (if the provided path points to a directory), and a few timestamps. However, as mentioned previously, FFS does not implement all features, such as permissions. Instead of keeping track of a file's or directory's permissions, all calls to valid path will return full read, write, and execute permissions for everyone. However, timestamps for last time accessed, time created, and last time modified are stored in FFS. The file or directory pointed to by the path does not need to be downloaded, all the metadata that FFS stores is accessible through the inode entry in the inode table.
+This operations returns attributes about a file or directory given a path. This includes permissions, number of entries (if the provided path points to a directory), and timestamps of creation, last access and last modification. However, as mentioned previously, FFS does not implement all features, such as permissions. Instead of keeping track of a file's or directory's permissions, all calls to valid path will return full read, write, and execute permissions for everyone. However, the timestamps are stored in the inode table of FFS. The file or directory pointed to by the path does not need to be downloaded, all the metadata that FFS stores is accessible through the inode entry in the inode table.
 
 \subsubsection{fgetattr}
-This operation is the same as \texttt{getattr}, but is called from a user program context. \texttt{fgetattr} simply calls \texttt{getattr} and returns whatever \texttt{getattr} returns.
+This operation is the similar to \texttt{getattr}, but is called from a user program context meaning that the file has a file handle associated with it. Other than skipping the path traverse step, this operation returns the equivalent information as \texttt{getattr}.
 
 \subsubsection{statfs}
-This operation returns metadata information about FFS. This includes, among other things, the maximum filename size and the filesystem ID. The operation has a short computation time as it does not have to download or upload any files.
+This operation returns metadata information about FFS. This includes, among other things, the maximum filename size and the filesystem ID. The operation has a short computation time as it does not have to download or upload any files. The only variable information is read from the inode table which is stored in memory and thus does not have to be downloaded from the OWS.
 
 \subsubsection{access}
 This operation, given a path, returns wether or not the path can be accessed. As long as the path is valid, this always returns that it can be accessed.
 
 \subsubsection{utimens}
-This operation updates the last created timestamp, the last modified timestamp, or both, of the file or directory at the given path. The file or directory does not have to be downloaded. However, the inode entry for the file's or directory's inode is updated with the new timestamps if they are newer than the previous timestamps but not greater than the current time since epoch.
+This operation updates the last access timestamp, the last modified timestamp, or both, of the file or directory at the given path. The file or directory does not have to be downloaded. However, the inode entry for the file's or directory's inode is updated with the new timestamps if they are newer than the previous timestamps but not greater than the current time since epoch. The new state of the inode table is updated to the OWS, and the old version is removed from the OWS.
 
 % \subsection{Unimplemented filesystem operations}
 % FIXME: Is this needed? ^ 
@@ -233,3 +259,13 @@ This operation updates the last created timestamp, the last modified timestamp, 
 \subsection{FFS limitations}
 % TODO: Limitations, both in number of bytes, files etc
 % Also what it lacks, such as filesystem operations and speed(!)
+FFS has numerous of limitations due to both implementation decisions and OWS limits. As Flickr allows a free-tier user account to store tp to 1\,000 images of up to \SI{200}{\mega\byte} per image, this allows storage of up to \SI{200}{\giga\byte} of images on per account on Flickr. However, as the inode table and at least one directory, the root directory, are required to be stored on the filesystem, a maximum of 998 images can be used to save data. This gives the system a maximum storage capacity of \SI{199.6}{\gia\byte} of FFS images. However, this assumes that all images are at their max capacity. As each file with data requires at least one image, there can be a maximum of 998 files and directories in the filesystem, excluding the root directory. 
+
+FFS limits the directories and the inode table to only occupy one image each. 
+
+FFS:
+200MB per photo, 1000 photos for free == 200GB of maximum storage
+Using videos of 1GB per, could get up to 1TB of maximum storage
+Multiple accounts could expand this further
+
+Limited on bandwidth

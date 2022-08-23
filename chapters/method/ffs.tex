@@ -92,37 +92,33 @@ FFS separately caches both the root directory and the inode table. As both of th
 
 \subsection{Encoding and decoding objects}
 \label{subsec:file_enc_dec}
-Objects that FFS stores, and therefore also encodes and decodes, are: files, directories, and the inode table. All of these objects are stored on the OWS using PNG images with 16 bit color depth. The inode table and the directories are represented as C++ objects in memory, but are serialized into a binary representation during runtime before encoded into images. A detailed description of these binary formats is described in Appendix~\ref{app:binary_rep}. The files saved to FFS are also read in to memory in a binary format before being encoded and uploaded to the OWS. 
+Objects that FFS stores, and therefore also encodes and decodes, are: files, directories, and the inode table. All of these objects are stored on the OWS using PNG images with 16 bit RGB color depth. The inode table and the directories are represented as C++ objects in memory, but are serialized into a binary representation during runtime before encoded into images. A detailed description of these binary formats is described in Appendix~\ref{app:binary_rep}. The files saved to FFS are also read in to memory in a binary format before being encoded and uploaded to the OWS. 
 
-The input to the image encoder is the binary data do encode as an image. A header is prepended to the binary data, containing among other things, the size of the data and a timestamp of when the image was encoded. The header and the input data is encrypted using AES. The encryption key used for the encryption is a SHA256 hash of the OWS application secret \textbf{TALK ABOUT THIS IN BACKGROUND}. The resulting data from the encryption is a randomized Initialization Vector (of constant length) concatenated with the cipher data. This is referred to as the Complete Encrypted Data (CED).
+The input to the image encoder is the binary data do encode as an image. A header is prepended to the binary data, containing among other things, the size of the data and a timestamp of when the data was encoded. The header and the input data is encrypted using AES. The encryption key used for the encryption is a SHA256 hash of the OWS application secret \textbf{TALK ABOUT THIS IN BACKGROUND}. The resulting data from the encryption is a randomized Initialization Vector (of constant length) concatenated with the cipher data. This is referred to as the Complete Encrypted Data (CED).
 
-The dimensions of a FFS image is based on the amount of bytes stored as described in Section~\ref{sec:data_storage}. The stored data is the CED, prepended by the length of the CED (LCED) using 4 bytes. For an image of $X = ceil(\frac{4 + LCED}{6})$ pixels, FFS will set the width $w$ of the image as $w = ceil(\sqrt{X})$. Further, the height $h$ of the image is set as $h = ceil(\frac{X}{w})$. This will require $(w * h) - X$ filler bytes, and will create an image with similar height and width. For certain values of $X$, $h$ will be equal to $w$. For other values of $X$, $h = w-1$. The result of this will be data consisting of, in order:
+The dimensions of a FFS image is based on the amount of bytes stored, as described in Section~\ref{sec:data_storage}. The stored data is the CED, prepended with the length of the CED (LCED) using 4 bytes. For an image of $X = ceil(\frac{4 + LCED}{6})$ pixels, FFS will set the width $w$ of the image as $w = ceil(\sqrt{X})$. Further, the height $h$ of the image is set as $h = ceil(\frac{X}{w})$. This will require $(w * h) - X$ filler bytes, and will create an image with similar height and width. For certain values of $X$, $h$ will be equal to $w$. For other values of $X$, $h = w-1$. The resulting data this will be, in order:
 \begin{itemize}
 	\item 4 bytes representing the LCED,
 	\item The CED data, and
 	\item Filler bytes
 \end{itemize}
+The filler bytes are randomized bytes.
 
-To decode a FFS image, the decoder first reads the 4 first bytes as the LCED. The following $LCED$ are decrypted using the same key as they were encrypted with. The unencrypted data consists of the FFS header, and the original file data. The header is asserted to be in the correct format, before the data is read and returned.
+The data consisting of the LCED, CED and filler bytes is encoded in to pixel color data for a PNG with 16 RGB bit color depth using the Magick++ library. The result is an image, with a high probability, of what looks like randomized colors for each pixel. This is due to the fact that most pixels are encrypted and therefore the bytes representing this data is seemingly random.
 
-%TODO: Add figure describing encoder and decoder better, with encryption
-
-Figure~\ref{fig:file_enc_dec} describes the encoder and decoder for files saved in FFS.
-
-FFS images date is encoded in the same way for all types of data, using a defined header in the beginning to inform the decoder of, among other things, the size of the encoded data so that filler bytes can be discarded. The decoder expects this header and will return an error if it is incorrect. The FFS header has a constant size of \SI{16}{\byte}. 
+To decode a FFS image, the decoder first interprets the 4 first bytes as the LCED. The following $LCED$ bytes are decrypted using the same key as mentioned above, as AES is a symmetric cipher algorithm. The unencrypted data consists of the FFS header concatenated with the original stored data. The header is asserted to be in the correct format, before the stored binary data is read and returned.  Figure~\ref{fig:file_enc_dec} visualizes the encoder and decoder for all data saved in FFS.
 
 % TODO: Mention upper limit of FFS image size here
 A FFS image has an upper size limit, defined by the OWS used. Further, an image storing data can become bigger than the data it stores. During testing of different filetypes and data sizes, this has been found to exceed 
 
+
 \begin{figure}[!ht]
 	\begin{center}
-	  \includegraphics[width=0.8\textwidth]{figures/encoder_decoder.png}
+	  \includegraphics[width=1.0\textwidth]{figures/encoder_decoder.png}
 	\end{center}
-	\caption{Simple description of the functionality of the FFS encoder and decoder}
+	\caption{Simple visualization of the encoder and decoder of FFS. The input of the encoder is the binary data to store in FFS, eg. a file, and the output is the FFS image to upload to the OWS. The input to the decoder is an FFS image, and the output is the binary data stored on FFS, eg. a file}
 	\label{fig:file_enc_dec}
 \end{figure}
-
-After data has been encoded as a FFS image
 
 \subsection{Used Online web services}
 As FFS is a proof-of-concept filesystem, it only uses one OWS as its storage medium. However, for a production filesystem, multiple OWSs would be beneficial. This would enable features such as redundancy by using replication over multiple OWSs, for instance in case one OWS would stop working.

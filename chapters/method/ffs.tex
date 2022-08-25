@@ -125,29 +125,29 @@ A FFS image has an upper size limit, defined by the OWS used. Further, an image 
 \subsection{Used Online web services}
 As FFS is a proof-of-concept filesystem, it only uses one OWS as its storage medium. However, for a production filesystem, multiple OWSs would be beneficial. This would enable features such as redundancy by using replication over multiple OWSs, for instance in case one OWS would stop working.
 
-The initial intention of FFS was to use Twitter as the OWS. Initial research found that it was possible to upload a file and download the same file without any data loss. However, it was later found that this was not a reliable conclusion. Some images uploaded to Twitter were converted to another image format when downloaded. Other images where compressed or recoded which led to data loss when downloading the image. As the decoder of FFS images relies on a specific binary representation of the image, this meant that the images could not be decoded into the previously uploaded file. 
+The initial intention of FFS was to use Twitter as the OWS. Initial research found that it was possible to upload a file and download the same file without any data loss. However, it was later found that this was not a reliable conclusion. Some images uploaded to Twitter were converted to another image format when they were stored by Twitter, which meant that the decoder could not decode the data as it expected another image format. Other images where compressed or recoded which led to data loss when downloading the image. As the decoder of FFS images relies on a specific binary representation of the image, this meant that the images could not be decoded into the previously uploaded data. 
 
 Flickr saves the original version of the uploaded image and thus it can be used to download the same image as was uploaded. This also means that a file that is encoded into a FFS-encoded image can be uploaded, downloaded, and decoded into the same file as before. While they do not assure that they will always support original images, they also do not indicate that this would change. Therefore, Flickr can be used at this moment for the proof-of-concept filesystem that FFS is. A free-tier Flickr account is therefore used for FFS. 
 
+% TODO: 
 As mentioned in Subsection~\ref{subsec:ows_flickr}, a free-tier Flickr account can store up to 1'000 images, and each image can be up to \SI{200}{\mega\byte}. To use as few images as possible per file or directory, 
-
-As mentioned previously, Flickr provides the ability to tag an image with a number of custom tags. Every tag is a string that the user defines. By tagging the inode table with a unique string, and deleting old inode table when it is updated, we can find the inode table easily. 
 
 Flickr provides an extensive free REST API for non-commercial use. A user can create applications and generate access tokens for the application. These application tokens are later used to request tokens from users who authenticate using Flickr's web interface, and allow the application to do requests for the user. The application will then receive access tokens for the user, which are used to authenticate with the API for the API calls that require authentication.
 
-While the API is extensive in its functionality, FFS only uses a few of the provided capabilities. FFS needs:
-\begin{itemize}
-	\item To be able to upload an image with a defined tag and return a post ID,
-	\item To be able to search for a tag of an image and return a post ID,
-	\item To be able to get the original image given a post ID, and
-	\item To be able to remove an image given a post ID.
-\end{itemize}
-All these features are supported by the Flickr API. Further, when searching for an image with a specific tag, the owner of the image post can also be specified. This helps FFS avoid finding some other user's image that might be posted with the same tag. 
+As mentioned previously, Flickr provides the ability to tag an image with a number of custom tags. Every tag is a string that the user defines. By tagging the inode table with a pre-defined string we can identify the inode table easily. The Flickr API supports searching for images with a specific tag, and to filter this result by the user who uploaded the image. This allows FFS to easily find the images tagged with the pre-defined inode table tag on Flickr, uploaded by FFS. Further, ensuring that only the inode table is tagged with this tag, and by deleting the old version of the inode table on Flickr when a new version is uploaded to Flickr, we can ensure a singelton pattern of the inode table in the OWS. 
 
-The request to get the original image given a post consists of two requests:
+While the API is extensive in its functionality, FFS only uses a few of the provided capabilities. The Flickr API capabilites that FFS utilizes are:
 \begin{itemize}
-	\item Getting the URL to the original image using the post ID
-	\item Downloading the image at the URL received from the previous request.
+	\item Upload an image, optionally with defined tag, and return a post ID,
+	\item Search for a tag of an image, uploaded by a specific user, and return the URL to the original uploaded image,
+	\item Get the URL to the original uploaded image given a post ID, and
+	\item Remove an image given a post ID.
+\end{itemize}
+
+To download the original image given a post ID or a tag, two requests are required:
+\begin{itemize}
+	\item Getting the URL to the original image using the post ID or tag,
+	\item Downloading the image from the URL received from the previous request.
 \end{itemize}
 The second request does not require authentication as the previous request returns a public URL to the image. 
 

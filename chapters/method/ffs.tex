@@ -278,7 +278,11 @@ This operation updates the last access timestamp, the last modified timestamp, o
 \subsection{FFS limitations}
 % TODO: Limitations, both in number of bytes, files etc
 % Also what it lacks, such as filesystem operations and speed(!)
-FFS has numerous of limitations due to both implementation decisions and OWS limits. As Flickr allows a free-tier user account to store tp to 1\,000 images of up to \SI{200}{\mega\byte} per image, this allows storage of up to \SI{200}{\giga\byte} of images on per account on Flickr. However, as the inode table and at least one directory, the root directory, are required to be stored on the filesystem, a maximum of 998 images can be used to save data. This gives the system a maximum storage capacity of \SI{199.6}{\gia\byte} of FFS images. However, this assumes that all images are at their max capacity. As each file with data requires at least one image, there can be a maximum of 998 files and directories in the filesystem, excluding the root directory. 
+FFS has numerous of limitations due to both implementation decisions and OWS limits. As Flickr allows a free-tier user account to store up to 1\,000 images of up to \SI{200}{\mega\byte} per image, this allows storage of up to \SI{200}{\giga\byte} of images on per account on Flickr. However, as the inode table is required to be stored on the filesystem, a maximum of 999 images can be used to save file and directory data. This limits the filesystem to a maximum of 999 files and directories while utilizing one free-tier account on Flickr. 
+
+While Flicker supports each image to be up to \SI{200}{\mega\byte}, it is not possible to use the full \SI{200}{\mega\byte} as the file data to store. The image includes, among other things, a PNG header, and the data stored is encrypted which could result in a cipher text of greater size than the unencrypted data.
+
+This gives the system a maximum storage capacity of \SI{199.6}{\gia\byte} of FFS images. However, this assumes that all images are at their max capacity. As each file with data requires at least one image, there can be a maximum of 998 files and directories in the filesystem, excluding the root directory. 
 
 FFS limits the directories and the inode table to only occupy one image each. 
 

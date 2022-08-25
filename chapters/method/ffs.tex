@@ -26,11 +26,11 @@ As directories only know the filenames inode, the \texttt{Directory} object does
 
 When a new file or directory is created, it is saved in its parent directory with its filename and an inode. The same inode is used in the inode table to keep track of the file's or directory's inode entry. As shown in Appendix~\ref{app:inode_dir_code}, the inode is represented as a unsigned 32-bit integer. The inode is calculated by adding one to the currently greatest inode. This means that new files and directories will always receive a higher greater inode than the ones currently in the inode table. This naïve approach to inode generation does not take in to account that there might be an available inode less than the greatest inode in the inode table (for instance, due to deletion of a previously created file). However, this inode generation approach is fast and will not be a problem until the integer overflows. As the inode is represented using a 32-bit integer, FFS would need to have saved over four billion files before the inode value would overflow. This scenario is not in the scope of this proof-of-concept filesystem.
 
-FFS does not support all filesystem operations that are implementable through FUSE, instead FFS implements a subset of them. The implemented functions are shown in Table~\ref{tbl:fs_impl_op}. The implemented operations are the most vital operations required for a working filesystem\,\cite{kuenningCS135FUSEDocumentation2010}. Operations such as \texttt{chown} provides extended capabilities of the filesystem but these are not required for a proof-of-concept filesystem. The functionality of the filesystem operations implemented by FFS and their implementation details are described in Subsection~\ref{subsec:file_op}. A file, directory or the inode table has to be uploaded to the OWS when it is modified to save its current information. As it takes time to make requests to the OWS, FFS is created to make as few requests as possible while still saving the data required. Therefor, only the directory or file that is affected by a change is uploaded to the system, while the ones unaffected can remain the same. The inode table has to be updated with every change of a file or directory as it contains the location of the file or directory.
+FFS does not support all filesystem operations that are implementable through FUSE, instead FFS implements a subset of them. The implemented functions are shown in Table~\ref{tbl:fs_impl_op}. The implemented operations are the most vital operations required for a working filesystem\,\cite{kuenningCS135FUSEDocumentation2010}. Operations such as \texttt{chown} provides extended capabilities of the filesystem but these are not required for a proof-of-concept filesystem. The functionality of the filesystem operations implemented by FFS and their implementation details are described in Subsection~\ref{subsec:file_op}. 
 
 \begin{table}[!ht]
 	\begin{center}
-		\caption{Filesystem operations implementable by FUSE that, and wether or not FFS implements them}
+		\caption{Filesystem operations implementable trough the FUSE API, and wether or not FFS implements them}
 		\begin{tabular}{| c | c |}
 			
 			\hline
@@ -78,15 +78,17 @@ FFS does not support all filesystem operations that are implementable through FU
 	\end{center}
 \end{table}
 
+A file, a directory, or the inode table has to be uploaded to the OWS when it is modified to save its current information. As it takes time to make requests to the OWS, FFS is created to make as few requests as possible while still saving the data required. Therefor, only the directory or file that is affected by a change is uploaded to the system, while the ones unaffected can remain the same. The inode table has to be updated with every change of a file or directory as it contains the location of the file or directory.
+
 \subsection{Cache}
 FFS implements a simple cache for the downloaded content. The cache consists of two data structures: 
 \begin{itemize}
-	\item a Cache Map providing a mapping between a post ID and its image data, and
+	\item a Cache Map - a mapping between a post ID and its image data, and
 	\item a Cache Queue - a queue keeping track of the cached post IDs.
 \end{itemize}
-The cache stores a maximum of 20 image posts, and each image cannot be bigger than \SI{5}{\mega\byte}. These constrains are set so that the memory used by the program does not become to large. Each time a image is uploaded or downloaded, it is added to the Cache Map with its post ID as the key. The post ID is also added to the beginning of the Cache Queue. If the Cache Queue is too big, the last element of the queue is removed. When a file or directory is removed, all its cached data is also removed.
+The cache stores a maximum of 20 image posts. To avoid FFS to use too much memory, the cache is configured so that images greater than \SI{5}{\mega\byte} are not cached. Each time an image is uploaded or downloaded, it is added to the Cache Map with its post ID as the key. The post ID is also added to the beginning of the Cache Queue. If the Cache Queue exeeds 20 elements, the last elements of the queue is removed, and the corresponding entry in the Cache Map is erased, thus the entry is fully erased from the cache. The queue ensures that the chache is limited to 20 entries, and by using the first in first out valuation method, the queue also ensures that the oldest element in the cache is removed when the cache exeeds the limit. When a file or directory is removed from the filesystem, all its data is also removed from the cache, if it stored there.
 
-Before a post with a specified post ID is downloaded from the OWS, the cache is checked to see if it is storing this post ID. If it is, the stored image is returned. Otherwise, the download process continues by downloading the image from the OWS. When the thesis states that a file or directory is downloaded, it is implied that the cache is also checked and the data is possibly returned by the cache instead of requiring to download the data from the OWS.
+Before a post with a specified post ID is downloaded from the OWS, the cache is checked to see if it is storing this post ID. If it is, the stored image is returned. Otherwise, the process continues by downloading the image from the OWS. When the thesis states that a file or directory is downloaded, it is implied that the cache is also checked and the data is possibly returned by the cache instead of requiring to download the data from the OWS.
 
 FFS separately caches both the root directory and the inode table. As both of these data structures are used in many of the filesystem operations, it is important that they can be accessed quickly and not be removed from the cache. Their cache entries are updated when the files are uploaded to the OWS.
 

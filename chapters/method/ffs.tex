@@ -108,11 +108,7 @@ The filler bytes are randomized bytes.
 
 The data consisting of the LCED, CED and filler bytes is encoded in to pixel color data for a PNG with 16 RGB bit color depth using the Magick++ library. The result is an image, with a high probability, of what looks like randomized colors for each pixel. This is due to the fact that most pixels are encrypted and therefore the bytes representing this data is seemingly random.
 
-To decode a FFS image, the decoder first interprets the 4 first bytes as the LCED. The following $LCED$ bytes are decrypted using the same key as mentioned above, as AES is a symmetric cipher algorithm. The unencrypted data consists of the FFS header concatenated with the original stored data. The header is asserted to be in the correct format, before the stored binary data is read and returned.  Figure~\ref{fig:file_enc_dec} visualizes the encoder and decoder for all data saved in FFS.
-
-% TODO: Mention upper limit of FFS image size here
-A FFS image has an upper size limit, defined by the OWS used. Further, an image storing data can become bigger than the data it stores. During testing of different filetypes and data sizes, this has been found to exceed 
-
+To decode a FFS image, the decoder first interprets the 4 first bytes as the LCED. The salt and IV are retrieved from the CED as they are of known length. The decryption key is derived using the IV and salt, and results in the same key as used in the encryption step because AES is a symmetric cipher algorithm. The remaining bytes of the CED are decrypted using the decryption key. The unencrypted data consists of the FFS header concatenated with the original stored data. The FFS header is asserted to be in the correct format, before the stored binary data is returned from the decryption function. Figure~\ref{fig:file_enc_dec} visualizes the encoder and decoder for all data saved in FFS.
 
 \begin{figure}[!ht]
 	\begin{center}
@@ -122,6 +118,10 @@ A FFS image has an upper size limit, defined by the OWS used. Further, an image 
 	\label{fig:file_enc_dec}
 \end{figure}
 
+The encryption and decryption methods used are state-of-the-art solutions as defined and implemented by Crypto++\,\cite{CryptoLibraryFree}. Crypto++ is a well-used and well maintained C++ library for cryptography, and as of writing has no reported CVE security vulnerabilities for the functionality used by FFS\,\cite{CryptoppSecurityVulnerabilities}.
+
+A FFS image has an upper size limit, defined by the OWS used. This limit is defined further down in this section. If the data to be stored in FFS, such as a file, exceeds this limit, it is split into multiple encoded images. These images will have no association with each other and will be encrypted using different salts and IVs. Only the inode table stores the different post IDs in the order they are encoded in. Files and directories stored in FFS can be separated in to multiple images, however the inode table is limited to only one image for simplicity when interacting with the OWS. This introduces a size limit of the inode table, limiting the filesystem further. More details about the limits are found in Subsection~\ref{subsec:ffs_limits}.
+
 \subsection{Online web services}
 As FFS is a proof-of-concept filesystem, it only uses one OWS as its storage medium. However, for a production filesystem, multiple OWSs would be beneficial. This would enable features such as redundancy by using replication over multiple OWSs, for instance in case one OWS would stop working.
 
@@ -129,16 +129,13 @@ The initial intention of FFS was to use Twitter as the OWS. Initial research fou
 
 Flickr saves the original version of the uploaded image and thus it can be used to download the same image as was uploaded. This also means that a file that is encoded into a FFS-encoded image can be uploaded, downloaded, and decoded into the same file as before. While they do not assure that they will always support original images, they also do not indicate that this would change. Therefore, Flickr can be used at this moment for the proof-of-concept filesystem that FFS is. A free-tier Flickr account is therefore used for FFS. 
 
-% TODO: 
-As mentioned in Subsection~\ref{subsec:ows_flickr}, a free-tier Flickr account can store up to 1'000 images, and each image can be up to \SI{200}{\mega\byte}. To use as few images as possible per file or directory, 
-
 Flickr provides an extensive free REST API for non-commercial use. A user can create applications and generate access tokens for the application. These application tokens are later used to request tokens from users who authenticate using Flickr's web interface, and allow the application to do requests for the user. The application will then receive access tokens for the user, which are used to authenticate with the API for the API calls that require authentication.
 
-As mentioned previously, Flickr provides the ability to tag an image with a number of custom tags. Every tag is a string that the user defines. By tagging the inode table with a pre-defined string we can identify the inode table easily. The Flickr API supports searching for images with a specific tag, and to filter this result by the user who uploaded the image. This allows FFS to easily find the images tagged with the pre-defined inode table tag on Flickr, uploaded by FFS. Further, ensuring that only the inode table is tagged with this tag, and by deleting the old version of the inode table on Flickr when a new version is uploaded to Flickr, we can ensure a singelton pattern of the inode table in the OWS. 
+As mentioned previously, Flickr provides the ability to tag an image with a number of custom tags. Every tag is a string that the user defines. By tagging the image containing the data of the inode table with a pre-defined string we can identify the image in the OWS easily. The Flickr API supports searching for images with a specific tag, uploaded by a specific user. This allows FFS to easily find the images tagged with the pre-defined inode table tag on Flickr, uploaded by FFS. Further, ensuring that only the inode table is tagged with this tag, and by deleting the old version of the inode table on Flickr when a new version is uploaded to Flickr, we can ensure a singelton pattern of the inode table in the OWS. 
 
-While the API is extensive in its functionality, FFS only uses a few of the provided capabilities. The Flickr API capabilites that FFS utilizes are:
+While the Flickr API is extensive in its functionality, FFS only uses a few of the provided capabilities. The Flickr API capabilites that FFS utilizes are:
 \begin{itemize}
-	\item Upload an image, optionally with defined tag, and return a post ID,
+	\item Upload an image, optionally with a tag, and return a post ID,
 	\item Search for a tag of an image, uploaded by a specific user, and return the URL to the original uploaded image,
 	\item Get the URL to the original uploaded image given a post ID, and
 	\item Remove an image given a post ID.
@@ -151,7 +148,7 @@ To download the original image given a post ID or a tag, two requests are requir
 \end{itemize}
 The second request does not require authentication as the previous request returns a public URL to the image. 
 
-For benchmarking purposes, FFS also provides the possibility to compile the program to use a Fake OWS (FOWS), which stores the data on the local filesystem. The FOWS is used by FFS similar to how Flickr is used, by storing encoded images in it. By storing the images on the local filesystem, the filesystem operations require much lower latency than the network-based operations as FFS can avoid making requests to Flickr. This makes it easier to conclude how much of the filesystem operation time is affected by the time of the network requests. The time $T$ of a filesystem operation can be modeled like:
+For benchmarking purposes, FFS also provides the possibility to compile the filesystem to use a Fake OWS (FOWS), which stores the data on the local filesystem. The FOWS is used by FFS similar to how Flickr is used, by storing encoded images in it. By storing the images on the local filesystem, the filesystem operations require much shorter execution time as the local filesystem operations are in general faster than the network requests. This makes it easier to conclude how much of the filesystem operation time is affected by the time of the network requests. The time $T$ of an FFS filesystem operation can be modeled like:
 $$
 	T = t_{ffs} + t_{ows}
 $$
@@ -162,13 +159,14 @@ where $t_{ffs}$ is the time that FFS takes to, for example for a file read opera
 	\item read the specified amount of data, and,
 	\item to output the data
 \end{itemize}
-This time will be approximately consistent for the same request. However, cache misses/hits and process scheduling can fluctuate the value of $t_{ffs}$. $t_{ows}$ is the total time required to complete all requests to the OWS for a filesystem operation. For instance, for a similar read operation as above;
+This time will be approximately consistent for the same request. However, cache misses/hits in the filesystem and process scheduling can fluctuate the value of $t_{ffs}$. $t_{ows}$ is the total time required to complete all requests to the OWS for a filesystem operation. For instance, for a similar read operation as above;
 \begin{itemize}
-	\item to find the inode table given the tag,
+	\item to download all the directories in the file path,
+	\item find the inode table image given the tag,
 	\item download the inode table, and,
 	\item to download the images representing the file to read
 \end{itemize}
-Depending on the OWS, the latency and bandwidth of the internet connection between the user's machine and the OWS's server can differ a lot. Duplicate requests to the same OWS can also differ significantly due to, for instance, server load balancing and a difference in request quantity from other users at the time of the requests. However, for a FOWS, $t_{ows}$ can be replaced by $t_{fows}$ which will have approximately consistent values for duplicate operations, as the local filesystem is not affected as much by load balancing. The local filesystem requests by other applications can also be influenced and minimized by not using other applications on the machine while running the benchmarking tool to ensure filesystem requests by the FOWS can be handled quickly by the operating system. However, $t_{fows}$ is affected by, among other things, the underlying storage device of the local filesystem and process scheduling which can still fluctuate the value of $t_{fows}$.
+Depending on the OWS, the latency and bandwidth of the internet connection between the user's machine and the OWS's server can differ a lot. Duplicate requests to the same OWS can also differ significantly due to, for instance, server load balancing and a difference in request quantity from other users at the time of the requests. However, for a FOWS, $t_{ows}$ can be replaced by $t_{fows}$ which will have approximately consistent values for duplicate operations, because the local filesystem is not affected as much by load balancing. The local filesystem requests by other applications on the machine can also be influenced and minimized by not using other applications on the machine while running the benchmarking tool to ensure filesystem requests by the FOWS can be handled quickly by the operating system. However, $t_{fows}$ is affected by, among other things, the underlying storage device of the local filesystem and process scheduling which can still fluctuate the value of $t_{fows}$.
 
 \subsection{Implemented filesystem operations}
 \label{subsec:file_op}
@@ -243,7 +241,7 @@ This operation reads a number of bytes, starting from a set offset, from the fil
 This operation reads the filenames inside the directory specified by a file handle. The result includes all filenames in the directory, and the special \texttt{"."} and \texttt{".."} directories.
 
 \subsubsection{write}
-This operation writes $s$ bytes, starting at the provided offset $o$, to the existing file at the provided file handle. All the data of the current file is read in to memory. Starting from the offset, the new data overwrites the current data of the file, until $s$ bytes have been written. If $o + s$ is greater than the file's size, the file size is set to $o + s$. If $o + s$ is less than the file's size, the data from position $o + s$ and forward remains the same, and the file size is not modified. See Figure~\ref{fig:write_flow} for a visualization. The parent directory does not have to modified. 
+This operation writes $s$ bytes, starting at the provided offset $o$, to the existing file at the provided file handle. All the data of the current file is read in to memory. Starting from the offset, the new data overwrites the current data of the file, until $s$ bytes have been written. If $o + s$ is greater than the file's size, the file size is set to $o + s$. If $o + s$ is less than the file's size, the data from position $o + s$ and forward remains the same, and the file size is not modified. See Figure~\ref{fig:write_flow} for a visualization of the result of a \texttt{write} operation given different offsets. The parent directory does not have to modified. 
 
 The file and inode table are not updated to the OWS, this occurs instead in the subsequent \texttt{release} call.
 
@@ -295,19 +293,24 @@ This operation updates the last access timestamp, the last modified timestamp, o
 % FIXME: Is this needed? ^ 
 
 \subsection{FFS limitations}
+\label{subsec:ffs_limits}
 % TODO: Limitations, both in number of bytes, files etc
 % Also what it lacks, such as filesystem operations and speed(!)
 FFS has numerous of limitations due to both implementation decisions and OWS limits. As Flickr allows a free-tier user account to store up to 1\,000 images of up to \SI{200}{\mega\byte} per image, this allows storage of up to \SI{200}{\giga\byte} of images on per account on Flickr. However, as the inode table is required to be stored on the filesystem, a maximum of 999 images can be used to save file and directory data. This limits the filesystem to a maximum of 999 files and directories while utilizing one free-tier account on Flickr. 
 
-While Flicker supports each image to be up to \SI{200}{\mega\byte}, it is not possible to use the full \SI{200}{\mega\byte} as the file data to store. The image includes, among other things, a PNG header, and the data stored is encrypted which could result in a cipher text of greater size than the unencrypted data.
+While Flicker supports each image to be up to \SI{200}{\mega\byte}, it is not possible to use the full \SI{200}{\mega\byte} as the file data to store. The image includes, among other things, a PNG header, and the CED which in total is of greater size than the unencrypted data. To ensure that the pixel color data along with the PNG header and other PNG attributes does not exceed the limit of \SI{200}{\mega\byte}, FFS limits the pixel color data size to \SI{190}{\mega\byte}, leaving up to \SI{10}{\mega\byte} of PNG header and other PNG attributes. The cryptographic variables IV, salt, and the authentication tag are stored using 12, 16, and 64 bytes respectively, for a total of 92 bytes. The size limit means that these 92 bytes, along with the encrypted cipher text, cannot exceed \SI{190}{\mega\byte}, meaning that the encrypted cipher text cannot exceed \SI{189.999908}{\mega\byte}. However, as AES is a block cipher producing cipher blocks of 16 bytes, the resulting cipher text must be a divisible of 16. The largest encrypted cipher text that FFS allows is therefore $floor(\frac{189\,999\,906}{16})*16 = 189\,999\,904$ bytes. Due to plain text padding, the unencrypted plain text can be a maximum of one byte less than this value, meaning that the plain text can be a maximum of \SI{189.999903}{\mega\byte}. For simplicity, this is rounded down to \SI{189}{\mega\byte}. This value is set as the maximum amount of data FFS will store per image. Data greater than \SI{189}{\mega\byte} is split into multiple encoded images. For instance, a file of \SI{200}{\mega\byte} will be stored as \SI{189}{\mega\byte} in one image, and \SI{11}{\mega\byte} in another. 
 
-This gives the system a maximum storage capacity of \SI{199.6}{\gia\byte} of FFS images. However, this assumes that all images are at their max capacity. As each file with data requires at least one image, there can be a maximum of 998 files and directories in the filesystem, excluding the root directory. 
+\SI{189}{\mega\byte} of usable data per images gives FFS a maximum storage capacity of \SI{188.811}{\gia\byte} using one free-tier account on Flickr. Each file with data requires at least one image, thus there can be a maximum of 998 files and directories in the filesystem, excluding the root directory. However, there could also be just one single file of \SI{188.811}{\gia\byte} stored in the filesystem.
 
-FFS limits the directories and the inode table to only occupy one image each. 
+The inode table also keeps information about empty files and directories even though they store no data on the OWS. The inode of a file or directory is an unsigned 32-bit integer, meaning that the inode table could theoretically store up to over four billion files and directories. However, due to the constraints mentioned above, most of these files and directories would have to be empty as Flickr limits the amount of images stored. An empty file requires \SI{37}{\byte} in the inode table. As the inode table is limited to one single image on the OWS, the inode table is limited to a maximum size of \SI{189}{\mega\byte}. Further, the size of the inode table is \SI{4}{\byte} plus the size of each entry, and one of these entries is the root directory. Even if a file is empty, it is still stored with its filename and inode in its parent directory. A non-empty directory in the inode table requires approximately (depending on the post ID by the OWS) \SI{12}{\byte} per file or directories it contains. The maximum number of empty files and directories $X$ that the inode table can store is therefore:
+$$
+	X = ceil(\frac{189\,000\,000 - 4 - (12 * X)}{37}) + 1, X = 3\,857\,143
+$$
+The additional directory is the root directory. Thus, the maximum number of files and directories that the inode table can store is close to four million, however this requires all files and directories, except the root directory, to be empty.
 
-FFS:
-200MB per photo, 1000 photos for free == 200GB of maximum storage
-Using videos of 1GB per, could get up to 1TB of maximum storage
-Multiple accounts could expand this further
+% Analyze max size of directory
 
-Limited on bandwidth
+
+All these calculations are based on a single free-tier Flickr account. However, a future expansion of FFS could include multiple user accounts, and multiple services. This could increase the limits on the filesystem.
+
+A limitation of FFS that is is not possible to quantify is the bandwidth and latency of the network connection from the user to Flickr. The connection can vary significantly depending on for instance the network load in a given moment and the geographic location of the user. A slow network connection is not something FFS can solve, but is left as an exercise for the reader.

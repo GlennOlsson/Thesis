@@ -1,10 +1,7 @@
 \section{Development environment specification}
 \label{sec:dev_env}
-Development of FFS is done on a 2016 years model Macbook Pro laptop with \SI{2.6}{\giga\hertz} Quad-Core Intel Core i7 processor and \SI{16}{\giga\byte} \SI{2133}{\mega\hertz} LPDDR3 memory. The storage device of the computer is a \SI{250}{\giga\byte} SSD. The computer runs macOS Monterey 12.3.1. 
+Development of FFS is done on a 2016 year model Macbook Pro laptop with \SI{2.6}{\giga\hertz} Quad-Core Intel Core i7 processor and \SI{16}{\giga\byte} \SI{2133}{\mega\hertz} LPDDR3 memory. The storage device of the computer is a \SI{250}{\giga\byte} SSD. The computer runs macOS Monterey 12.5
 
-FFS is developed in C++20 and compiled using Apple clang version 13.0.0 using target x86\_64\-apple\-darwin21.4.0. It uses the Magick++ library for image processing, which is of version 7.1.0\-29. macFUSE version 4.2.5 is used for FFS to use the FUSE API. FUSE API version 26 is used.
+FFS is developed in C++20 and compiled using Apple clang version 13.0.0 using target x86\_64\-apple\-darwin21.4.0. FFS uses the ImageMagick Magick++ library\,\cite{ImageMagick2022} for image processing. Version 7.1.0\-29 of Magick++ is used by FFS. macFUSE\,\cite{HomeMacFUSE} version 4.2.5 is used for FFS to use the FUSE API. FUSE API version 26 is used. cURLpp\,\cite{barrette-lapierreCURLpp2022} is a cURL\,\cite{CurlCurl2022} wrapper used by FFS to make HTTP requests. Version 0.8.1 of cURLpp is used by FFS. libOauth\,\cite{Liboauth} version 1.0.3 is used by FFS to sign and encode HTTP request according to the OAuth\,\cite{barrette-lapierreCURLpp2022} standard. Flickcurl\,\cite{beckettFlickcurlLibraryFlickr} version 1.26 is a C library used by FFS to communicate with parts of the Flickr API. Crypto++\,\cite{CryptoLibraryFree} is a C++ library providing cryptographic schemes. FFS uses Crypto++ to encrypt end decrypt the data stored in FFS, and to derive the keys used in the encryption and decryption algorithm. Crypto++ version 8.6 is used by FFS.
 
-\textbf{HERE WILL BE TEXT ABOUT THE VERSIONS OF THE TESTING CODE AND LIBRARIES USED}
-% TODO: ^
-
-FFS is developed on a single computer for simplicity, and the version used for the operating system, libraries and tools were the most recent up-to-date versions when development of the filesystem started. To avoid unnecessary re-writes of the source code, these versions will remain the same throughout the development process.
+FFS is developed on a single computer for simplicity, and the version used for the operating system, libraries and tools were the most recent up-to-date versions when development of the filesystem started. To avoid re-writing the source code, these versions will remain the same throughout the development process.

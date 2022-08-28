@@ -114,7 +114,7 @@ To decode a FFS image, the decoder first interprets the 4 first bytes as the LCE
 	\begin{center}
 	  \includegraphics[width=1.0\textwidth]{figures/encoder_decoder.png}
 	\end{center}
-	\caption{Simple visualization of the encoder and decoder of FFS. The input of the encoder is the binary data to store in FFS, eg. a file, and the output is the FFS image to upload to the OWS. The input to the decoder is an FFS image, and the output is the binary data stored on FFS, eg. a file}
+	\caption[Simple visualization of the encoder and decoder of FFS]{Simple visualization of the encoder and decoder of FFS. The input of the encoder is the binary data to store in FFS, eg. a file, and the output is the FFS image to upload to the OWS. The input to the decoder is an FFS image, and the output is the binary data stored on FFS, eg. a file}
 	\label{fig:file_enc_dec}
 \end{figure}
 
@@ -312,5 +312,7 @@ The additional directory is the root directory. Thus, the maximum number of file
 
 
 All these calculations are based on a single free-tier Flickr account. However, a future expansion of FFS could include multiple user accounts, and multiple services. This could increase the limits on the filesystem.
+
+%TODO: write about limitations due to memory and storage. Must have enough memory to read all data in to memory, and enough storage to store the file (temporarely) before uploading to the OWS.
 
 A limitation of FFS that is not possible to quantify is the bandwidth and latency of the network connection from the user to Flickr. The connection can vary significantly depending on for instance the network load in a given moment and the geographic location of the user. A slow network connection is not something FFS can solve, but is left as an exercise for the reader.

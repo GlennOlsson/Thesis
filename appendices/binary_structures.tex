@@ -65,7 +65,7 @@ Figure~\ref{fig:app_bin_table} visualizes the serialized format of the \texttt{I
 \end{figure}
 
 \section{FFS Images}
-An FFS images consists of multiple binary structures, including the FFS header and the encrypted data. This section visualizes these binary structures for better understanding. Figure~\ref{fig:app_bin_ffs_header} visualizes binary format of the FFS header.
+An FFS images consists of multiple binary structures, including the FFS header and the encrypted data. This section visualizes these binary structures for better understanding. Figure~\ref{fig:app_bin_ffs_header} visualizes binary format of the FFS header. Figure~\ref{fig:app_bin_pixels} visualizes the pixel color data of FFS images stored on the OWS.
 
 \begin{figure}[!htb]
 	\label{fig:app_bin_ffs_header}
@@ -79,5 +79,33 @@ An FFS images consists of multiple binary structures, including the FFS header a
 		\bitbox{1}{V} & \bitbox{8}{Timestamp} & \bitbox{4}{Data length}
 		
 	\end{bytefield}
-	\caption[Byte representation of the FFS image header]{\texttt{'F'} and \texttt{'S'} are the literal letters F and S in ASCII code. \texttt{V} is an integer representing the version of the FFS image produced. \texttt{Timestamp} is an unsigned integer representing the number of milliseconds since Unix epoch when the image was encoded. \texttt{Data length} is an unsigned integer representing the number of bytes stored after the header. Following the heder is \texttt{Data length} bytes, containing the actual data stored in the image}
+	\caption[Byte representation of the FFS image header]{\texttt{'F'} and \texttt{'S'} are the literal letters F and S in ASCII code. \texttt{V} is an integer representing the version of the FFS image produced. \texttt{Timestamp} is an unsigned integer representing the number of milliseconds since Unix epoch when the image was encoded. \texttt{Data length} is an unsigned integer representing the number of bytes stored after the header. Following the heder is \texttt{Data length} bytes, containing the actual data stored in the image.}
+\end{figure}
+
+\begin{figure}[!htb]
+	\label{fig:app_bin_pixels}
+	\centering
+    \textbf{Pixel color data in FFS images}\par\medskip
+
+	% bitwidth = 1/32 * textwidth
+	\begin{bytefield}[bitwidth=0.0312\textwidth]{32}
+		\bitheader{0,3} \\
+		\bitbox{4}{LCED}
+		\begin{rightwordgroup}{CED}\\
+			\bitheader[lsb=4]{4,35} \\
+			\wordbox[lrt]{1}{} \\
+			\wordbox[lrb]{1}{Salt} \\
+			\bitbox{12}{initialization Vector (IV)} & \bitbox[ltr]{20}{}\\
+			\wordbox[lr]{1}{} \\
+			\wordbox[lr]{1}{Encrypted cipher text} \\
+			\skippedwords \\
+			\wordbox[lr]{1}{} \\
+			\bitbox[lb]{16}{} & \bitbox{16}{Authentication Tag}
+		\end{rightwordgroup} \\
+		\wordbox[lr]{1}{} \\
+		\wordbox[lr]{1}{Filler bytes} \\
+		\skippedwords \\
+		\wordbox[blr]{1}{} \\
+	\end{bytefield}
+	\caption[Byte representation of the data stored as pixel color data in FFS images]{Byte representation of the data stored as pixel color data in FFS images. \texttt{LCED} an unsigned integer representing the Length of the Complete Encrypted Data (CED). The \texttt{Salt} is a 64-byte randomized vector used to derive the encryption and decryption key. The \texttt{IV} is a 12-byte randomized vector used as the initial state of the encryption and decryption methods. Following is the \texttt{Encrypted cipher text} of variable size, depending on the size of the unencrypted data. The FFS header and the data to be stored, for instance the data of a file, is what is encrypted to become the \texttt{Encrypted cipher text}. The \texttt{Authentication Tag} is a 16-byte vector produced by the authenticated encryption method, and verified by the decryption method, to ensure data integrity has been upheld. Following is a number of filler bytes, depending on the size of the preceding data, to ensure the image has enough number of pixels for its calculated dimensions.}
 \end{figure}

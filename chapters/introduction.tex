@@ -1,57 +1,6 @@
 
 \chapter{Introduction}
 \label{ch:introduction}
-% 	todo[inline, backgroundcolor=kth-lightblue]{svensk: Introduktion}
-
-
-% \todo[inline, backgroundcolor=kth-lightblue]{Ofta kommer problemet och problemägaren
-%   från industrin där man önskar en specifik lösning på ett specifikt
-%   problem. Detta är ofta ”för smalt” definierat och ger ofta en ”för smal”
-%   lösning för att resultatet skall vara intressant ur ett mer allmänt
-%   ingenjörsperspektiv och med ”nya” erfarenheter som resultat. Fundera
-%   tillsammans med projektets intressenter (student, problemägare och akademi)
-%   hur man skulle kunna använda det aktuella problemet/förslaget för att
-%   undersöka någon ingenjörsaspekt och vars resultat kan ge ny eller
-%   kompletterande erfarenhet till ingenjörssamfundet och vetenskapen.\\
-  
-%   Examensarbetet handlar då om att ta fram denna nya ”erfarenhet” och på köpet
-%   löser man en del eller hela delen av det ursprungliga problemet.\\
-
-%   Erfarenheten kommer ur en frågeställning som man i examensarbetet försöker
-%   besvara med tidigare och andras erfarenhet, egna eller modifierade metoder som
-%   ger ett resultat vilket kan användas för att diskutera ett svar på
-%   undersökningsfrågan.\\
-
-%   Detta stycke skall alltså, förutom det ursprungliga ”smala” problemet,
-%   innehålla  vad som skall undersökas för att skapa ny ingenjörserfarenhet
-%   och/eller vetenskap.
-% }
-
-% \todo[inline, backgroundcolor=kth-lightgreen]{The first paragraph after a heading is not indented, all of the
-%   subsequent paragraphs have their first line indented.}
-  
-% This chapter describes the specific problem that this thesis addresses, the context of the problem, the
-% goals of this thesis project, and outlines the structure of the thesis.\\
-
-% \todo[inline]{Give a general introduction to the area. (Remember to use appropriate references in this and all other sections.)}
-
-% One can use either biblatex or bibtex - set as the option for the document at the top of this file
-  % \ifbiblatex
-% \todo[inline, backgroundcolor=kth-lightgreen]{We use the \emph{biblatex} package to handle our references.  We
-% use the command \texttt{parencite} to get a reference in parenthesis, like
-% this \textbackslash parencite\{heisenberg2015\} resulting in \parencite{heisenberg2015}.  It is also possible to include the author as part of the sentence using \texttt{textcite}, like talking about the work of \textbackslash textcite\{einstein2016\} resulting in \textcite{einstein2016}.\\
-% This also means that you have to change the include files to include biblatex and change the way that the reference.bib file is included.}
-  % \else
-% \todo[inline, backgroundcolor=kth-lightgreen]{We use the \emph{bibtex} package to handle our references.  We therefore
-% use the command \textbackslash cite\{farshin\_make\_2019\}. For example, Farshin, \etal described how to improve LLC
-
-% at \SI{200}{Gbps}.}
-  % \fi
-
-% \todo[inline, backgroundcolor=kth-lightgreen]{Use the glossaries package to help yourself and your readers.
-% Add the acronyms and abbreviations to templates/kth/lib/acronyms.tex. Some examples are shown below:}
-% In this thesis we will examine the use of \glspl{LAN}. In this thesis we will
-% assume that \glspl{LAN} include \glspl{WLAN}, such as \gls{WiFi}.
 
 To keep files and data secure we often use encrypted filesystems. However, while these filesystems hide the content of the data, they often do not conceal the existence of data. For instance, using snapshots of the filesystems from different moments in time, it could be possible to notice a difference in the data stored and therefore that data exists and where it is located. Snapshots could even reveal user passwords\,\cite{hanMultiuserSteganographicFile2010}.
 
@@ -61,7 +10,7 @@ There exists multiple deniable filesystems that are designed to combat this prob
 
 Social media platforms such as Twitter and Flickr have many millions of daily users that post texts and images (for example, of their cats or funny videos). According to Henna Kermani at Twitter, they processed ~\SI{200}{\giga\byte} of image data every second in 2016\,\cite{MobileScaleLondona}. The photos posted on Twitter, as opposed to the ones stored on cloud services such as Google Drive, are stored for free on the service for the user, for what seems to be an indefinite period. There is also no specified limit of how many images or tweets one can make. Although, as stated in their terms of service, such limits can be imposed on specific users whenever Twitter wishes and tweets can be removed at any point in time\,\cite{twitterTwitterTermsService2021}.
 
-This project intends to create a cryptographic and deniable cloud-based filesystem called the \textit{Fejk FileSystem} (FFS) which takes advantage of free online web services, such as Twitter and Flickr, for the actual storage. The idea is to save the user's files by posting an encrypted version of the file as images and text posts these web services. The intention is not to create a revolutionary fast and usable filesystem but instead to explore how well it is possible to utilize the storage that Twitter and similar services provide their users for free, as a cryptographic and deniable cloud-based filesystem. Additionally, the performance and limits of this filesystem will be analyzed and compared to alternative filesystems, such as Google Drive, to compare the advantages and disadvantages of the developed filesystem compared to professional filesystems. The security of the filesystem will also be discussed, as well as an analysis of the steganographic capability of the developed filesystem.
+This project intends to create a cryptographic and deniable cloud-based filesystem called the \textit{Fejk FileSystem} (\gls{FFS}) which takes advantage of free online web services, such as Twitter and Flickr, for the actual storage. The idea is to save the user's files by posting an encrypted version of the file as images and text posts these web services. The intention is not to create a revolutionary fast and usable filesystem but instead to explore how well it is possible to utilize the storage that Twitter and similar services provide their users for free, as a cryptographic and deniable cloud-based filesystem. Additionally, the performance and limits of this filesystem will be analyzed and compared to alternative filesystems, such as Google Drive, to compare the advantages and disadvantages of the developed filesystem compared to professional filesystems. The security of the filesystem will also be discussed, as well as an analysis of the steganographic capability of the developed filesystem.
 
 % \input{chapters/introduction/overview} 
 % Moved the content to this page instead

@@ -12,8 +12,21 @@ To analyze the performance of FFS, filesystem benchmarking tools are used to com
 
 The encrypted APFS filesystem was used as reference for a local filesystem without required internet connection. It is the local filesystem of the development environment for FFS. It was selected as it will gives the analyze an example of a normally fast filesystem, and how the benchmark data of FFS and other filesystems looks compared to this local filesystem.
 
-GCSF was used to compare FFS against another network-based filesystem. While GCSF is not a steganographic filesystem, it is a filesystem which stores its data on an OWS, namely Google Drive. The reason GCSF was used instead of, for instance, the official Google Drive mountable filesystem volume provided by the Google Drive Desktop application, is that GCSF provides instant upload of the files and directories to Google Drive. The instant upload provided by GCSF enables us to measure the duration of a file operation easily. For instance, a write operation on a file in GCSF will not complete before the new file data has been completely stored on Google Drive. Another reason why GCSF was chosen was because it is a recent filesystem compared to other related filesystems. Some of the other filesystems discussed in Related filesystems, Section~\ref{sec:rel_fs}, were developed many years before FFS and thus do no longer work as expected, for instance due to changes in the API or that the OWS manages its uploaded data differently than previously, as the case with Twitter. 
+GCSF was used to compare FFS against another network-based filesystem. While GCSF is not a steganographic filesystem, it is a filesystem which stores its data on an OWS, namely Google Drive. The reason GCSF was used instead of, for instance, the official Google Drive mountable filesystem volume provided by the Google Drive Desktop application, is that GCSF provides instant upload of the files and directories to Google Drive. The instant upload provided by GCSF enables us to measure the duration of a file operation easily. For instance, a write operation on a file in GCSF will not complete before the new file data has been completely stored on Google Drive. Another reason why GCSF was chosen was because it is a recent filesystem compared to other related filesystems. Some of the other filesystems discussed in Related filesystems, Section~\ref{sec:rel_fs}, were developed many years before FFS and thus do no longer work as expected, for instance due to changes in the API or that the OWS manages its uploaded data differently than previously, as the case with Twitter.
 
 The instance of FFFS using an FOWS of an encrypted APFS was chosen to be compared to FFS so that the duration time of the filesystem operations could be analyzed further. As the filesystem operations of FFFS are similar to the ones of FFS, other than the network request being replaced by local filesystem operations, it is possible to analyze the effect the OWS latency has on the filesystem speed. Further, as the FOWS used by FFFS (encrypted APFS) is also analyzed and benchmarked, the computation time of the FOWS filesystem operations can be deduced from the benchmark results of FFFS. This enables us to analyze the speed of FFS, independent of the OWS used.
 
 \subsection{Tools}
+% TODO: Write about iozone
+%	Why it cannot be used for GCSF
+%	What we do instead - analyze with the help of certain files and creating/traversing directories
+
+Want to analyze with GCSF - How useable it is
+Repo has a lot of stars - if comparable useability, it is interesting as we store it freely and encrypted
+
+Write and read text file (eg. 1 Mb)
+	Make sure to clear cache/local storage between (maybe both)
+Write and read image file
+	How long it takes to open the image in eg. preview
+Create directory tree (depth 3?) and read file in bottom of tree
+	Same with image, see if differs a lot in speed compared to in root

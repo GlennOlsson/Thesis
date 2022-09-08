@@ -81,7 +81,7 @@ FFS does not support all filesystem operations that are implementable through FU
 A file, a directory, or the inode table has to be uploaded to the OWS when it is modified to save its current information. As it takes time to make requests to the OWS, FFS is created to make as few requests as possible while still saving the data required. Therefor, only the directory or file that is affected by a change is uploaded to the system, while the ones unaffected can remain the same. The inode table has to be updated with every change of a file or directory as it contains the location of the file or directory.
 
 \subsection{Cache}
-FFS implements a simple in-memory cache for the downloaded content. The cache consists of two data structures: 
+FFS implements a simple in-memory Least Recently Used (\gls{LRU}) cache for the downloaded content. The cache consists of two data structures: 
 \begin{itemize}
 	\item a Cache Map - a mapping between a post ID and its image data, and
 	\item a Cache Queue - a queue keeping track of the cached post IDs.

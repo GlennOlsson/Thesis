@@ -20,6 +20,44 @@ The instance of FFFS using an FOWS of an encrypted APFS was chosen to be compare
 % TODO: Write about iozone
 %	Why it cannot be used for GCSF
 %	What we do instead - analyze with the help of certain files and creating/traversing directories
+IOZone\,\cite{IozoneFilesystemBenchmark} is a filesystem benchmarking tool, analyzing the performance using different tests\,\cite{iozoneIozoneFilesystemBenchmark}:
+\begin{itemize}
+	\item Read
+	\item Write
+	\item Re-read
+	\item Re-write
+	\item Random read
+	\item Random write
+	\item Read backwards
+	\item Read strided
+	\item fread
+	\item fwrite
+\end{itemize}
+The tests are run with different buffer sizes for the read or write operation, and for different file sizes to read from or write to. The maximum file size is set by the user as an argument when running the benchmark, and IOZone starts from a file size of \SI{1024}{\kilo\byte}, doubling the file size until the next file size is greater than the file size specified in the argument. For each file size, the IOZone runs all test for different sizes of the buffer used in the read or write operation. Starting at \SI{4}{\kilo\byte}, the buffer size doubles after all tests have been run, and runs all the tests again with the new buffer size. The biggest buffer size for each file size is the same as the file size. For instance, with a maximum file size set at \SI{2048}{\kilo\byte}, IOZone will run all the tests for:
+\begin{enumerate}
+	\item File size = \SI{1024}{\kilo\byte}, buffer size = \SI{4}{\kilo\byte},
+	\item File size = \SI{1024}{\kilo\byte}, buffer size = \SI{8}{\kilo\byte},
+	\item File size = \SI{1024}{\kilo\byte}, buffer size = \SI{16}{\kilo\byte},
+	\item File size = \SI{1024}{\kilo\byte}, buffer size = \SI{32}{\kilo\byte},
+	\item File size = \SI{1024}{\kilo\byte}, buffer size = \SI{64}{\kilo\byte},
+	\item File size = \SI{1024}{\kilo\byte}, buffer size = \SI{128}{\kilo\byte},
+	\item File size = \SI{1024}{\kilo\byte}, buffer size = \SI{256}{\kilo\byte},
+	\item File size = \SI{1024}{\kilo\byte}, buffer size = \SI{512}{\kilo\byte},
+	\item File size = \SI{1024}{\kilo\byte}, buffer size = \SI{1024}{\kilo\byte},
+	\item File size = \SI{2048}{\kilo\byte}, buffer size = \SI{4}{\kilo\byte},
+	\item File size = \SI{2048}{\kilo\byte}, buffer size = \SI{8}{\kilo\byte},
+	\item File size = \SI{2048}{\kilo\byte}, buffer size = \SI{16}{\kilo\byte},
+	\item File size = \SI{2048}{\kilo\byte}, buffer size = \SI{32}{\kilo\byte},
+	\item File size = \SI{2048}{\kilo\byte}, buffer size = \SI{64}{\kilo\byte},
+	\item File size = \SI{2048}{\kilo\byte}, buffer size = \SI{128}{\kilo\byte},
+	\item File size = \SI{2048}{\kilo\byte}, buffer size = \SI{256}{\kilo\byte},
+	\item File size = \SI{2048}{\kilo\byte}, buffer size = \SI{512}{\kilo\byte},
+	\item File size = \SI{2048}{\kilo\byte}, buffer size = \SI{1024}{\kilo\byte}, and
+	\item File size = \SI{2048}{\kilo\byte}, buffer size = \SI{2048}{\kilo\byte}
+\end{enumerate}
+% TODO: Briefly describe each test, what it does
+
+The thesis intended to use IOZone for filesystem benchmarking for all the filesystems to have a unified method of benchmarking. However, while running IOZone on GCSF, it was found that IOZOne crashed when  
 
 Want to analyze with GCSF - How useable it is
 Repo has a lot of stars - if comparable useability, it is interesting as we store it freely and encrypted
@@ -30,3 +68,6 @@ Write and read image file
 	How long it takes to open the image in eg. preview
 Create directory tree (depth 3?) and read file in bottom of tree
 	Same with image, see if differs a lot in speed compared to in root
+
+Copy file from local filesystem
+Move within filesystem 

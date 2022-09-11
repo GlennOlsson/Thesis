@@ -693,7 +693,7 @@
 
 \newcommand{\acknowlegmentssignature}{
   \begin{flushleft}
-    San Luis Obispo, California, USA \MONTH\enspace\the\year\\
+    Amsterdam, The Netherlands \MONTH\enspace\the\year\\
     \@authorsFirstname\space\@authorsLastname
     \ifx\@secondAuthorsLastname\@empty\relax
     \else

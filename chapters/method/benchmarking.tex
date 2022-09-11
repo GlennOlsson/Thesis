@@ -57,7 +57,7 @@ The tests are run with different buffer sizes for the read or write operation, a
 \end{enumerate}
 % TODO: Briefly describe each test, what it does
 
-The thesis intended to use IOZone for filesystem benchmarking for all the filesystems to have a unified method of benchmarking. However, it was found that IOZone crashed when performing the tests on GCSF. A similar problem was found during development of FFS, that IOZone could not complete certain tests and thus crashed. The problem for FFS was solved, but as of writing, it is not possible to perform IOZone tests on GCSF. Instead, a custom test suit has been developed for the comparison FFS and GCSF, TFG. 
+The thesis intended to use IOZone for filesystem benchmarking for all the filesystems to have an unified method of benchmarking. However, it was found that IOZone crashed when performing the tests on GCSF. A similar problem was found during development of FFS, that IOZone could not complete certain tests and thus crashed. The problem for FFS was solved, but as of writing, it is not possible to perform IOZone tests on GCSF. Instead, a custom test suit has been developed for the comparison FFS and GCSF, TFG. 
 
 % "If you wish to get accurate results for the entire range of performance for a platform you need to make sure that the maximum file size that will be tested is bigger than the buffer cache." 
 % 	Will do this, max size set to 16Mb (could lower to 8Mb if slow)

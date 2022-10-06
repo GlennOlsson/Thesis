@@ -20,20 +20,7 @@ The instance of FFFS using an FOWS of an encrypted APFS was chosen to be compare
 % TODO: Write about iozone
 %	Why it cannot be used for GCSF
 %	What we do instead - analyze with the help of certain files and creating/traversing directories
-IOZone\,\cite{IozoneFilesystemBenchmark} is a filesystem benchmarking tool, analyzing the performance using different tests\,\cite{iozoneIozoneFilesystemBenchmark}:
-\begin{itemize}
-	\item Read
-	\item Write
-	\item Re-read
-	\item Re-write
-	\item Random read
-	\item Random write
-	\item Read backwards
-	\item Read strided
-	\item fread
-	\item fwrite
-\end{itemize}
-The tests are run with different buffer sizes for the read or write operation, and for different file sizes to read from or write to. The maximum file size is set by the user as an argument when running the benchmark, and IOZone starts from a file size of \SI{1024}{\kilo\byte}, doubling the file size until the next file size is greater than the file size specified in the argument. For each file size, the IOZone runs all test for different sizes of the buffer used in the read or write operation. Starting at \SI{4}{\kilo\byte}, the buffer size doubles after all tests have been run, and runs all the tests again with the new buffer size. The biggest buffer size for each file size is the same as the file size. For instance, with a maximum file size set at \SI{2048}{\kilo\byte}, IOZone will run all the tests for:
+IOZone\,\cite{IozoneFilesystemBenchmark} is a filesystem benchmarking tool used to analyze the performance of a filesystem using different tests\,\cite{iozoneIozoneFilesystemBenchmark}, among other tests: reading and writing sequentially, reading and writing randomly, and reading backwards. Each test can be run with different file sizes and different buffer sizes used for the read or write operation. Normally, multiple buffer sizes are used for each test, for each file size tested. The buffer size starts at \SI{4}{\kilo\byte} and multiplies by two up to a buffer size equal to the file size. Multiple file sizes are often used for the benchmarking tests as well. For instance, one could run the IOZone tests with file size \SI{1024}{\kilo\byte} and \SI{2048}{\kilo\byte}, which would run the following values of the file size and buffer size for each test specified:
 \begin{enumerate}
 	\item File size = \SI{1024}{\kilo\byte}, buffer size = \SI{4}{\kilo\byte},
 	\item File size = \SI{1024}{\kilo\byte}, buffer size = \SI{8}{\kilo\byte},
@@ -57,10 +44,18 @@ The tests are run with different buffer sizes for the read or write operation, a
 \end{enumerate}
 % TODO: Briefly describe each test, what it does
 
-The thesis intended to use IOZone for filesystem benchmarking for all the filesystems to have an unified method of benchmarking. However, it was found that IOZone crashed when performing certain tests on GCSF, such as backwards read. A similar problem was found during development of FFS, that IOZone could not complete certain tests and thus crashed. The problem for FFS was solved, but as of writing, it is not possible to perform certain IOZone tests on GCSF. Instead, a custom test suit has been developed for the comparison FFS and GCSF, TFG. 
+When IOZone reads from a file it has written to, it asserts that the file content is what it wrote to verify that the filesystem stores the data properly. However, it does not verify all aspects of the filesystem functionality. It does, for instance, only test writing and reading to and from a specific file in the filesystem. It does not test if directory hierarchies work as expected, nor if multiple files can be stored at the same time. IOZone is a benchmarking tool used for evaluating the performance of the filesystem, not test the functionality. The thesis has however tested certain cases of the functionality aspect of both FFS and GCSF, and found that they support directory hierarchies and multiple files as expected. Future work could research the functionality aspect of these filesystem utilizing online storage systems. APFS is expected to have full functionality as a professionally developed and widely used filesystem.
 
-Further, it was discovered that FFS also is not suitable for IOZone benchmarking due to API rate limits
+While IOZone supports multiple different file operation tests, the thesis only uses a subset of these for the benchmarking. Among other reasons, certain tests failed when run on GCSF. Further, tests such as backwards reading lack relevance as they test a rare case of filesystem operations. The documentation of IOZone\,\cite{iozoneIozoneFilesystemBenchmark} claims that the software MSC Nastran uses backwards read. The documentation also mentions that only a few operating systems provide enhancements for backwards reading, although many operating systems provide enhancements for forward reading. As FFS is intended as a proof-of-concept filesystem, and is not intended as a general-purpose filesystem, only relevant tests are chosen. The tests that FFS will use are: Forward read and write, forward re-read and re-write, and random read and write.
 
+The IOZone documentation\,\cite{iozoneIozoneFilesystemBenchmark} states that to get the most accurate performance results of the benchmarking, the maximum file size of the tests should be set to a value bigger than the filesystem cache. While the FFS cache limit is known to be \SI{5}{\mega\byte}, the cache size limit or the existence of such a limit for GCSF is unknown. The documentations states that when the cache is unknown, it should be set to greater than the physical memory of the system. However, as the memory of the computer where the benchmarking is run is \SI{16}{\giga\byte}, this is bigger than reasonable for testing FFS and GCSF. Running the IOZone benchmarking tests for file sizes of \SI{1}{\mega\byte} to \SI{16}{\mega\byte} using all buffer sizes from \SI{4}{\kilo\byte} up to the file size takes over one hour for each of FFS and GCSF. Each doubled file size takes exponentially much more time as both the file size gets bigger, and the buffer size must run for a doubled value. To run the benchmarking up to a file size greater than \SI{16}{\giga\byte} is therefore unreasonable. Further, it has been found that both GCSF and FFS might occasionally crash during benchmarking, meaning that a benchmarking test of \SI{16}{\giga\byte} might never complete due to the filesystem crashing first. The file sizes used for the IOZone tests are therefore set as:
+\begin{enumerate}
+	\item \SI{1024}{\kilo\byte}
+	\item \SI{2048}{\kilo\byte}
+	\item \SI{4096}{\kilo\byte}
+	\item \SI{8192}{\kilo\byte}
+	\item \SI{16384}{\kilo\byte}
+\end{enumerate}
 
 % "If you wish to get accurate results for the entire range of performance for a platform you need to make sure that the maximum file size that will be tested is bigger than the buffer cache." 
 % 	Will do this, max size set to 16Mb (could lower to 8Mb if slow)
@@ -69,15 +64,3 @@ Further, it was discovered that FFS also is not suitable for IOZone benchmarking
 
 Want to analyze with GCSF - How useable it is
 Repo has a lot of stars - if comparable useability, it is interesting as we store it freely and encrypted
-
-Write and read text file (eg. 1 Mb)
-	Make sure to clear cache/local storage between (maybe both)
-Write and read image file
-	How long it takes to open the image in eg. preview
-Create directory tree (depth 3?) and read file in bottom of tree
-	Same with image, see if differs a lot in speed compared to in root
-
-Copy file from local filesystem
-Move within filesystem 
-
-Read same file multiple times (cached)

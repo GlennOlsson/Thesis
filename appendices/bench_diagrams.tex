@@ -1,11 +1,20 @@
-\chapter{IOZone benchmarking diagrams}
-This appendix contains all figures of the IOZone benchmarking outputs produced. Each section contains the figures for the benchmarking results of the specific filesystem. Each figure represents one IOZone test, and each graph in the figures visualizes the performance of the filesystem for different file sizes. The x-axis shows the buffer size in kilobytes, and the y-axis is the throughput in kilobytes per second.
+\chapter{IOZone benchmarking data}
+\label{app:bench_data}
+This appendix contains tables and figures of the IOZone benchmarking outputs produced. Each section contains the tables and figures for the benchmarking results of the specific filesystem. Each table and each figure represents one IOZone test. Each tables presents the throughput in kilobytes per second for a test, for the different file sizes and buffer sizes, both presented in kB. Each graph in the figures visualizes the performance of the filesystem for different file sizes. The x-axis shows the buffer size in kilobytes, and the y-axis is the throughput in kilobytes per second.
 
 \section{FFS}
+
+\input{figures/benchmarking/ffs/Read}
+\input{figures/benchmarking/ffs/Write}
+\input{figures/benchmarking/ffs/Random read}
+\input{figures/benchmarking/ffs/Random write}
+\input{figures/benchmarking/ffs/Re-Read}
+\input{figures/benchmarking/ffs/Re-Write}
+
 \begin{figure}[!htb]
 	\label{fig:app_bench_ffs_rnd_read}
 	\begin{center}
-		\includegraphics[width=1.0\textwidth]{figures/benchmarking/ffs/Reader.pdf}
+		\includegraphics[width=1.0\textwidth]{figures/benchmarking/ffs/Read.pdf}
 	\end{center}
 	\caption{IOZone output for FFS Forward Read}
 \end{figure}
@@ -13,7 +22,7 @@ This appendix contains all figures of the IOZone benchmarking outputs produced. 
 \begin{figure}[!htb]
 	\label{fig:app_bench_ffs_rnd_read}
 	\begin{center}
-		\includegraphics[width=1.0\textwidth]{figures/benchmarking/ffs/Writer.pdf}
+		\includegraphics[width=1.0\textwidth]{figures/benchmarking/ffs/Write.pdf}
 	\end{center}
 	\caption{IOZone output for FFS Forward Write}
 \end{figure}
@@ -37,7 +46,7 @@ This appendix contains all figures of the IOZone benchmarking outputs produced. 
 \begin{figure}[!htb]
 	\label{fig:app_bench_ffs_rnd_read}
 	\begin{center}
-		\includegraphics[width=1.0\textwidth]{figures/benchmarking/ffs/Re-Reader.pdf}
+		\includegraphics[width=1.0\textwidth]{figures/benchmarking/ffs/Re-Read.pdf}
 	\end{center}
 	\caption{IOZone output for FFS Re-Read}
 \end{figure}
@@ -45,17 +54,25 @@ This appendix contains all figures of the IOZone benchmarking outputs produced. 
 \begin{figure}[!htb]
 	\label{fig:app_bench_ffs_rnd_read}
 	\begin{center}
-		\includegraphics[width=1.0\textwidth]{figures/benchmarking/ffs/Re-Writer.pdf}
+		\includegraphics[width=1.0\textwidth]{figures/benchmarking/ffs/Re-Write.pdf}
 	\end{center}
 	\caption{IOZone output for FFS Re-Write}
 \end{figure}
 
 
 \section{Fake FFS}
+
+\input{figures/benchmarking/fake-ffs/Read}
+\input{figures/benchmarking/fake-ffs/Write}
+\input{figures/benchmarking/fake-ffs/Random read}
+\input{figures/benchmarking/fake-ffs/Random write}
+\input{figures/benchmarking/fake-ffs/Re-Read}
+\input{figures/benchmarking/fake-ffs/Re-Write}
+
 \begin{figure}[!htb]
 	\label{fig:app_bench_fffs_rnd_read}
 	\begin{center}
-		\includegraphics[width=1.0\textwidth]{figures/benchmarking/fake-ffs/Reader.pdf}
+		\includegraphics[width=1.0\textwidth]{figures/benchmarking/fake-ffs/Read.pdf}
 	\end{center}
 	\caption{IOZone output for Fake FFS Forward Read}
 \end{figure}
@@ -63,7 +80,7 @@ This appendix contains all figures of the IOZone benchmarking outputs produced. 
 \begin{figure}[!htb]
 	\label{fig:app_bench_fffs_rnd_read}
 	\begin{center}
-		\includegraphics[width=1.0\textwidth]{figures/benchmarking/fake-ffs/Writer.pdf}
+		\includegraphics[width=1.0\textwidth]{figures/benchmarking/fake-ffs/Write.pdf}
 	\end{center}
 	\caption{IOZone output for Fake FFS Forward Write}
 \end{figure}
@@ -87,7 +104,7 @@ This appendix contains all figures of the IOZone benchmarking outputs produced. 
 \begin{figure}[!htb]
 	\label{fig:app_bench_fffs_rnd_read}
 	\begin{center}
-		\includegraphics[width=1.0\textwidth]{figures/benchmarking/fake-ffs/Re-Reader.pdf}
+		\includegraphics[width=1.0\textwidth]{figures/benchmarking/fake-ffs/Re-Read.pdf}
 	\end{center}
 	\caption{IOZone output for Fake FFS Re-Read}
 \end{figure}
@@ -95,16 +112,24 @@ This appendix contains all figures of the IOZone benchmarking outputs produced. 
 \begin{figure}[!htb]
 	\label{fig:app_bench_fffs_rnd_read}
 	\begin{center}
-		\includegraphics[width=1.0\textwidth]{figures/benchmarking/fake-ffs/Re-Writer.pdf}
+		\includegraphics[width=1.0\textwidth]{figures/benchmarking/fake-ffs/Re-Write.pdf}
 	\end{center}
 	\caption{IOZone output for Fake FFS Re-Write}
 \end{figure}
 
 \section{APFS}
+
+\input{figures/benchmarking/local/Read}
+\input{figures/benchmarking/local/Write}
+\input{figures/benchmarking/local/Random read}
+\input{figures/benchmarking/local/Random write}
+\input{figures/benchmarking/local/Re-Read}
+\input{figures/benchmarking/local/Re-Write}
+
 \begin{figure}[!htb]
 	\label{fig:app_bench_apfs_rnd_read}
 	\begin{center}
-		\includegraphics[width=1.0\textwidth]{figures/benchmarking/local/Reader.pdf}
+		\includegraphics[width=1.0\textwidth]{figures/benchmarking/local/Read.pdf}
 	\end{center}
 	\caption{IOZone output for APFS Forward Read}
 \end{figure}
@@ -112,7 +137,7 @@ This appendix contains all figures of the IOZone benchmarking outputs produced. 
 \begin{figure}[!htb]
 	\label{fig:app_bench_apfs_rnd_read}
 	\begin{center}
-		\includegraphics[width=1.0\textwidth]{figures/benchmarking/local/Writer.pdf}
+		\includegraphics[width=1.0\textwidth]{figures/benchmarking/local/Write.pdf}
 	\end{center}
 	\caption{IOZone output for APFS Forward Write}
 \end{figure}
@@ -136,7 +161,7 @@ This appendix contains all figures of the IOZone benchmarking outputs produced. 
 \begin{figure}[!htb]
 	\label{fig:app_bench_apfs_rnd_read}
 	\begin{center}
-		\includegraphics[width=1.0\textwidth]{figures/benchmarking/local/Re-Reader.pdf}
+		\includegraphics[width=1.0\textwidth]{figures/benchmarking/local/Re-Read.pdf}
 	\end{center}
 	\caption{IOZone output for APFS Re-Read}
 \end{figure}
@@ -144,7 +169,7 @@ This appendix contains all figures of the IOZone benchmarking outputs produced. 
 \begin{figure}[!htb]
 	\label{fig:app_bench_apfs_rnd_read}
 	\begin{center}
-		\includegraphics[width=1.0\textwidth]{figures/benchmarking/local/Re-Writer.pdf}
+		\includegraphics[width=1.0\textwidth]{figures/benchmarking/local/Re-Write.pdf}
 	\end{center}
 	\caption{IOZone output for APFS Re-Write}
 \end{figure}

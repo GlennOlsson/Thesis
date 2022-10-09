@@ -52,6 +52,23 @@ The IOZone documentation\,\cite{iozoneIozoneFilesystemBenchmark} states that to 
 	\item \SI{8192}{\kilo\byte}, and
 	\item \SI{16384}{\kilo\byte}
 \end{enumerate}
+The buffer sizes tested are:
+\begin{enumerate}
+	\item \SI{4}{\kilo\byte},
+	\item \SI{8}{\kilo\byte},
+	\item \SI{16}{\kilo\byte},
+	\item \SI{32}{\kilo\byte},
+	\item \SI{64}{\kilo\byte},
+	\item \SI{128}{\kilo\byte},
+	\item \SI{256}{\kilo\byte},
+	\item \SI{512}{\kilo\byte},
+	\item \SI{1024}{\kilo\byte},
+	\item \SI{2048}{\kilo\byte},
+	\item \SI{4096}{\kilo\byte},
+	\item \SI{8192}{\kilo\byte}, and
+	\item \SI{16384}{\kilo\byte}
+\end{enumerate}
+However, the maximum buffer size for each file size is the file size itself. For instance, for a file size of \SI{4096}{\kilo\byte}, IOZone will run the tests for buffer sizes up to, and including, \SI{4096}{\kilo\byte}. It can not run tests with a buffer size greater than \SI{4096}{\kilo\byte}.
 
 When benchmarking the filesystems using IOZone, an argument is passed to include the time to close a file (using the \texttt{close} filesystem operation) in the total time of a test. This is important as FFS, and potentially other filesystems, saves the data to the storage medium only after the device is closed. In the case of FFS, if the time of closing the file was not included, the performance of the filesystem would be appear to be higher than it actually is.
 

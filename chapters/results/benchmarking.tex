@@ -13,6 +13,15 @@ Combining all the data in one table, we get the overall performance of a test. U
 	\caption{Box plot of the IOZone output for the different tests for FFS}
 \end{figure}
 
+
+\begin{figure}[!htb]
+	\label{fig:res_box_gcsf}
+	\begin{center}
+		\includegraphics[width=1.0\textwidth]{figures/benchmarking/gcsf/GCSF-box.pdf}
+	\end{center}
+	\caption{Box plot of the IOZone output for the different tests for GCSF}
+\end{figure}
+
 Figure~\ref{fig:res_box_fffs} presents a box plot of the benchmarking results of FFFS. In this plot, it is possible to see tha the spread of the values from Write and Re-Write is high. Looking at Table~\ref{tbl:data_write_fejk_ffs}, we can see that certain values are indeed greater than the most, such as \texttt{file size = 2048, buffer size = 128} where the performance is \SI[per-mode = symbol]{116330}{\kilo\byte\per\second} which is significantly more than most values in the table. Further, Figure~\ref{fig:res_box_fffs} shows that Read, Re-Read and Random Read have similar performances, where the average and best performance of Re-Read and Random Read is better than the average and best performance of Read. Random Write has less of a spread than Write and Re-Write has, and the average performance of Random Write is better than the average performance of both Write and Re-Write.
 
 \begin{figure}[!htb]

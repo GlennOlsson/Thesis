@@ -7,7 +7,7 @@ To analyze the performance of FFS, a filesystem benchmarking tool is used to com
 	\item An encrypted APFS partition on a SSD,
 	\item An instance of GCSF, and,
 	\item An instance of FFFS using an encrypted APFS filesystem on a SSD as its FOWS.
-\end{itemize}
+\end{enumerate}
 The encrypted APFS filesystem was used as reference for a local filesystem without required internet connection. It is the local filesystem of the development environment for FFS. It was selected as it will gives the analyze an example of a modern, well-used and fast filesystem, and how the benchmark data of FFS and other filesystems looks compared to this local filesystem.
 
 GCSF was selected to compare FFS against another network-based filesystem. While GCSF is not a steganographic filesystem, it is a filesystem which stores its data on an OWS, namely Google Drive. The reason GCSF was used instead of, for instance, the official Google Drive mountable filesystem volume provided by the Google Drive Desktop application, is that GCSF provides instant upload of the files and directories to Google Drive using the Google Drive REST API. The instant upload provided by GCSF enables us to measure the duration of a file operation easily. For instance, a write operation on a file in GCSF will not complete before the new file data has been completely stored on Google Drive. Another reason why GCSF was chosen was because it is a recent filesystem compared to other related filesystems. Some of the other filesystems discussed in Related filesystems, Section~\ref{sec:rel_fs}, were developed many years before FFS and thus do no longer work as expected, for instance due to changes in the API, or that the OWS manages the uploaded data differently than previously.

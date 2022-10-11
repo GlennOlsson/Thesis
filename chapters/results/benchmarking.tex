@@ -2,8 +2,9 @@
 \label{sec:res_bench}
 This section presents the result from the IOZone benchmarking tests run on each filesystem. The output result is divided into a table for each test for each filesystem. Each table presents the benchmark performance of the test for each file size and each buffer size. It is a table of five rows and 13 columns, where each cell is the performance of the test with the specific file size and buffer size. The complete data tables and graphs presenting the performance of each file system for the different file sizes can be found in Appendix~\ref{app:bench_data}.
 
-Combining all the data in one table, we get the overall performance of a test. Using this data, we can plot a box plot presenting the spread of the values in the table. Figure~\ref{fig:res_box_ffs} presents a box plot of the benchmarking results of FFS.
-% TODO: Fill in when have real data about ffs
+The IOZone benchmarking for FFS ran for 41 minutes, and the IOZone benchmarking for GCSF took 20 minutes. They were started at the same time and the internet speed tests ran every five minutes until the benchmarking of FFS was completed. In total, eight speed tests were conducted with an average latency of \SI{15.22}{\milli\second}. The average download speed was \SI[per-mode = symbol]{90.96}{\mega\bit\per\second} and the average upload speed was \SI[per-mode = symbol]{92.95}{\mega\bit\per\second}.
+
+Combining the 55 data points one table, we get the overall performance of a test. Using this data, we can plot a box plot presenting the spread of the values in the table. Figure~\ref{fig:res_box_ffs} presents a box plot of the benchmarking results of FFS. It can be observed that the Read, Re-Read, and Random Read operations are significantly faster than the Write, Re-Write, and Random Write operations. The Write, Re-Write, and Random Write operations all have a big spread of values. It can also be noted that the median performance of Re-Read and Random Read are better than the median performance of Read. The median performance of Re-Read and Random Read are comparable where Random Read has a bigger spread of values.
 
 \begin{figure}[!htb]
 	\label{fig:res_box_ffs}
@@ -13,6 +14,7 @@ Combining all the data in one table, we get the overall performance of a test. U
 	\caption{Box plot of the IOZone output for the different tests for FFS}
 \end{figure}
 
+Figure~\ref{fig:res_box_gcsf} presents a box plot of the benchmarking results of GCSF. It shows that Write, Re-Write, and Random Write have significantly less performance than the results of Read, Re-Read, and Random Read. It can be noted that the median performance of Re-Write and Random Write are similar, and both are less than the median performance of Write. The median performance of Re-Read and Random Read are higher than the median performance of Read.
 
 \begin{figure}[!htb]
 	\label{fig:res_box_gcsf}
@@ -22,7 +24,7 @@ Combining all the data in one table, we get the overall performance of a test. U
 	\caption{Box plot of the IOZone output for the different tests for GCSF}
 \end{figure}
 
-Figure~\ref{fig:res_box_fffs} presents a box plot of the benchmarking results of FFFS. In this plot, it is possible to see tha the spread of the values from Write and Re-Write is high. Looking at Table~\ref{tbl:data_write_fejk_ffs}, we can see that certain values are indeed greater than the most, such as \texttt{file size = 2048, buffer size = 128} where the performance is \SI[per-mode = symbol]{116330}{\kilo\byte\per\second} which is significantly more than most values in the table. Further, Figure~\ref{fig:res_box_fffs} shows that Read, Re-Read and Random Read have similar performances, where the average and best performance of Re-Read and Random Read is better than the average and best performance of Read. Random Write has less of a spread than Write and Re-Write has, and the average performance of Random Write is better than the average performance of both Write and Re-Write.
+Figure~\ref{fig:res_box_fffs} presents a box plot of the benchmarking results of FFFS. In this plot, one can see that the spread of the values from Write and Re-Write is high. Looking at Table~\ref{tbl:data_write_fejk_ffs}, we can see that certain values are indeed greater than the most, such as \texttt{file size = 2048, buffer size = 128} where the performance is \SI[per-mode = symbol]{116330}{\kilo\byte\per\second} which is significantly more than most values in the table. Further, Figure~\ref{fig:res_box_fffs} shows that Read, Re-Read and Random Read have similar performances, where the median and best performance of Re-Read and Random Read is better than the median and best performance of Read. Random Write has less of a spread than Write and Re-Write has, and the median performance of Random Write is better than the median performance of both Write and Re-Write.
 
 \begin{figure}[!htb]
 	\label{fig:res_box_fffs}
@@ -32,7 +34,7 @@ Figure~\ref{fig:res_box_fffs} presents a box plot of the benchmarking results of
 	\caption{Box plot of the IOZone output for the different tests for FFFS}
 \end{figure}
 
-Figure~\ref{fig:res_box_apfs} presents a box plot for APFS. In this figure, it is possible to see that the performance of the different write operations are lower than the performance of the read operations. Further, it can be noted that the average performance of the Re-Read and the Re-Write tests are better than the performance of the standard Read and Write tests. The average performance of Random Read is similar to the average performance of Read, but the average performance of Random Write is significantly lower than the average performance of Write.
+Figure~\ref{fig:res_box_apfs} presents a box plot for APFS. In this figure, it is possible to see that the performance of the different write operations are lower than the performance of the read operations. Further, it can be noted that the median performance of the Re-Read and the Re-Write tests are better than the performance of the standard Read and Write tests. The median performance of Random Read is similar to the median performance of Read, but the median performance of Random Write is significantly lower than the median performance of Write.
 
 \begin{figure}[!htb]
 	\label{fig:res_box_apfs}

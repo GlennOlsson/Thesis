@@ -4,7 +4,7 @@ This section presents the result from the IOZone benchmarking tests run on each 
 
 The IOZone benchmarking for FFS ran for 41 minutes, and the IOZone benchmarking for GCSF took 20 minutes. They were started at the same time and the internet speed tests ran every five minutes until the benchmarking of FFS was completed. In total, eight speed tests were conducted with an average latency of \SI{15.22}{\milli\second}. The average download speed was \SI[per-mode = symbol]{90.96}{\mega\bit\per\second} and the average upload speed was \SI[per-mode = symbol]{92.95}{\mega\bit\per\second}.
 
-Combining the 55 data points one table, we get the overall performance of a test. Using this data, we can plot a box plot presenting the spread of the values in the table. Figure~\ref{fig:res_box_ffs} presents a box plot of the benchmarking results of FFS. It can be observed that the Read, Re-Read, and Random Read operations are significantly faster than the Write, Re-Write, and Random Write operations. The Write, Re-Write, and Random Write operations all have a big spread of values. It can also be noted that the median performance of Re-Read and Random Read are better than the median performance of Read. The median performance of Re-Read and Random Read are comparable where Random Read has a bigger spread of values.
+Combining the 55 data points in one table, we get the overall performance of a test. Using this data, we can plot a box plot presenting the spread of the values in the table. Figure~\ref{fig:res_box_ffs} presents a box plot of the benchmarking results of FFS. It can be observed that the Read, Re-Read, and Random Read operations are significantly faster than the Write, Re-Write, and Random Write operations. The Write, Re-Write, and Random Write operations all have a big spread of values. It can also be noted that the median performance of Re-Read and Random Read are better than the median performance of Read. The median performance of Re-Read and Random Read are comparable where Random Read has a bigger spread of values.
 
 \begin{figure}[!htb]
 	\label{fig:res_box_ffs}
@@ -34,7 +34,7 @@ Figure~\ref{fig:res_box_fffs} presents a box plot of the benchmarking results of
 	\caption{Box plot of the IOZone output for the different tests for FFFS}
 \end{figure}
 
-Figure~\ref{fig:res_box_apfs} presents a box plot for APFS. In this figure, it is possible to see that the performance of the different write operations are lower than the performance of the read operations. Further, it can be noted that the median performance of the Re-Read and the Re-Write tests are better than the performance of the standard Read and Write tests. The median performance of Random Read is similar to the median performance of Read, but the median performance of Random Write is significantly lower than the median performance of Write.
+Figure~\ref{fig:res_box_apfs} presents a box plot for APFS. In this figure, it is possible to see that the performance of the different write operations is lower than the performance of the read operations. Further, it can be noted that the median performance of the Re-Read and the Re-Write tests is better than the performance of the standard Read and Write tests. The median performance of Random Read is similar to the median performance of Read, but the median performance of Random Write is significantly lower than the median performance of Write.
 
 \begin{figure}[!htb]
 	\label{fig:res_box_apfs}

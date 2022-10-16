@@ -30,7 +30,7 @@ FFS does not support all filesystem operations that are implementable through \g
 
 \begin{table}[!ht]
 	\begin{center}
-		\caption{Filesystem operations implementable trough the \gls{FUSE} API, and wether or not \gls{FFS} implements them}
+		\caption{Filesystem operations implementable trough the \gls{FUSE} \gls{API}, and wether or not \gls{FFS} implements them}
 		\begin{tabular}{| c | c |}
 			
 			\hline
@@ -131,11 +131,11 @@ The initial intention of \gls{FFS} was to use Twitter as the \gls{OWS}. Initial 
 
 Flickr saves the original version of the uploaded image and thus it can be used to download the same image as was uploaded. This also means that data that is encoded into an \gls{FFS}-encoded image can be uploaded, downloaded, and decoded into the same data as before. While they do not assure that they will always support original images, they also do not indicate that this would change. Therefore, Flickr can be used at this moment for the proof-of-concept filesystem that \gls{FFS} is. A free-tier Flickr account is therefore used for \gls{FFS}. 
 
-Flickr provides an extensive free REST API for non-commercial use. A user can create applications and generate access tokens for the application. These application tokens are later used to request tokens from users who authenticate using Flickr's web interface and allow the application to do requests for the user. The application will then receive access tokens for the user, which are used to authenticate with the API for the API calls that require authentication.
+Flickr provides an extensive free REST \gls{API} for non-commercial use. A user can create applications and generate access tokens for the application. These application tokens are later used to request tokens from users who authenticate using Flickr's web interface and allow the application to do requests for the user. The application will then receive access tokens for the user, which are used to authenticate with the \gls{API} for the \gls{API} calls that require authentication.
 
 Flickr provides the ability to search for all the images posted by a user and to sort these results by the time of posting. Every time an image is uploaded to Flickr, it is due to some modification in the filesystem, for instance, a write operation to a file or a creation of a new directory. For every modification in the filesystem, the inode table will have to be updated. Therefore, we can ensure that the inode table is always the most recently uploaded image to Flickr by configuring \gls{FFS} to upload all other images first, for instance, the newly written file. This provides \gls{FFS} with a simple way of querying the inode table from Flickr - by simply requesting the most recently uploaded image on the Flickr account.
 
-While the Flickr API is extensive in its functionality, \gls{FFS} only uses a few of the provided capabilities. The Flickr API capabilities that \gls{FFS} uses are:
+While the Flickr \gls{API} is extensive in its functionality, \gls{FFS} only uses a few of the provided capabilities. The Flickr \gls{API} capabilities that \gls{FFS} uses are:
 \begin{itemize}
 	\item Upload an image and return the post ID,
 	\item Query the most recent image by a user, and return the URL and post ID of the original uploaded image,
@@ -164,7 +164,7 @@ where $t_{ffs}$ is the time that \gls{FFS} takes to, for example for a file read
 This time will be approximately consistent for the same request for the same file size. However, computer memory cache misses/hits and process scheduling, among other factors, can fluctuate the value of $t_{ffs}$. $t_{ows}$ is the total time required to complete all requests to the \gls{OWS} for a filesystem operation. For instance, for a similar read operation as above;
 \begin{itemize}
 	\item to download all the directories in the file path,
-	\item query the Flickr API for the \gls{URL} pointing to the most recently uploaded image,
+	\item query the Flickr \gls{API} for the \gls{URL} pointing to the most recently uploaded image,
 	\item download the image representing the inode table, and,
 	\item to download the images representing the file to read.
 \end{itemize}
@@ -276,7 +276,7 @@ This operation removes a file given the file path. The file is removed from the 
 \subsubsection{rmdir}
 Similar to \texttt{unlink}, this operation removes the directory at the path. The directory and all its subdirectories are traversed, and the post IDs of these files and directories are recorded for deletion later. Following this, the entry of the removed directory is removed from the parent directory. The inode entry for the removed directory is removed. The parent directory is updated to the \gls{OWS}, and the inode table is updated with the new posts of the parent directory. Following this, the inode table is updated to the \gls{OWS}. The old parent directory and the old inode table are removed from the \gls{OWS}.
 
-The operation also starts a new thread, where all the posts of files and subdirectories inside the removed directory, are removed from the \gls{OWS}. They are removed to save space on the \gls{OWS}, and a separate thread is used to save computation time for subsequent file operations. There is no data race involved as the API is thread-safe, and the posts are no longer associated with any data structures on the main thread and would not be accessed there.
+The operation also starts a new thread, where all the posts of files and subdirectories inside the removed directory, are removed from the \gls{OWS}. They are removed to save space on the \gls{OWS}, and a separate thread is used to save computation time for subsequent file operations. There is no data race involved as the \gls{API} is thread-safe, and the posts are no longer associated with any data structures on the main thread and would not be accessed there.
 
 \subsubsection{getattr}
 This operation returns attributes about a file or directory given a path. This includes permissions, the number of entries (if the provided path points to a directory), timestamps of creation, timestamps of last access, and timestamps of last modification. However, as mentioned previously, \gls{FFS} does not implement all features, such as permissions. Instead of keeping track of a file's or directory's permissions, all calls to a valid path will return full read, write, and execute permissions for everyone. However, the timestamps are stored in the inode table of \gls{FFS}. The file or directory pointed to by the path does not need to be downloaded, all the metadata that \gls{FFS} stores is accessible through the inode entry in the inode table, and the inode table is always cached.
@@ -309,6 +309,6 @@ The additional directory is the root directory. Thus, the maximum number of file
 
 Limits to the file sizes also depend on the machine where \gls{FFS} is mounted. When a file is read or written to, the complete file is read into memory. This requires the computer to provide at least as much memory as the size of the file. However, even if the computer has less memory available, more memory can often be provided through a memory swap on the hard disk. Apple ensures that the swapped data is securely encrypted on the hard disk\,\cite{appleinc.WhatSecureVirtual}. However, using a memory swap puts a constraint on the storage of the computer to be sufficient. Further, as \gls{FFS} temporarily saves the data on the local filesystem before it is uploaded to Flickr, the storage device must have sufficient storage available. For instance, a file larger than the available storage on the local filesystem cannot be saved to \gls{FFS}. If the local filesystem has no available storage, very few filesystem operations can be performed on \gls{FFS} as any operation that modifies the inode table requires the new inode table to be saved to the local filesystem before it is uploaded to Flickr. 
 
-Another limitation of \gls{FFS} is the rate limits presented by the Flickr API. Flickr allows up to $3\,600$ API requests per hour, after which the API keys may be revoked by Flickr. $3\,600$ requests per hour equals $60$ requests per minute, or $1$ request per second. If the average request takes less than a second for constant, sequential Flickr API calls, the API keys could be revoked. Further, some requests are sent concurrently to Flickr which means that \gls{FFS} could reach $3\,600$ API calls faster. However, as long as \gls{FFS} is not constantly serving filesystem calls, the API limit should be of little concern.
+Another limitation of \gls{FFS} is the rate limits presented by the Flickr \gls{API}. Flickr allows up to $3\,600$ \gls{API} requests per hour, after which the \gls{API} keys may be revoked by Flickr. $3\,600$ requests per hour equals $60$ requests per minute, or $1$ request per second. If the average request takes less than a second for constant, sequential Flickr \gls{API} calls, the \gls{API} keys could be revoked. Further, some requests are sent concurrently to Flickr which means that \gls{FFS} could reach $3\,600$ \gls{API} calls faster. However, as long as \gls{FFS} is not constantly serving filesystem calls, the \gls{API} limit should be of little concern.
 
 A limitation of \gls{FFS} that is not possible to quantify is the bandwidth and latency of the network connection from the user to Flickr. The connection can vary significantly depending on for instance the network load at a given moment and the geographic location of the user. A slow network connection is not something \gls{FFS} can solve, but is left as an exercise for the reader.

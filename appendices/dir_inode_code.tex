@@ -1,12 +1,12 @@
 \chapter{Directory, InodeTable, and InodeEntry class and attributes representation}
-This chapter present pseudo-code of the different data structures used by FFS. Listing~\ref{lst:dir_itable_classes} presents the attributes each C++ class stores in-memory, which is also encoded into the binary representation of the object when it is serialized before uploaded to the OWS.
+This chapter present pseudo-code of the different data structures used by \gls{FFS}. Listing~\ref{lst:dir_itable_classes} presents the attributes each C++ class stores in-memory, which is also encoded into the binary representation of the object when it is serialized before uploaded to the \gls{OWS}.
 
 \label{app:inode_dir_code}
-\begin{lstlisting}[language=python, caption={The attributes classes representing directories and the inode table in FFS}, label=lst:dir_itable_classes,breaklines=true]
+\begin{lstlisting}[language=python, caption={The attributes classes representing directories and the inode table in \gls{FFS}}, label=lst:dir_itable_classes,breaklines=true]
 
 # typedef inode_id = uint32_t
 
-# Represents a directory in FFS. Keeps track of the filename and inode of each file
+# Represents a directory in \gls{FFS}. Keeps track of the filename and inode of each file
 class Directory
 	# Map of (filename, inode id) representing the content of the directory
 	map<string, inode_id> entries

@@ -1,7 +1,39 @@
 \section{Development environment specification}
 \label{sec:dev_env}
-Development of \gls{FFS} was done on a 2016 year model Macbook Pro laptop with a \SI{2.6}{\giga\hertz} Quad-Core Intel Core i7 processor and \SI{16}{\giga\byte} \SI{2133}{\mega\hertz} LPDDR3 memory. The storage device of the computer was a \SI{250}{\giga\byte} \gls{SSD}, and the filesystem used was an encrypted \gls{APFS} partition. The computer was running macOS Monterey 12.5.
+Development of \gls{FFS} was done on a 15 inch 2016 year model Macbook Pro laptop with a \SI{2.6}{\giga\hertz} Quad-Core Intel Core i7 processor and \SI{16}{\giga\byte} \SI{2133}{\mega\hertz} LPDDR3 memory. The storage device of the computer was a \SI{250}{\giga\byte} \gls{SSD} running an encrypted \gls{APFS} partition as the filesystem. Apple claims that the \gls{SSD} has a read speed of \SI[per-mode = symbol]{3.1}{\giga\byte\per\second} and a write speed of \SI[per-mode = symbol]{2.2}{\giga\byte\per\second}. The computer used to develop FFS was running macOS.
 
-FFS was developed using C++20 and compiled using Apple clang version 13.0.0, using target x86\_64\-apple\-darwin21.4.0. \gls{FFS} uses the ImageMagick Magick++ library\,\cite{ImageMagick2022} for image processing. Version 7.1.0\-29 of Magick++ is used by \gls{FFS}. macFUSE\,\cite{HomeMacFUSE} version 4.2.5 is used for \gls{FFS} to use the \gls{FUSE} \gls{API}. \gls{FUSE} \gls{API} version 26 is used. cURLpp\,\cite{barrette-lapierreCURLpp2022} is a cURL\,\cite{CurlCurl2022} C++ wrapper used by \gls{FFS} to make HTTP requests. Version 0.8.1 of cURLpp is used by \gls{FFS}. libOauth\,\cite{Liboauth} version 1.0.3 is used by \gls{FFS} to sign and encode HTTP requests according to the OAuth\,\cite{barrette-lapierreCURLpp2022} standard. Flickcurl\,\cite{beckettFlickcurlLibraryFlickr} version 1.26 is a C library used by \gls{FFS} to communicate with parts of the Flickr \gls{API}. Crypto++\,\cite{CryptoLibraryFree} is a C++ library providing cryptographic schemes. \gls{FFS} uses Crypto++ to encrypt end decrypt the data stored in \gls{FFS}, and to derive the keys used in the encryption and decryption algorithm. Crypto++ version 8.6 is used by \gls{FFS}.
+Table~\ref{tbl:dev_env} presents the version of the libraries, APIs and tools used by FFS. FFS was developed using C++ and compiled using Apple clang. \gls{FFS} uses the ImageMagick Magick++ library\,\cite{ImageMagick2022} for image processing. macFUSE\,\cite{HomeMacFUSE} is used for \gls{FFS} to use the \gls{FUSE} \gls{API}. cURLpp\,\cite{barrette-lapierreCURLpp2022} is a cURL\,\cite{CurlCurl2022} C++ wrapper used by \gls{FFS} to make HTTP requests. libOauth\,\cite{Liboauth} is used by \gls{FFS} to sign and encode HTTP requests according to the OAuth\,\cite{barrette-lapierreCURLpp2022} standard. Flickcurl\,\cite{beckettFlickcurlLibraryFlickr} is a C library used by \gls{FFS} to communicate with parts of the Flickr \gls{API}. Crypto++\,\cite{CryptoLibraryFree} is a C++ library providing cryptographic schemes. \gls{FFS} uses Crypto++ to encrypt end decrypt the data stored in \gls{FFS}, and to derive the keys used in the encryption and decryption algorithm. 
+
+
+\begin{table}[!ht]
+	\begin{center}
+		\caption{The versions of the libraries, APIs, and tools used by \gls{FFS}}
+		\begin{tabular}{| l || c |}
+			
+			\hline
+
+			\textbf{Library, API, or tool} & \textbf{Version}\\
+			
+			\hline
+			\hline
+			
+				C++						& 20 \\
+				Apple clang 			& 13.0.0\\
+				Apple clang target		& x86\_64\-apple\-darwin21.4.0\\
+				ImageMagick Magick++	& 7.1.0\-29\\
+				macFUSE					& 4.2.5 \\
+				FUSE API				& 26 \\
+				cURLpp					& 0.8.1 \\
+				libOauth				& 1.0.3 \\
+				Flickcurl				& 1.26 \\
+				Crypto++				& 8.6 \\
+				macOS Monterey			& 12.5\\
+
+			\hline
+		\end{tabular}
+		\label{tbl:dev_env}
+	\end{center}
+
+\end{table}
 
 FFS was developed for use on a single computer for simplicity, and the version used for the operating system, libraries, and tools were the most recent up-to-date versions when the development of the filesystem started. To avoid re-writing the source code to handle new \gls{API} designs, these versions remained the same throughout the development process.

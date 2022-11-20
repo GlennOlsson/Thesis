@@ -1020,13 +1020,13 @@ get a list of all of the programs at KTH.
 
 \lstset{extendedchars=true}
 \begin{lstlisting}[language={Python}, caption={Using a python program to
-    access the KTH API to get all of the programs at KTH}, label=lst:programmes]
+    access the KTH \gls{API} to get all of the programs at KTH}, label=lst:programmes]
 KOPPSbaseUrl = 'https://www.kth.se'
 
 def v1_get_programmes():
     global Verbose_Flag
     #
-    # Use the KOPPS API to get the data
+    # Use the KOPPS \gls{API} to get the data
     # note that this returns XML
     url = "{0}/api/kopps/v1/programme".format(KOPPSbaseUrl)
     if Verbose_Flag:

@@ -1,6 +1,6 @@
 \section{Benchmarking}
 \label{sec:res_bench}
-This section presents the result from the IOZone benchmarking tests run on each filesystem. The output result is divided into a table for each test for each filesystem. Each table presents the benchmark performance of the test for each file size and each buffer size. The benchmarking completed successfully for all file sizes for \gls{FFS}, \gls{FFFS}, and \gls{APFS}. For the biggest file size, \SI{262144}{\kilo\byte}, \gls{GCSF} crashed multiple times, but it succeeded for the other file sizes. In total, six benchmarking tests were conducted on the filesystems, using nine file sizes (eight for \gls{GCSF}) and up to 13 buffer sizes per file size. Each table presented has nine rows (eight rows for \gls{GCSF}) and 13 columns, where each cell is the performance of the test with the specific file size and buffer size. Each table for \gls{FFS}, \gls{FFFS}, and \gls{APFS} have 107 cells, and the table for \gls{GCSF} has 94 cells. The complete data tables and graphs presenting the performance of each file system for the different file sizes can be found in Appendix~\ref{app:bench_data}.
+This section presents the result from the IOZone benchmarking tests run on each filesystem. The output result is divided into a table for each test for each filesystem. Each table presents the benchmark performance of the test for each file size and each buffer size. The benchmarking completed successfully for all file sizes for \gls{FFS}, \gls{FFFS}, and \gls{APFS}. For the biggest file size, \SI{262144}{\kilo\byte}, \gls{GCSF} crashed multiple times, but it succeeded for the other file sizes. In total, six benchmarking tests were conducted on the filesystems, using nine file sizes (eight for \gls{GCSF}) and up to 13 buffer sizes per file size. Each table presented has nine rows (eight rows for \gls{GCSF}) and 13 columns, where each cell is the performance of the test with the specific file size and buffer size. Each table for \gls{FFS}, \gls{FFFS}, and \gls{APFS} have 107 cells, and the table for \gls{GCSF} has 94 cells. The complete data tables presenting the performance of each file system for the different file sizes can be found in Appendix~\ref{app:bench_data}.
 
 The average latency of the internet speed when \gls{FFS} ran was \SI{15.3}{\milli\second}, the average download speed was \SI[per-mode = symbol]{90.87}{\mega\bit\per\second}, and the average upload speed was \SI[per-mode = symbol]{92.95}{\mega\bit\per\second}. The average latency of the internet speed when \gls{GCSF} ran was \SI{17.29}{\milli\second}, the average download speed was \SI[per-mode = symbol]{89.2}{\mega\bit\per\second}, and the average upload speed was \SI[per-mode = symbol]{91.83}{\mega\bit\per\second}.
 
@@ -76,4 +76,208 @@ Figure~\ref{fig:res_box_rndwrite} presents a box plot for the Random read test f
 
 \FloatBarrier
 
-\gls{FFS} does not have the best performance in any of the box plots presented. \gls{GCSF} has better performance than \gls{FFS} for all tests run with the benchmarking.
+\gls{FFS} does not have the best performance in any of the box plots presented. \gls{GCSF} has better performance than \gls{FFS} for all tests run with the benchmarking. Following are diagrams presenting the performance of each benchmarking test per file size, for each filesystem. Figure~\ref{fig:bench_ffs_read}, Figure~\ref{fig:bench_ffs_write}, Figure~\ref{fig:bench_ffs_re_read}, Figure~\ref{fig:bench_ffs_re_write}, Figure~\ref{fig:bench_ffs_rnd_read}, and Figure~\ref{fig:bench_ffs_rnd_write} presents the performances of the Read, Write, \mbox{Re-Read}, \mbox{Re-Write}, Random Read, and Random Write tests for \gls{FFS}.
+
+\begin{figure}[!htb]
+	\label{fig:bench_ffs_read}
+	\begin{center}
+		\includegraphics[width=1.0\textwidth]{figures/benchmarking/ffs/Read.pdf}
+	\end{center}
+	\caption{IOZone output for FFS Read}
+\end{figure}
+
+\begin{figure}[!htb]
+	\label{fig:bench_ffs_write}
+	\begin{center}
+		\includegraphics[width=1.0\textwidth]{figures/benchmarking/ffs/Write.pdf}
+	\end{center}
+	\caption{IOZone output for FFS Write}
+\end{figure}
+
+\begin{figure}[!htb]
+	\label{fig:bench_ffs_re_read}
+	\begin{center}
+		\includegraphics[width=1.0\textwidth]{figures/benchmarking/ffs/Re-Read.pdf}
+	\end{center}
+	\caption{IOZone output for FFS \mbox{Re-Read}}
+\end{figure}
+
+\begin{figure}[!htb]
+	\label{fig:bench_ffs_re_write}
+	\begin{center}
+		\includegraphics[width=1.0\textwidth]{figures/benchmarking/ffs/Re-Write.pdf}
+	\end{center}
+	\caption{IOZone output for FFS \mbox{Re-Write}}
+\end{figure}
+
+\begin{figure}[!htb]
+	\label{fig:bench_ffs_rnd_read}
+	\begin{center}
+		\includegraphics[width=1.0\textwidth]{figures/benchmarking/ffs/Random read.pdf}
+	\end{center}
+	\caption{IOZone output for FFS Random read}
+\end{figure}
+
+\begin{figure}[!htb]
+	\label{fig:bench_ffs_rnd_write}
+	\begin{center}
+		\includegraphics[width=1.0\textwidth]{figures/benchmarking/ffs/Random write.pdf}
+	\end{center}
+	\caption{IOZone output for FFS Random write}
+\end{figure}
+
+\FloatBarrier
+
+Figure~\ref{fig:bench_fffs_read}, Figure~\ref{fig:bench_fffs_write}, Figure~\ref{fig:bench_fffs_re_read}, Figure~\ref{fig:bench_fffs_re_write}, Figure~\ref{fig:bench_fffs_rnd_read}, and Figure~\ref{fig:bench_fffs_rnd_write} presents the performances of the Read, Write, \mbox{Re-Read}, \mbox{Re-Write}, Random Read, and Random Write tests for \gls{FFFS}.
+
+\begin{figure}[!htb]
+	\label{fig:bench_fffs_read}
+	\begin{center}
+		\includegraphics[width=1.0\textwidth]{figures/benchmarking/fejk-ffs/Read.pdf}
+	\end{center}
+	\caption{IOZone output for Fejk FFS Read}
+\end{figure}
+
+\begin{figure}[!htb]
+	\label{fig:bench_fffs_write}
+	\begin{center}
+		\includegraphics[width=1.0\textwidth]{figures/benchmarking/fejk-ffs/Write.pdf}
+	\end{center}
+	\caption{IOZone output for Fejk FFS Write}
+\end{figure}
+
+\begin{figure}[!htb]
+	\label{fig:bench_fffs_re_read}
+	\begin{center}
+		\includegraphics[width=1.0\textwidth]{figures/benchmarking/fejk-ffs/Re-Read.pdf}
+	\end{center}
+	\caption{IOZone output for Fejk FFS \mbox{Re-Read}}
+\end{figure}
+
+\begin{figure}[!htb]
+	\label{fig:bench_fffs_re_write}
+	\begin{center}
+		\includegraphics[width=1.0\textwidth]{figures/benchmarking/fejk-ffs/Re-Write.pdf}
+	\end{center}
+	\caption{IOZone output for Fejk FFS \mbox{Re-Write}}
+\end{figure}
+
+\begin{figure}[!htb]
+	\label{fig:bench_fffs_rnd_read}
+	\begin{center}
+		\includegraphics[width=1.0\textwidth]{figures/benchmarking/fejk-ffs/Random read.pdf}
+	\end{center}
+	\caption{IOZone output for Fejk FFS Random read}
+\end{figure}
+
+\begin{figure}[!htb]
+	\label{fig:bench_fffs_rnd_write}
+	\begin{center}
+		\includegraphics[width=1.0\textwidth]{figures/benchmarking/fejk-ffs/Random write.pdf}
+	\end{center}
+	\caption{IOZone output for Fejk FFS Random write}
+\end{figure}
+
+\FloatBarrier
+
+Figure~\ref{fig:bench_gcsf_read}, Figure~\ref{fig:bench_gcsf_write}, Figure~\ref{fig:bench_gcsf_re_read}, Figure~\ref{fig:bench_gcsf_re_write}, Figure~\ref{fig:bench_gcsf_rnd_read}, and Figure~\ref{fig:bench_gcsf_rnd_write} presents the performances of the Read, Write, \mbox{Re-Read}, \mbox{Re-Write}, Random Read, and Random Write tests for \gls{GCSF}.
+
+\begin{figure}[!htb]
+	\label{fig:bench_gcsf_read}
+	\begin{center}
+		\includegraphics[width=1.0\textwidth]{figures/benchmarking/gcsf/Read.pdf}
+	\end{center}
+	\caption{IOZone output for GCSF Read}
+\end{figure}
+
+\begin{figure}[!htb]
+	\label{fig:bench_gcsf_write}
+	\begin{center}
+		\includegraphics[width=1.0\textwidth]{figures/benchmarking/gcsf/Write.pdf}
+	\end{center}
+	\caption{IOZone output for GCSF Write}
+\end{figure}
+
+\begin{figure}[!htb]
+	\label{fig:bench_gcsf_re_read}
+	\begin{center}
+		\includegraphics[width=1.0\textwidth]{figures/benchmarking/gcsf/Re-Read.pdf}
+	\end{center}
+	\caption{IOZone output for GCSF \mbox{Re-Read}}
+\end{figure}
+
+\begin{figure}[!htb]
+	\label{fig:bench_gcsf_re_write}
+	\begin{center}
+		\includegraphics[width=1.0\textwidth]{figures/benchmarking/gcsf/Re-Write.pdf}
+	\end{center}
+	\caption{IOZone output for GCSF \mbox{Re-Write}}
+\end{figure}
+
+\begin{figure}[!htb]
+	\label{fig:bench_gcsf_rnd_read}
+	\begin{center}
+		\includegraphics[width=1.0\textwidth]{figures/benchmarking/gcsf/Random read.pdf}
+	\end{center}
+	\caption{IOZone output for GCSF Random read}
+\end{figure}
+
+\begin{figure}[!htb]
+	\label{fig:bench_gcsf_rnd_write}
+	\begin{center}
+		\includegraphics[width=1.0\textwidth]{figures/benchmarking/gcsf/Random write.pdf}
+	\end{center}
+	\caption{IOZone output for GCSF Random write}
+\end{figure}
+
+\FloatBarrier
+
+Figure~\ref{fig:bench_apfs_read}, Figure~\ref{fig:bench_apfs_write}, Figure~\ref{fig:bench_apfs_re_read}, Figure~\ref{fig:bench_apfs_re_write}, Figure~\ref{fig:bench_apfs_rnd_read}, and Figure~\ref{fig:bench_apfs_rnd_write} presents the performances of the Read, Write, \mbox{Re-Read}, \mbox{Re-Write}, Random Read, and Random Write tests for \gls{APFS}.
+
+\begin{figure}[!htb]
+	\label{fig:bench_apfs_read}
+	\begin{center}
+		\includegraphics[width=1.0\textwidth]{figures/benchmarking/local/Read.pdf}
+	\end{center}
+	\caption{IOZone output for \gls{APFS} Read}
+\end{figure}
+
+\begin{figure}[!htb]
+	\label{fig:bench_apfs_write}
+	\begin{center}
+		\includegraphics[width=1.0\textwidth]{figures/benchmarking/local/Write.pdf}
+	\end{center}
+	\caption{IOZone output for \gls{APFS} Write}
+\end{figure}
+
+\begin{figure}[!htb]
+	\label{fig:bench_apfs_re_read}
+	\begin{center}
+		\includegraphics[width=1.0\textwidth]{figures/benchmarking/local/Re-Read.pdf}
+	\end{center}
+	\caption{IOZone output for \gls{APFS} \mbox{Re-Read}}
+\end{figure}
+
+\begin{figure}[!htb]
+	\label{fig:bench_apfs_re_write}
+	\begin{center}
+		\includegraphics[width=1.0\textwidth]{figures/benchmarking/local/Re-Write.pdf}
+	\end{center}
+	\caption{IOZone output for \gls{APFS} \mbox{Re-Write}}
+\end{figure}
+
+\begin{figure}[!htb]
+	\label{fig:bench_apfs_rnd_read}
+	\begin{center}
+		\includegraphics[width=1.0\textwidth]{figures/benchmarking/local/Random read.pdf}
+	\end{center}
+	\caption{IOZone output for \gls{APFS} Random read}
+\end{figure}
+
+\begin{figure}[!htb]
+	\label{fig:bench_apfs_rnd_write}
+	\begin{center}
+		\includegraphics[width=1.0\textwidth]{figures/benchmarking/local/Random write.pdf}
+	\end{center}
+	\caption{IOZone output for \gls{APFS} Random write}
+\end{figure}

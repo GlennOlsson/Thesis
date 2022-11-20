@@ -6,8 +6,6 @@ A Unix filesystem uses a data structure called an \textit{inode}. The inodes are
 
 Figure~\ref{fig:inode_diag} shows an example inode filesystem and how it can be visualized. The blocks of an inode entry are where in the storage device the data is stored, each block is often defined as a certain amount of bytes. Listing~\ref{lst:inode_fs} describes a simple implementation of an inode, an inode table, and directory entries. 
 
-% TODO: Add info about how \gls{FFS} will only implement some metadata? And/or add that to delimitations too
-
 \begin{figure}[!ht]
 	\begin{center}
 	  \includegraphics[width=0.5\textwidth]{figures/inode_diagram.png}

@@ -177,7 +177,7 @@ The path of a file is sometimes provided for the filesystem operation and traver
 # Traverse a given path and return the parent directory object
 #  and filename of the path
 traverse_path(path) -> (Directory, string):
-	# Fetches inode table from the \gls{OWS}
+	# Fetches inode table from the cache
 	inode_table := get_inode_table()
 	
 	split_path := path.split("/")
@@ -186,12 +186,12 @@ traverse_path(path) -> (Directory, string):
 	filename := split_path.last
 	dirs := split_path.remove_last()
 
-	# Get the root dir from cache
+	# Get the root dir from the cache
 	curr_dir = cache.get_root_dir()
 
 	# While there are still directories to traverse,
-	#  get the next directory in the list from current
-	#  directory
+	#  get the next directory in the list from the 
+	# current directory
 	while(!dirs.empty())
 		dir_name := dirs.pop_first()
 		inode := curr_dir.inode_of(filename=dir_name)
@@ -307,7 +307,10 @@ Limits to the file sizes also depend on the machine where \gls{FFS} is mounted. 
 
 \gls{FFS} also stores data associated with file handles of modified and open files in memory. The amount of open files in \gls{FFS} is unbounded, and the amount of data \gls{FFS} can store per file handle is also unbounded. Further, the data associated with the file handle is not removed from memory until the file is closed. This presents a potential memory overflow scenario if, for instance, many files are opened and modified without being closed afterwards. 
 
-Another limitation of \gls{FFS} is the rate limits presented by the Flickr \gls{API}. Flickr allows up to $3\,600$ \gls{API} requests per hour, after which the \gls{API} keys may be revoked by Flickr. $3\,600$ requests per hour equals $60$ requests per minute, or $1$ request per second. If the average request takes less than a second for constant, sequential Flickr \gls{API} calls, the \gls{API} keys could be revoked. Further, some requests are sent concurrently to Flickr which means that \gls{FFS} could reach $3\,600$ \gls{API} calls faster. However, as long as \gls{FFS} is not constantly serving filesystem calls, the \gls{API} limit should be of little concern.
+Another limitation of \gls{FFS} is the rate limits presented by the Flickr \gls{API}. Flickr allows up to $3\,600$ \gls{API} requests per hour, after which the \gls{API} keys may be revoked by Flickr. $3\,600$ requests per hour equals $60$ requests per minute, or $1$ request per second. If the average request takes less than a second for constant, sequential Flickr \gls{API} calls, the \gls{API} keys could be revoked. Furthermore, some requests are sent concurrently to Flickr which means that \gls{FFS} could reach $3\,600$ \gls{API} calls faster. 
+
+
+However, as long as \gls{FFS} is not constantly serving filesystem calls, the \gls{API} limit should be of little concern.
 
 A limitation of \gls{FFS} that is not possible to quantify is the bandwidth and latency of the network connection from the user to Flickr. The connection can vary significantly depending on for instance the network load at a given moment and the geographic location of the user. A slow network connection is not something \gls{FFS} can solve, but is left as an exercise for the reader.
 

@@ -15,58 +15,58 @@ The encrypted \gls{APFS} filesystem was used as a reference for a local filesyst
 The instance of \gls{FFFS} using a \gls{FOWS} of an encrypted \gls{APFS} was chosen to be compared to \gls{FFS} so that the duration of the \gls{FUSE} filesystem operations could be further analyzed. As the filesystem operations of \gls{FFFS} are similar to the ones of \gls{FFS}, other than the network request being replaced by local filesystem operations, it is possible to analyze the effect of the \gls{OWS} latency, the \gls{OWS} internet connection bandwidth and latency, and the \gls{OWS} data processing speed has on the filesystem performance. Comparing the benchmark results of \gls{FFFS} and \gls{APFS} allows us to analyze the \gls{FFS} overhead as \gls{FFFS} is dependent on the performance of \gls{APFS}. Especially for file operations where \gls{FFFS} must interact with the storage medium, for instance, write operations and read operations for files not in the cache, \gls{FFFS} cannot outperform \gls{APFS} as it will require the execution time of the \gls{APFS} file operation as well as the internal \gls{FFS} computation time. Both \gls{FFFS} and \gls{FFS} are mounted with a maximum buffer size of \SI{32}{\mega\byte}.
 
 \subsection{Tools}
-IOZone\,\cite{IozoneFilesystemBenchmark} is a filesystem benchmarking tool used to analyze the performance of filesystem file operations using different tests on a file\,\cite{iozoneIozoneFilesystemBenchmark}. Examples of tests that IOZone provides support for are: reading and writing, reading and writing randomly, and reading backward. Each test can be run with different file sizes and different buffer sizes used for the read- or write operation. Normally, multiple buffer sizes are used for each test, for each file size tested. The buffer size starts at \SI{4}{\kilo\byte} and increases by a multiple of two up to a buffer size equal to the file size. Multiple file sizes are often used for benchmarking tests as well, which are also increased by a multiple of two. For instance, one could run the IOZone tests with file size \SI{1024}{\kilo\byte} and \SI{2048}{\kilo\byte}, which would utilize the following values of the file size and buffer size for each test specified:
+IOZone\,\cite{IozoneFilesystemBenchmark} is a filesystem benchmarking tool used to analyze the performance of filesystem file operations using different tests on a file\,\cite{iozoneIozoneFilesystemBenchmark}. Examples of tests that IOZone provides support for are: reading and writing, reading and writing randomly, and reading backward. Each test can be run with different file sizes and different buffer sizes used for the read- or write operation. Normally, multiple buffer sizes are used for each test, for each file size tested. The buffer size starts at \SI{4}{\kilo\byte} and increases by a multiple of two up to a buffer size equal to the file size. Multiple file sizes are often used for benchmarking tests as well, which are also increased by a multiple of two. For instance, one could run the IOZone tests with file size \SI{1\,024}{\kilo\byte} and \SI{2\,048}{\kilo\byte}, which would utilize the following values of the file size and buffer size for each test specified:
 \needspace{18\baselineskip}
 \begin{enumerate}
-	\item File size = \SI{1024}{\kilo\byte}, buffer size = \SI{4}{\kilo\byte},
-	\item File size = \SI{1024}{\kilo\byte}, buffer size = \SI{8}{\kilo\byte},
-	\item File size = \SI{1024}{\kilo\byte}, buffer size = \SI{16}{\kilo\byte},
-	\item File size = \SI{1024}{\kilo\byte}, buffer size = \SI{32}{\kilo\byte},
-	\item File size = \SI{1024}{\kilo\byte}, buffer size = \SI{64}{\kilo\byte},
-	\item File size = \SI{1024}{\kilo\byte}, buffer size = \SI{128}{\kilo\byte},
-	\item File size = \SI{1024}{\kilo\byte}, buffer size = \SI{256}{\kilo\byte},
-	\item File size = \SI{1024}{\kilo\byte}, buffer size = \SI{512}{\kilo\byte},
-	\item File size = \SI{1024}{\kilo\byte}, buffer size = \SI{1024}{\kilo\byte},
-	\item File size = \SI{2048}{\kilo\byte}, buffer size = \SI{4}{\kilo\byte},
-	\item File size = \SI{2048}{\kilo\byte}, buffer size = \SI{8}{\kilo\byte},
-	\item File size = \SI{2048}{\kilo\byte}, buffer size = \SI{16}{\kilo\byte},
-	\item File size = \SI{2048}{\kilo\byte}, buffer size = \SI{32}{\kilo\byte},
-	\item File size = \SI{2048}{\kilo\byte}, buffer size = \SI{64}{\kilo\byte},
-	\item File size = \SI{2048}{\kilo\byte}, buffer size = \SI{128}{\kilo\byte},
-	\item File size = \SI{2048}{\kilo\byte}, buffer size = \SI{256}{\kilo\byte},
-	\item File size = \SI{2048}{\kilo\byte}, buffer size = \SI{512}{\kilo\byte},
-	\item File size = \SI{2048}{\kilo\byte}, buffer size = \SI{1024}{\kilo\byte}, and
-	\item File size = \SI{2048}{\kilo\byte}, buffer size = \SI{2048}{\kilo\byte}
+	\item File size = \SI{1\,024}{\kilo\byte}, buffer size = \SI{4}{\kilo\byte},
+	\item File size = \SI{1\,024}{\kilo\byte}, buffer size = \SI{8}{\kilo\byte},
+	\item File size = \SI{1\,024}{\kilo\byte}, buffer size = \SI{16}{\kilo\byte},
+	\item File size = \SI{1\,024}{\kilo\byte}, buffer size = \SI{32}{\kilo\byte},
+	\item File size = \SI{1\,024}{\kilo\byte}, buffer size = \SI{64}{\kilo\byte},
+	\item File size = \SI{1\,024}{\kilo\byte}, buffer size = \SI{128}{\kilo\byte},
+	\item File size = \SI{1\,024}{\kilo\byte}, buffer size = \SI{256}{\kilo\byte},
+	\item File size = \SI{1\,024}{\kilo\byte}, buffer size = \SI{512}{\kilo\byte},
+	\item File size = \SI{1\,024}{\kilo\byte}, buffer size = \SI{1\,024}{\kilo\byte},
+	\item File size = \SI{2\,048}{\kilo\byte}, buffer size = \SI{4}{\kilo\byte},
+	\item File size = \SI{2\,048}{\kilo\byte}, buffer size = \SI{8}{\kilo\byte},
+	\item File size = \SI{2\,048}{\kilo\byte}, buffer size = \SI{16}{\kilo\byte},
+	\item File size = \SI{2\,048}{\kilo\byte}, buffer size = \SI{32}{\kilo\byte},
+	\item File size = \SI{2\,048}{\kilo\byte}, buffer size = \SI{64}{\kilo\byte},
+	\item File size = \SI{2\,048}{\kilo\byte}, buffer size = \SI{128}{\kilo\byte},
+	\item File size = \SI{2\,048}{\kilo\byte}, buffer size = \SI{256}{\kilo\byte},
+	\item File size = \SI{2\,048}{\kilo\byte}, buffer size = \SI{512}{\kilo\byte},
+	\item File size = \SI{2\,048}{\kilo\byte}, buffer size = \SI{1\,024}{\kilo\byte}, and
+	\item File size = \SI{2\,048}{\kilo\byte}, buffer size = \SI{2\,048}{\kilo\byte}
 \end{enumerate}
 Furthermore, each test is run for each file size-buffer size pair before the buffer size or file size is increased. This means that, for the example above, IOZone will run the following in order:
 \begin{enumerate}
-	\item Read test for: File size = \SI{1024}{\kilo\byte}, buffer size = \SI{4}{\kilo\byte},
-	\item Write test for: File size = \SI{1024}{\kilo\byte}, buffer size = \SI{4}{\kilo\byte},
-	\item Re-Read test for: File size = \SI{1024}{\kilo\byte}, buffer size = \SI{4}{\kilo\byte},
-	\item Re-Write test for: File size = \SI{1024}{\kilo\byte}, buffer size = \SI{4}{\kilo\byte},
-	\item Random Read test for: File size = \SI{1024}{\kilo\byte}, buffer size = \SI{4}{\kilo\byte},
-	\item Random Write test for: File size = \SI{1024}{\kilo\byte}, buffer size = \SI{4}{\kilo\byte},
-	\item Read test for: File size = \SI{1024}{\kilo\byte}, buffer size = \SI{8}{\kilo\byte},
-	\item Write test for: File size = \SI{1024}{\kilo\byte}, buffer size = \SI{8}{\kilo\byte}, et cetera
+	\item Read test for: File size = \SI{1\,024}{\kilo\byte}, buffer size = \SI{4}{\kilo\byte},
+	\item Write test for: File size = \SI{1\,024}{\kilo\byte}, buffer size = \SI{4}{\kilo\byte},
+	\item Re-Read test for: File size = \SI{1\,024}{\kilo\byte}, buffer size = \SI{4}{\kilo\byte},
+	\item Re-Write test for: File size = \SI{1\,024}{\kilo\byte}, buffer size = \SI{4}{\kilo\byte},
+	\item Random Read test for: File size = \SI{1\,024}{\kilo\byte}, buffer size = \SI{4}{\kilo\byte},
+	\item Random Write test for: File size = \SI{1\,024}{\kilo\byte}, buffer size = \SI{4}{\kilo\byte},
+	\item Read test for: File size = \SI{1\,024}{\kilo\byte}, buffer size = \SI{8}{\kilo\byte},
+	\item Write test for: File size = \SI{1\,024}{\kilo\byte}, buffer size = \SI{8}{\kilo\byte}, et cetera
 \end{enumerate}
 
 When IOZone reads from a file it has written to, it asserts that the file content is what it wrote previously to verify that the filesystem stores the data properly. This is not documented in the IOZone documentation\,\cite{iozoneIozoneFilesystemBenchmark} but was discovered during testing. However, while it asserts that file operations function correctly, it does not verify all aspects of the filesystem functionality. Further, as IOZone does not state that the file operations are tested, it cannot be assumed that the file operations are correct. Additionally, IOZone does not test if directory hierarchies work as expected, nor if multiple files can be stored at the same time. IOZone is a benchmarking tool used for evaluating the performance of the file operations of a filesystem, not testing the functionality. However, certain cases of the functionality of both \gls{FFS} and \gls{GCSF} was tested, and to support directory hierarchies and multiple files as expected. Future work could research the functionality of these filesystems utilizing online storage systems. \gls{APFS} is expected to have full functionality as it is a professionally developed and widely used filesystem.
 
-While IOZone supports multiple different file operation tests, the thesis only uses a subset of these for benchmarking. Among other reasons, certain tests failed when ran on \gls{GCSF}. Furthermore, tests such as backward reading lack relevance as it tests a rare case of filesystem operations. The documentation of IOZone\,\cite{iozoneIozoneFilesystemBenchmark} claims that the software MSC Nastran uses \mbox{backward-read}. The documentation also mentions that only a few operating systems provide enhancements for backward reading, although many operating systems provide enhancements for \mbox{forward-reading}. As \gls{FFS} is intended as a \mbox{proof-of-concept} filesystem and is not intended as a \mbox{general-purpose} filesystem, only relevant tests were chosen. The IOZone benchmarking tests used in the thesis are: Forward- Read and Write, Forward- \mbox{Re-Read} and \mbox{Re-Write}, and Random- Read and Write. The \textit{Forward} specifier will sometimes be omitted in the thesis when the tests are referenced. For instance, when mentioning the Read test, we refer to the Forward Read test.
+While IOZone supports multiple different file operation tests, the thesis only uses a subset of these for benchmarking. Among other reasons, certain tests failed when ran on \gls{GCSF}. Furthermore, tests such as backward reading lack relevance as it tests a rare case of filesystem operations. The documentation of IOZone\,\cite{iozoneIozoneFilesystemBenchmark} claims that the software MSC Nastran uses \mbox{backward-read}. The documentation also mentions that only a few operating systems provide enhancements for backward reading, although many operating systems provide enhancements for \mbox{forward-reading}. As \gls{FFS} is intended as a \mbox{proof-of-concept} filesystem and is not intended as a \mbox{general-purpose} filesystem, only relevant tests were chosen. The IOZone benchmarking tests used in the thesis are: Forward- Read and Write, Forward- \mbox{Re-Read} and \mbox{Re-Write}, and Random- Read and Write. The \textit{Forward} specifier will sometimes be omitted in the thesis when the tests are referenced. For instance, when mentioning the Read test, we refer to the Forward Read test. The Forward Write test is writing data to a new file, in order. The file is first created which can include overhead time. Forward Read tests reading the file in order. The \mbox{Re-Write} test measures the performance of writing to an existing file. In general, \mbox{Re-Write} is faster than Write as it does not have to create the file. \mbox{Re-Read} measures the performance of reading a recently read file. In general, \mbox{Re-Read} is faster than \mbox{Read} as the file data can be kept in the filesystem cache. The Random Write and Random Read tests measure writing and reading data from random positions in a file. Depending on filesystem implementation, this can be influenced by many factors. For instance, as \gls{FFS} has to download and read the entire file into memory before accessing a specific offset, \gls{FFS} might provide lower performance for these tests than a filesystem that can choose to only read a part of a file at a specific location. The official descriptions of these tests can be found in the IOZone documentation\,\cite{iozoneIozoneFilesystemBenchmark}.
 
-The IOZone documentation\,\cite{iozoneIozoneFilesystemBenchmark} states that to get the most accurate performance results from the benchmarking, the maximum file size of the tests should be set to a value bigger than the filesystem cache. While the \gls{FFS} cache limit is known to be \SI{5}{\mega\byte}, the cache size limit or the existence of such a limit for the other filesystems, such as \gls{GCSF}, is unknown. The documentation states that when the cache is unknown, it should be set to greater than the physical memory of the system. However, as the memory of the computer where the benchmarking is run is \SI{16}{\giga\byte}, this is bigger than reasonable for testing \gls{FFS} and \gls{GCSF}. Each doubled file size takes exponentially much more time as both the file size is doubled for each test and buffer size. Furthermore, it has been found that \gls{GCSF} will crash for bigger file sizes. The maximum file size for the benchmarking tests is set as \SI{262144}{\kilo\byte} as this is bigger than the biggest image possible to store on Flickr, requiring \gls{FFS} to split the image in to more than one image on the \gls{OWS}. This helps us test the functionality of FFS further. The file sizes used for the IOZone tests are therefore set as:
+The IOZone documentation\,\cite{iozoneIozoneFilesystemBenchmark} states that to get the most accurate performance results from the benchmarking, the maximum file size of the tests should be set to a value bigger than the filesystem cache. While the \gls{FFS} cache limit is known to be \SI{5}{\mega\byte}, the cache size limit or the existence of such a limit for the other filesystems, such as \gls{GCSF}, is unknown. The documentation states that when the cache is unknown, it should be set to greater than the physical memory of the system. However, as the memory of the computer where the benchmarking is run is \SI{16}{\giga\byte}, this is bigger than reasonable for testing \gls{FFS} and \gls{GCSF}. Each doubled file size takes exponentially much more time as both the file size is doubled for each test and buffer size. Furthermore, it has been found that \gls{GCSF} will crash for bigger file sizes. The maximum file size for the benchmarking tests is set as \SI{262\,144}{\kilo\byte} as this is bigger than the biggest image possible to store on Flickr, requiring \gls{FFS} to split the image in to more than one image on the \gls{OWS}. This helps us test the functionality of FFS further. The file sizes used for the IOZone tests are therefore set as:
 \begin{enumerate}
-	\item \SI{1024}{\kilo\byte},
-	\item \SI{2048}{\kilo\byte},
-	\item \SI{4096}{\kilo\byte},
-	\item \SI{8192}{\kilo\byte},
-	\item \SI{16384}{\kilo\byte},
-	\item \SI{32768}{\kilo\byte},
-	\item \SI{65536}{\kilo\byte},
-	\item \SI{131072}{\kilo\byte}, and
-	\item \SI{262144}{\kilo\byte}
+	\item \SI{1\,024}{\kilo\byte},
+	\item \SI{2\,048}{\kilo\byte},
+	\item \SI{4\,096}{\kilo\byte},
+	\item \SI{8\,192}{\kilo\byte},
+	\item \SI{16\,384}{\kilo\byte},
+	\item \SI{32\,768}{\kilo\byte},
+	\item \SI{65\,536}{\kilo\byte},
+	\item \SI{131\,072}{\kilo\byte}, and
+	\item \SI{262\,144}{\kilo\byte}
 \end{enumerate}
-The biggest buffer size IOZone uses is \SI{16384}{\kilo\byte}, therefore the buffer sizes tested are:
+The biggest buffer size IOZone uses is \SI{16\,384}{\kilo\byte}, therefore the buffer sizes tested are:
 \begin{enumerate}
 	\item \SI{4}{\kilo\byte},
 	\item \SI{8}{\kilo\byte},
@@ -76,13 +76,13 @@ The biggest buffer size IOZone uses is \SI{16384}{\kilo\byte}, therefore the buf
 	\item \SI{128}{\kilo\byte},
 	\item \SI{256}{\kilo\byte},
 	\item \SI{512}{\kilo\byte},
-	\item \SI{1024}{\kilo\byte},
-	\item \SI{2048}{\kilo\byte},
-	\item \SI{4096}{\kilo\byte},
-	\item \SI{8192}{\kilo\byte}, and
-	\item \SI{16384}{\kilo\byte}
+	\item \SI{1\,024}{\kilo\byte},
+	\item \SI{2\,048}{\kilo\byte},
+	\item \SI{4\,096}{\kilo\byte},
+	\item \SI{8\,192}{\kilo\byte}, and
+	\item \SI{16\,384}{\kilo\byte}
 \end{enumerate}
-However, the maximum buffer size for each file size is the file size itself. For instance, for a file size of \SI{4096}{\kilo\byte}, IOZone will run the tests for buffer sizes up to, and including, \SI{4096}{\kilo\byte}. It can not run tests with a buffer size greater than \SI{4096}{\kilo\byte}.
+However, the maximum buffer size for each file size is the file size itself. For instance, for a file size of \SI{4\,096}{\kilo\byte}, IOZone will run the tests for buffer sizes up to, and including, \SI{4\,096}{\kilo\byte}. It can not run tests with a buffer size greater than \SI{4\,096}{\kilo\byte}.
 
 When benchmarking the filesystems using IOZone, an argument is passed to include the time to close a file (using the \texttt{close} filesystem operation) in the total time of a test. This is important as \gls{FFS}, and potentially other filesystems save the data to the storage medium only after the device is closed. In the case of \gls{FFS}, if the time of closing the file was not included, the performance of the filesystem would appear to be higher than it is.
 

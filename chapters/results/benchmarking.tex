@@ -28,7 +28,7 @@ Figure~\ref{fig:res_box_write} presents a box plot of the benchmarking results o
 
 \FloatBarrier
 
-Figure~\ref{fig:res_box_reread} presents the result of the \mbox{Re-Read} test for the filesystems. The median performance of the filesystems are similar, with the performance of \gls{FFS} being lowest. The spread of the values for \gls{APFS} is greater than for the other filesystems but the filesystem still has the best median and average performance. While the average performance for the Re-Read test of \gls{APFS} is around \SI[per-mode = symbol]{5.4}{\giga\byte\per\second}, the lowest performance was at \SI[per-mode = symbol]{422\,414}{\kilo\byte\per\second}, namely for \texttt{file size = 32\,768, buffer size = 8}. The spread of values is higher for \gls{FFS} than for \gls{FFFS} and \gls{GCSF}. \gls{FFFS} has a higher average and median performance than \gls{GCSF}.
+Figure~\ref{fig:res_box_reread} presents the result of the \mbox{Re-Read} test for the filesystems. The median performance of the filesystems are similar, with the performance of \gls{FFS} being lowest. The spread of the values for \gls{APFS} is greater than for the other filesystems but the filesystem still has the best median and average performance. While the average performance for the Re-Read test of \gls{APFS} is around \SI[per-mode = symbol]{5.4}{\giga\byte\per\second}, the lowest performance was at \SI[per-mode = symbol]{422\,414}{\kilo\byte\per\second}, namely for \texttt{file size = 32\,768\,kB, buffer size = 8\,kB}. The spread of values is higher for \gls{FFS} than for \gls{FFFS} and \gls{GCSF}. \gls{FFFS} has a higher average and median performance than \gls{GCSF}.
 
 \begin{figure}[!ht]
 	\label{fig:res_box_reread}

@@ -20,34 +20,34 @@ mainly lacks certain filesystem operations which are not the focus of
 \gls{FFS} as it is a proof of concept. 
 
 % REMOVE FOR PANDOC
-% \begin{table}[!ht]
-% 	\begin{center}
-% 		\caption{Comparison between features present in related filesystems and \gls{FFS}. X means that the feature is supported and - means that it is not supported}
-% 		\begin{tabular}{| l || c | c | c | c | c | c }
+\begin{table}[!ht]
+	\begin{center}
+		\caption{Comparison between features present in related filesystems and \gls{FFS}. X means that the feature is supported and - means that it is not supported}
+		\begin{tabular}{| l || c | c | c | c | c | c }
 			
-% 			\hline
-% \hspace{1mm} 						& \textbf{ext4} 	& \begin{tabular}{@{}c@{}}\textbf{Google} \\ \textbf{Drive}\end{tabular} & \textbf{DEFY} 	& \textbf{TweetFS} 	& \textbf{FFS}\\
+			\hline
+\hspace{1mm} 						& \textbf{ext4} 	& \begin{tabular}{@{}c@{}}\textbf{Google} \\ \textbf{Drive}\end{tabular} & \textbf{DEFY} 	& \textbf{TweetFS} 	& \textbf{FFS}\\
 			
-% 			\hline
-% 			\hline
+			\hline
+			\hline
 			
-% Mountable							& 	X 				& 	X					& 	X 				& 	-				& 	X\\
-% Read/Write/Remove file				& 	X 				& 	X					& 	X 				& 	X				& 	X\\
-% Read/Write/Remove directory 		& 	X 				& 	X					& 	X 				& 	X				& 	X\\
-% Hard links 							& 	X 				& 	-					& 	X 				& 	-				& 	-\\
-% Soft links 							& 	X 				& 	-					& 	X 				& 	-				& 	-\\
-% File and directory access control 	& 	X 				& 	X					& 	- 				& 	X				& 	-\\
+Mountable							& 	X 				& 	X					& 	X 				& 	-				& 	X\\
+Read/Write/Remove file				& 	X 				& 	X					& 	X 				& 	X				& 	X\\
+Read/Write/Remove directory 		& 	X 				& 	X					& 	X 				& 	X				& 	X\\
+Hard links 							& 	X 				& 	-					& 	X 				& 	-				& 	-\\
+Soft links 							& 	X 				& 	-					& 	X 				& 	-				& 	-\\
+File and directory access control 	& 	X 				& 	X					& 	- 				& 	X				& 	-\\
 
-% Encrypted							&	X				&	X$^{*}$				&	X				&	-				&	X\\
-% Steganographic						&	-				&	-					&	X				&	X				&	X\\
-% Cloud-based							&	-				&	X					&	-				&	X				&	X\\
+Encrypted							&	X				&	X$^{*}$				&	X				&	-				&	X\\
+Steganographic						&	-				&	-					&	X				&	X				&	X\\
+Cloud-based							&	-				&	X					&	-				&	X				&	X\\
 
-% 			\hline		
+			\hline		
 
-% 		\multicolumn{3}{l}{$^{*}$\footnotesize{As mentioned, the user has no control over this encryption}} \\
+		\multicolumn{3}{l}{$^{*}$\footnotesize{As mentioned, the user has no control over this encryption}} \\
 
-% 		\end{tabular}
-% 		\label{tbl:fs_comp}
-% 	\end{center}
+		\end{tabular}
+		\label{tbl:fs_comp}
+	\end{center}
 
-% \end{table}
+\end{table}

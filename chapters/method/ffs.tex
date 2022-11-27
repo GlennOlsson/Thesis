@@ -30,42 +30,42 @@ When a new file or directory is created, it is saved in its parent directory wit
 \gls{FFS} does not support all filesystem operations that are implementable through \gls{FUSE}, instead, \gls{FFS} implements a subset of them as shown in Table~\ref{tbl:fs_impl_op}. The implemented operations are the most essential operations required for a working filesystem\,\cite{kuenningCS135FUSEDocumentation2010}. Operations such as \texttt{chown} provide extended capabilities of the filesystem but these are not required for a \mbox{proof-of-concept} filesystem. The functionality of the filesystem operations implemented by \gls{FFS} and their implementation details are described in Subsection~\ref{subsec:file_op}. 
 
 % REMOVE FOR PANDOC
-% \begin{table}[!ht]
-% 	\begin{center}
-% 		\caption{Filesystem operations implementable trough the \gls{FUSE} \gls{API}, and whether or not \gls{FFS} implements them}
-% 		\begin{tabular}{| c | c |}
+\begin{table}[!ht]
+	\begin{center}
+		\caption{Filesystem operations implementable trough the \gls{FUSE} \gls{API}, and whether or not \gls{FFS} implements them}
+		\begin{tabular}{| c | c |}
 			
-% 			\hline
-% 			\begin{tabular}{@{}c@{}}\textbf{Filesystem operations} \\ \textbf{implemented by FFS}\end{tabular} &
-% 				\begin{tabular}{@{}c@{}}\textbf{Filesystem operations} \\ \textbf{\textit{not} implemented by FFS}\end{tabular} \\
-% 			\hline
-% 			\hline
-% 			\texttt{open} & \texttt{readlink}\\
-% 			\texttt{opendir} & \texttt{symlink}\\
-% 			\texttt{release} & \texttt{link}\\
-% 			\texttt{releasedir} & \texttt{chmod}\\
-% 			\texttt{create} & \texttt{chown}\\
-% 			\texttt{mkdir} & \texttt{fsync}\\
-% 			\texttt{read} & \texttt{fsyncdir}\\
-% 			\texttt{readdir} & \texttt{lock}\\
-% 			\texttt{write} & \texttt{bmap}\\
-% 			\texttt{rename} & \texttt{setxattr}\\
-% 			\texttt{truncate} & \texttt{getxattr}\\
-% 			\texttt{ftruncate} & \texttt{listxatt}\\
-% 			\texttt{unlink} & \texttt{ioctl}\\
-% 			\texttt{rmdir} & \texttt{flush}\\
-% 			\texttt{getattr} & \texttt{poll}\\
-% 			\texttt{fgetattr} & {}\\
-% 			\texttt{statfs} & {}\\
-% 			\texttt{access} & {}\\
-% 			\texttt{utimens} & {}\\
+			\hline
+			\begin{tabular}{@{}c@{}}\textbf{Filesystem operations} \\ \textbf{implemented by FFS}\end{tabular} &
+				\begin{tabular}{@{}c@{}}\textbf{Filesystem operations} \\ \textbf{\textit{not} implemented by FFS}\end{tabular} \\
+			\hline
+			\hline
+			\texttt{open} & \texttt{readlink}\\
+			\texttt{opendir} & \texttt{symlink}\\
+			\texttt{release} & \texttt{link}\\
+			\texttt{releasedir} & \texttt{chmod}\\
+			\texttt{create} & \texttt{chown}\\
+			\texttt{mkdir} & \texttt{fsync}\\
+			\texttt{read} & \texttt{fsyncdir}\\
+			\texttt{readdir} & \texttt{lock}\\
+			\texttt{write} & \texttt{bmap}\\
+			\texttt{rename} & \texttt{setxattr}\\
+			\texttt{truncate} & \texttt{getxattr}\\
+			\texttt{ftruncate} & \texttt{listxatt}\\
+			\texttt{unlink} & \texttt{ioctl}\\
+			\texttt{rmdir} & \texttt{flush}\\
+			\texttt{getattr} & \texttt{poll}\\
+			\texttt{fgetattr} & {}\\
+			\texttt{statfs} & {}\\
+			\texttt{access} & {}\\
+			\texttt{utimens} & {}\\
 			
-% 			\hline
+			\hline
 
-% 		\end{tabular}
-% 		\label{tbl:fs_impl_op}
-% 	\end{center}
-% \end{table}
+		\end{tabular}
+		\label{tbl:fs_impl_op}
+	\end{center}
+\end{table}
 
 A file, a \texttt{Directory}, or the \texttt{Inode Table} has to be uploaded to the \gls{OWS} when it is modified to save its current information. As it takes time to make requests to the \gls{OWS}, \gls{FFS} is designed to make as few requests as possible while still saving the data required. Therefore, only the directory or file that is affected by a change is uploaded to the system, while those unaffected can remain the same. The inode table has to be updated with every change of a file or directory as it contains the location of the file or directory.
 

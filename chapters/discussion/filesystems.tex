@@ -43,17 +43,11 @@ The bandwidth reference measurements are performed every five minutes while \gls
 
 
 % TODO: 
-% - Analyze the time of "overhead", i.e. time of FFFS - time of APFS
-%		Does not really make sense though as the buffer size to APFS is unknown, meaning it's hard
-%		to know which buffer size to compare to. The highest performing? Maybe the lowest?
 %
 % - Compare difference between kernel cache performance
 %	- all over 125 000 is kernel cache for gcsf and ffs read operations
 % 	- how much does it fluctuate?
 %	- create figure, scatter all points
-%
-% - 4096 files could be too big for the ffs cache
-%	 - no they shouldn't, 10% more is 4500
 %
 % - Not super fair to use kernel cache/writing and asking for data directly
 % 	- more normal use case could be writing data once in a while and asking for it once in a while

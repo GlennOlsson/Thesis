@@ -37,19 +37,19 @@ IOZone\,\cite{IozoneFilesystemBenchmark} is a filesystem benchmarking tool used 
 	\item File size = \SI{2\,048}{\kilo\byte}, buffer size = \SI{256}{\kilo\byte},
 	\item File size = \SI{2\,048}{\kilo\byte}, buffer size = \SI{512}{\kilo\byte},
 	\item File size = \SI{2\,048}{\kilo\byte}, buffer size = \SI{1\,024}{\kilo\byte}, and
-	\item File size = \SI{2\,048}{\kilo\byte}, buffer size = \SI{2\,048}{\kilo\byte}
+	\item File size = \SI{2\,048}{\kilo\byte}, buffer size = \SI{2\,048}{\kilo\byte}.
 \end{enumerate}
 Furthermore, each test is run for each file size-buffer size pair before the buffer size or file size is increased. This means that, for the example above using the tests: Read, Write, Re-Read, Re-Write, Random Read, and Random Write, IOZone will run the following in order:
 \needspace{9\baselineskip}
 \begin{enumerate}
-	\item Read test for: File size = \SI{1\,024}{\kilo\byte}, buffer size = \SI{4}{\kilo\byte},
 	\item Write test for: File size = \SI{1\,024}{\kilo\byte}, buffer size = \SI{4}{\kilo\byte},
-	\item Re-Read test for: File size = \SI{1\,024}{\kilo\byte}, buffer size = \SI{4}{\kilo\byte},
-	\item Re-Write test for: File size = \SI{1\,024}{\kilo\byte}, buffer size = \SI{4}{\kilo\byte},
+	\item \mbox{Re-Write} test for: File size = \SI{1\,024}{\kilo\byte}, buffer size = \SI{4}{\kilo\byte},
+	\item Read test for: File size = \SI{1\,024}{\kilo\byte}, buffer size = \SI{4}{\kilo\byte},
+	\item \mbox{Re-Read} test for: File size = \SI{1\,024}{\kilo\byte}, buffer size = \SI{4}{\kilo\byte},
 	\item Random Read test for: File size = \SI{1\,024}{\kilo\byte}, buffer size = \SI{4}{\kilo\byte},
 	\item Random Write test for: File size = \SI{1\,024}{\kilo\byte}, buffer size = \SI{4}{\kilo\byte},
-	\item Read test for: File size = \SI{1\,024}{\kilo\byte}, buffer size = \SI{8}{\kilo\byte},
-	\item Write test for: File size = \SI{1\,024}{\kilo\byte}, buffer size = \SI{8}{\kilo\byte}, et cetera
+	\item Write test for: File size = \SI{1\,024}{\kilo\byte}, buffer size = \SI{8}{\kilo\byte},
+	\item \mbox{Re-Write} test for: File size = \SI{1\,024}{\kilo\byte}, buffer size = \SI{8}{\kilo\byte}, et cetera.
 \end{enumerate}
 
 When IOZone reads from a file it has written to, it asserts that the file content is what it wrote previously to verify that the filesystem stores the data properly. This is not documented in the IOZone documentation\,\cite{iozoneIozoneFilesystemBenchmark} but was discovered during testing. However, while it asserts that file operations function correctly, it does not verify all aspects of the filesystem functionality. Further, as IOZone does not state that the file operations are tested, it cannot be assumed that the file operations are correct. Additionally, IOZone does not test if directory hierarchies work as expected, nor if multiple files can be stored at the same time. IOZone is a benchmarking tool used for evaluating the performance of the file operations of a filesystem, not testing the functionality. However, certain cases of the functionality of both \gls{FFS} and \gls{GCSF} was tested, and to support directory hierarchies and multiple files as expected. Future work could research the functionality of these filesystems utilizing online storage systems. \gls{APFS} is expected to have full functionality as it is a professionally developed and widely used filesystem.

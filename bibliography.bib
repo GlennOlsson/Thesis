@@ -422,13 +422,6 @@
   file = {/Users/glenn/Zotero/storage/KR95KEHT/11a.html}
 }
 
-@online{FiSTStackableFile,
-  title = {{{FiST}}: {{Stackable File System Language}} and {{Templates}}},
-  url = {https://www.filesystems.org/},
-  urldate = {2022-02-02},
-  file = {/Users/glenn/Zotero/storage/6AX2V2B8/www.filesystems.org.html}
-}
-
 @online{fleischerMountOptionsOsxfuse2020,
   title = {Mount Options · Osxfuse/Osxfuse {{Wiki}}},
   author = {Fleischer, Benjamin},
@@ -674,15 +667,6 @@
   file = {/Users/glenn/Zotero/storage/T7NTAD2F/Hansen och Eastlake 3rd - 2011 - US Secure Hash Algorithms (SHA and SHA-based HMAC .pdf}
 }
 
-@online{harababurelShowHNGoogle2018,
-  title = {Show {{HN}}: {{Google Drive}} as a File System | {{Hacker News}}},
-  author = {{harababurel}},
-  date = {2018-07-01},
-  url = {https://news.ycombinator.com/item?id=17430397},
-  urldate = {2022-09-08},
-  organization = {{Hacker News}}
-}
-
 @inproceedings{hineyUsingFacebookImage2015,
   title = {Using {{Facebook}} for {{Image Steganography}}},
   booktitle = {2015 10th {{International Conference}} on {{Availability}}, {{Reliability}} and {{Security}}},
@@ -780,8 +764,9 @@
   file = {/Users/glenn/Zotero/storage/TYU58N6I/mer-om-bbk.html}
 }
 
-@online{IozoneFilesystemBenchmark,
+@online{IozoneFilesystemBenchmark2016,
   title = {Iozone {{Filesystem Benchmark}}},
+  year = {Jan 23rd 20:00:00 2016},
   url = {https://www.iozone.org/},
   urldate = {2022-03-07},
   file = {/Users/glenn/Zotero/storage/Q4QY6N5I/www.iozone.org.html}
@@ -1288,25 +1273,13 @@
   file = {/Users/glenn/Zotero/storage/GUZ95DV6/fragor-och-svar.html}
 }
 
-@software{puscasHarababurelGcsf2022,
-  title = {Harababurel/Gcsf},
-  author = {Pușcaș, Sergiu},
-  date = {2022-08-24T10:09:50Z},
-  origdate = {2018-04-06T17:35:31Z},
-  url = {https://github.com/harababurel/gcsf},
-  urldate = {2022-08-27},
-  abstract = {a FUSE file system based on Google Drive},
-  keywords = {drive,filesystem,fuse,google,google-drive,google-drive-api,google-drive-wrapper,rust}
-}
-
-@thesis{puscassergiudanGCSFVIRTUALFILE2018,
-  title = {{{GCSF}} – {{A VIRTUAL FILE SYSTEM BASED ON GOOGLE DRIVE}}},
+@online{puscassergiudanShowHNGoogle2018,
+  title = {Show {{HN}}: {{Google Drive}} as a File System | {{Hacker News}}},
   author = {{Puşcaş, Sergiu Dan}},
-  date = {2018},
-  institution = {{BABES, -BOLYAI UNIVERSITY CLUJ-NAPOCA}},
-  url = {https://harababurel.com/thesis.pdf},
-  urldate = {2022-08-27},
-  file = {/Users/glenn/Zotero/storage/UBWQ3PH6/thesis.pdf}
+  date = {2018-07-01},
+  url = {https://news.ycombinator.com/item?id=17430397},
+  urldate = {2022-09-08},
+  organization = {{Hacker News}}
 }
 
 @article{ramadhaniAnonymityCommunicationVPN2018,
@@ -1422,10 +1395,33 @@
   file = {/Users/glenn/Zotero/storage/9WLMEWLJ/isp-bahnhof-must-log-subscriber-data-but-copyright-mafia-wont-get-any-191001.html}
 }
 
-@online{shubhamharnalShortGCSFTends2018,
+@thesis{sergiudanGCSFVirtualFile2018,
+  type = {Diploma thesis},
+  title = {{{GCSF}} – {{A}} Virtual File System Based on {{Google Drive}}},
+  author = {Sergiu Dan, Puşcaş},
+  date = {2018},
+  institution = {{Babes-Bolyai University Cluj-Napoca}},
+  location = {{Romainia}},
+  url = {https://harababurel.com/thesis.pdf},
+  urldate = {2022-08-27},
+  file = {/Users/glenn/Zotero/storage/UBWQ3PH6/thesis.pdf}
+}
+
+@software{sergiudanHarababurelGcsf2022,
+  title = {Harababurel/Gcsf},
+  author = {Sergiu Dan, Puşcaş},
+  date = {2022-08-24T10:09:50Z},
+  origdate = {2018-04-06T17:35:31Z},
+  url = {https://github.com/harababurel/gcsf},
+  urldate = {2022-08-27},
+  abstract = {a FUSE file system based on Google Drive},
+  keywords = {drive,filesystem,fuse,google,google-drive,google-drive-api,google-drive-wrapper,rust}
+}
+
+@online{sergiudanShortGCSFTends2018,
   type = {Reddit Comment},
   title = {In Short, {{GCSF}} Tends…},
-  author = {{shubhamharnal}},
+  author = {Sergiu Dan, Puşcaş},
   date = {2018-07-02T21:11:34},
   url = {www.reddit.com/r/DataHoarder/comments/8vlb2v/google_drive_as_a_file_system/e1oh9q9/},
   urldate = {2022-09-08},
@@ -1736,4 +1732,12 @@
   abstract = {Data encryption has become an increasingly important factor in everyday work. Users seek a method of securing their data with maximum comfort and minimum additional requirements on their part; they want a security system that protects any files used by any of their applications, without resorting to application-specific encryption methods. Performance is an important factor to users since encryption can be time consuming. Operating system vendors want to provide this functionality but without incurring the large costs of developing a new file system. This paper describes the design and implementation of Cryptfs -- a file system that was designed as a stackable Vnode layer loadable kernel module. Cryptfs operates by 'encapsulating' a client file system with a layer of encryption transparent to the user. Being kernel resident, Cryptfs performs better than user-level or NFS based file servers such as CFS and TCFS. It is 2 to 37 times faster on micro-benchmarks such as read and write; this translates to 12-52\textbackslash\%application speedup, as exemplified by a large build. Cryptfs offers stronger security by basing its keys on process session IDs as well as user IDs, and by the fact that kernel memory is harder to access. Working at and above the vnode level, Cryptfs is more portable than a file system which works directly with native media such as disks and networks. Cryptfs can operate on top of any other native file system such as UFS/FFS and NFS. Finally, Cryptfs requires no changes to client file systems or remote servers.},
   langid = {english},
   file = {/Users/glenn/Zotero/storage/2L7RSL3J/Badulescu m. fl. - 1998 - Cryptfs A Stackable Vnode Level Encryption File S.pdf;/Users/glenn/Zotero/storage/NHTXNRM8/D82N5935.html}
+}
+
+@online{zadokFiSTStackableFile,
+  title = {{{FiST}}: {{Stackable File System Language}} and {{Templates}}},
+  author = {Zadok, Erez},
+  url = {https://www.filesystems.org/},
+  urldate = {2022-02-02},
+  file = {/Users/glenn/Zotero/storage/6AX2V2B8/www.filesystems.org.html}
 }

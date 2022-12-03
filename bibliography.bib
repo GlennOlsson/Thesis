@@ -85,9 +85,10 @@
   file = {/Users/glenn/Zotero/storage/FLUC4ERN/HT202303.html}
 }
 
-@online{appleinc.WhatSecureVirtual,
+@online{appleinc.WhatSecureVirtual2022,
   title = {What Is Secure Virtual Memory on {{Mac}}?},
   author = {{Apple Inc.}},
+  date = {2022},
   url = {https://support.apple.com/en-gb/guide/mac-help/mh11852/mac},
   urldate = {2022-09-11},
   abstract = {Secure virtual memory protects the data on your Mac by encrypting data being written from random-access memory (RAM) to your internal disk.},
@@ -373,6 +374,17 @@
   langid = {english},
   keywords = {error-correcting codes,Information privacy and security,steganographic file systems},
   file = {/Users/glenn/Zotero/storage/SPAHLSH6/Domingo-Ferrer och Bras-Amorós - 2008 - A Shared Steganographic File System with Error Cor.pdf}
+}
+
+@online{electronicfrontierfoundationEFFCrackerMachine2016,
+  title = {{{EFF DES Cracker}} Machine Brings Honesty to Crypto Debate},
+  author = {{Electronic Frontier Foundation}},
+  date = {2016-08-09T14:26:03-07:00},
+  url = {https://www.eff.org/press/releases/eff-des-cracker-machine-brings-honesty-crypto-debate},
+  urldate = {2022-11-30},
+  abstract = {SAN FRANCISCO, CA -- The Electronic Frontier Foundation (EFF) today raised the level of honesty in crypto politics by revealing that the Data Encryption Standard (DES) is insecure. The U.S. government has long pressed industry to limit encryption to DES (and even weaker forms), without revealing...},
+  langid = {english},
+  organization = {{Electronic Frontier Foundation}}
 }
 
 @online{EuropeanCourtJustice2017,
@@ -766,7 +778,7 @@
 
 @online{IozoneFilesystemBenchmark2016,
   title = {Iozone {{Filesystem Benchmark}}},
-  year = {Jan 23rd 20:00:00 2016},
+  date = {2016-01-23},
   url = {https://www.iozone.org/},
   urldate = {2022-03-07},
   file = {/Users/glenn/Zotero/storage/Q4QY6N5I/www.iozone.org.html}
@@ -909,6 +921,18 @@
   isbn = {978-1-4244-7140-9},
   langid = {english},
   file = {/Users/glenn/Zotero/storage/YARGT2KB/Kreitz och Niemela - 2010 - Spotify -- Large Scale, Low Latency, P2P Music-on-.pdf}
+}
+
+@online{kryptedMaximumFilesMac2009,
+  title = {Maximum {{Files}} in {{Mac OS X}}},
+  author = {{Krypted}},
+  date = {2009-03-04T23:57:27+00:00},
+  url = {https://krypted.com/mac-os-x/maximum-files-in-mac-os-x/},
+  urldate = {2022-12-03},
+  abstract = {By default, the maximum number of files that Mac OS X can open is set to 12,288 and the maximum number of files a given process can open is 10,240. There are a number of applications that might try to exceed this number, whether ill advised or not. And so if you would like to raise the limit (given that you have enough CPU and RAM to do so) then you can use the sysctl command to do so. To view the sysctl values for maximum files use the following command: sysctl -A | grep kern.maxfiles This will show you the kern.maxfiles and kern.maxfilesperproc variables. There are two ways to increase this limit. The first is using the sysctl command itself. To do so you would use the -w option. For example, to set kern.maxfiles to 20,480 you would use the following command: sysctl -w kern.maxfiles=20480 The only problem with this method is that upon the next reboot the kern.maxfiles will go back to the default value. So to set it permanently you would edit the sysctl.conf file and reboot. Of course, this isn’t as easy as you might think since the sysctl.conf file doesn’t actually exist by default. Therefore you’d create it in /etc using a command like the following: touch /etc/sysctl.conf Then you’d add in the contents that you’d like to have, for example: kern.maxfiles=20480 kern.maxfilesperproc=24576 Once you’ve done this, the kernel itself will have a maximum number of files but the shell might not. And since most processes that will take up this many files are going to be initiated by the shell you’re gonna’ want to increase that. You can change shell limits using the ulimit command. To do so: ulimit -S -n 2048 Just a warning that unless you have a high number of transactions you DO NOT need to do this. If you have a process that is trying to exceed the default maximum number of files first think about why it’s trying to do so. Then if it should actually be doing it, go ahead and increase the numbers and see if you are able to fix your problem. But remember that every computer has a finite amount of resources, and by increasing something like the maximum number of files that can be opened, you are going to allow the computer to potentially use more resources than it should. Finally, keep in mind that many processes will have built in controls for how many resources they are able to take up. For example, to control PHP’s number of files and amount of time a given file transfer is allowable you would look to the PHP.ini file rather than the kernel. The number of files a process can have is the lowest common denominator between the upper limit defined by the process, the upper limit allowable by the shell (if it’s invoked by the shell – and it probably is) and finally the upper limit allowable by the kernel. Most processes worth running are a little complicated to manage… Note: The Linux equivalent to kern.maxfiles is fs.max-files.},
+  langid = {american},
+  organization = {{krypted}},
+  file = {/Users/glenn/Zotero/storage/S33IL2Z9/maximum-files-in-mac-os-x.html}
 }
 
 @online{kuenningCS135FUSEDocumentation2010,
@@ -1395,6 +1419,14 @@
   file = {/Users/glenn/Zotero/storage/9WLMEWLJ/isp-bahnhof-must-log-subscriber-data-but-copyright-mafia-wont-get-any-191001.html}
 }
 
+@online{sergiudanGcsfConfigRust,
+  title = {Gcsf::{{Config}} - {{Rust}}},
+  author = {Sergiu Dan, Puşcaş},
+  url = {https://docs.rs/gcsf/latest/gcsf/struct.Config.html},
+  urldate = {2022-12-03},
+  file = {/Users/glenn/Zotero/storage/UE2VZZ64/struct.Config.html}
+}
+
 @thesis{sergiudanGCSFVirtualFile2018,
   type = {Diploma thesis},
   title = {{{GCSF}} – {{A}} Virtual File System Based on {{Google Drive}}},
@@ -1407,10 +1439,10 @@
   file = {/Users/glenn/Zotero/storage/UBWQ3PH6/thesis.pdf}
 }
 
-@software{sergiudanHarababurelGcsf2022,
+@software{sergiudanHarababurelGcsf2021,
   title = {Harababurel/Gcsf},
   author = {Sergiu Dan, Puşcaş},
-  date = {2022-08-24T10:09:50Z},
+  date = {2021-04-28},
   origdate = {2018-04-06T17:35:31Z},
   url = {https://github.com/harababurel/gcsf},
   urldate = {2022-08-27},

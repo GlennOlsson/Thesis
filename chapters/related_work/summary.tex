@@ -13,11 +13,7 @@
 %   to each of them. This will also help you define the variables that you will
 %   use for your evaluation.}
 
-As presented, different filesystems provide different features and drawbacks. 
-In Table~\ref{tbl:fs_comp} we display a summary of characteristics and features 
-of some filesystems mentioned above and how \gls{FFS} compares. As can be seen, \gls{FFS} 
-mainly lacks certain filesystem operations which are not the focus of
-\gls{FFS} as it is a proof of concept. 
+As presented in this chapter, different filesystems provide different features and drawbacks. Table~\ref{tbl:fs_comp} gives a summary of characteristics and features of some of the filesystems mentioned above and how they compare to \gls{FFS}. As can be seen, \gls{FFS} mainly lacks certain filesystem operations which are not the focus of \gls{FFS} as \gls{FFS} is a \mbox{proof-of-concept} deniable filesystem storing data on \gls{OWS}s. 
 
 % REMOVE FOR PANDOC
 \begin{table}[!ht]
@@ -39,7 +35,7 @@ Soft links 							& 	X 				& 	-					& 	X 				& 	-				& 	-\\
 File and directory access control 	& 	X 				& 	X					& 	- 				& 	X				& 	-\\
 
 Encrypted							&	X				&	X$^{*}$				&	X				&	-				&	X\\
-Steganographic						&	-				&	-					&	X				&	X				&	X\\
+Deniable						&	-				&	-					&	X				&	X				&	X\\
 Cloud-based							&	-				&	X					&	-				&	X				&	X\\
 
 			\hline		

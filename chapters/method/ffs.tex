@@ -9,7 +9,7 @@ This section presents the implementation details of \gls{FFS}. General overview 
 
 \begin{figure}[!ht]
 	\begin{center}
-	  \includegraphics[width=0.8\textwidth]{figures/ffs_inode_diagram.png}
+	  \includegraphics[width=0.8\textwidth]{figures.nosync/ffs_inode_diagram.png}
 	\end{center}
 	\caption{Basic structure of \gls{FFS} \mbox{inode-based} structure}
 	\label{fig:ffs_inode_diag}
@@ -119,7 +119,7 @@ To decode an \gls{FFS} image, the decoder first interprets the four first bytes 
 
 \begin{figure}[!ht]
 	\begin{center}
-	  \includegraphics[width=1.0\textwidth]{figures/encoder_decoder.png}
+	  \includegraphics[width=1.0\textwidth]{figures.nosync/encoder_decoder.png}
 	\end{center}
 	\caption[Simple visualization of the encoder and decoder of \gls{FFS}]{Simple visualization of the encoder and decoder of \gls{FFS}. The input of the encoder is the binary data to store in \gls{FFS}, eg. a file, and the output is the \gls{FFS} image to upload to the \gls{OWS}. The input to the decoder is an \gls{FFS} image, and the output is the binary data stored on \gls{FFS}, eg. a file}
 	\label{fig:file_enc_dec}
@@ -261,7 +261,7 @@ The file and inode table are not updated on the \gls{OWS}, this occurs instead i
 
 \begin{figure}[!ht]
 	\begin{center}
-	  \includegraphics[width=0.9\textwidth]{figures/write_flow.png}
+	  \includegraphics[width=0.9\textwidth]{figures.nosync/write_flow.png}
 	\end{center}
 	\caption{Visualization of how the write operation handles different offsets.}
 	\label{fig:write_flow}

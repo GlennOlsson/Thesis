@@ -1,0 +1,24 @@
+\begin{table}[!ht]
+	\begin{center}
+	\caption{Network bandwidth during the benchmarks of the cloud-based filesystems}
+	
+	\resizebox{\textwidth}{!}{
+		\begin{tabular}{| c | r | r | r | r | }
+			\hline
+			{} & \multicolumn{4}{c |}{Bandwidth (kbit/s)} \\
+		 	\textbf{Filesystem} & \multicolumn{1}{c |}{Minimum} & \multicolumn{1}{c |}{Average} & \multicolumn{1}{c |}{Median} & \multicolumn{1}{c |}{Maximum} \\
+		 	\hline
+		 	\hline
+FFS, UBC Enabled & 0.28 & 636.26 & 241.02 & 12214.97\\
+FFS, UBC Disabled & 0.11 & 310.61 & 185.28 & 17720.17\\
+GCSF, UBC Enabled & 0.00 & 590.87 & 471.35 & 15781.85\\
+GCSF, UBC Disabled & 0.00 & 547.30 & 477.68 & 25538.91\\
+
+
+			\hline
+
+		\end{tabular}
+		}
+		\label{tbl:sniff-data}
+	\end{center}
+\end{table}

@@ -92,196 +92,271 @@ Figure~\ref{fig:res_box_rndwrite} presents a box plot for the Random read test f
 \FloatBarrier
 
 % TODO: Fixme
-\gls{FFS} does not have the best performance in any of the box plots presented. \gls{GCSF} has better performance than \gls{FFS} for all tests run with the benchmarking. Following are diagrams presenting the performance of each benchmarking test per file size, for each filesystem. The raw data tables can be found in Appendix~\ref{app:bench_data}. Figure~\ref{fig:bench_ffs_read} to Figure~\ref{fig:bench_ffs_rnd_write} present the performances of the Read, Write, \mbox{Re-Read}, \mbox{Re-Write}, Random Read, and Random Write tests for \gls{FFS}. Figure~\ref{fig:bench_fffs_read} to Figure~\ref{fig:bench_fffs_rnd_write} present the performances of the Read, Write, \mbox{Re-Read}, \mbox{Re-Write}, Random Read, and Random Write tests for \gls{FFFS}.  Figure~\ref{fig:bench_gcsf_read} to Figure~\ref{fig:bench_gcsf_rnd_write} present the performances of the Read, Write, \mbox{Re-Read}, \mbox{Re-Write}, Random Read, and Random Write tests for \gls{GCSF}. Figure~\ref{fig:bench_apfs_read} to Figure~\ref{fig:bench_apfs_rnd_write} present the performances of the Read, Write, \mbox{Re-Read}, \mbox{Re-Write}, Random Read, and Random Write tests for \gls{APFS}.
+\gls{FFS} does not have the best performance in any of the box plots presented. \gls{GCSF} has better performance than \gls{FFS} for all tests run with the benchmarking.
+%  Following are diagrams presenting the performance of each benchmarking test per file size, for each filesystem. The raw data tables can be found in Appendix~\ref{app:bench_data}. Figure~\ref{fig:bench_ffs_read} to Figure~\ref{fig:bench_ffs_rnd_write} present the performances of the Read, Write, \mbox{Re-Read}, \mbox{Re-Write}, Random Read, and Random Write tests for \gls{FFS}. Figure~\ref{fig:bench_fffs_read} to Figure~\ref{fig:bench_fffs_rnd_write} present the performances of the Read, Write, \mbox{Re-Read}, \mbox{Re-Write}, Random Read, and Random Write tests for \gls{FFFS}.  Figure~\ref{fig:bench_gcsf_read} to Figure~\ref{fig:bench_gcsf_rnd_write} present the performances of the Read, Write, \mbox{Re-Read}, \mbox{Re-Write}, Random Read, and Random Write tests for \gls{GCSF}. Figure~\ref{fig:bench_apfs_read} to Figure~\ref{fig:bench_apfs_rnd_write} present the performances of the Read, Write, \mbox{Re-Read}, \mbox{Re-Write}, Random Read, and Random Write tests for \gls{APFS}.
+
+
 
 \begin{figure}[!htb]
-	\label{fig:bench_ffs_read}
+	\label{fig:bench_ffs_with_cache}
 	\begin{center}
-		\includegraphics[width=1.0\textwidth]{figures.nosync/benchmarking/old/ffs/Read.pdf}
+		\includegraphics[width=1.0\textwidth]{figures.nosync/benchmarking/FFS/FFS-UBC Enabled-hist.pdf}
 	\end{center}
-	\caption{IOZone output for FFS Read}
+	\caption{Performance comparison of different file sizes for FFS with the UBC enabled}
 \end{figure}
 
 \begin{figure}[!htb]
-	\label{fig:bench_ffs_write}
+	\label{fig:bench_ffs_without_cache}
 	\begin{center}
-		\includegraphics[width=1.0\textwidth]{figures.nosync/benchmarking/old/ffs/Write.pdf}
+		\includegraphics[width=1.0\textwidth]{figures.nosync/benchmarking/FFS/FFS-UBC Disabled-hist.pdf}
 	\end{center}
-	\caption{IOZone output for FFS Write}
+	\caption{Performance comparison of different file sizes for FFS with the UBC disabled}
+\end{figure}
+
+
+
+\begin{figure}[!htb]
+	\label{fig:bench_gcsf_with_cache}
+	\begin{center}
+		\includegraphics[width=1.0\textwidth]{figures.nosync/benchmarking/GCSF/GCSF-UBC Enabled-hist.pdf}
+	\end{center}
+	\caption{Performance comparison of different file sizes for GCSF with the UBC enabled}
 \end{figure}
 
 \begin{figure}[!htb]
-	\label{fig:bench_ffs_re_read}
+	\label{fig:bench_gcsf_without_cache}
 	\begin{center}
-		\includegraphics[width=1.0\textwidth]{figures.nosync/benchmarking/old/ffs/Re-Read.pdf}
+		\includegraphics[width=1.0\textwidth]{figures.nosync/benchmarking/GCSF/GCSF-UBC Disabled-hist.pdf}
 	\end{center}
-	\caption{IOZone output for FFS \mbox{Re-Read}}
+	\caption{Performance comparison of different file sizes for GCSF with the UBC disabled}
+\end{figure}
+
+
+\begin{figure}[!htb]
+	\label{fig:bench_fffs_with_cache}
+	\begin{center}
+		\includegraphics[width=1.0\textwidth]{figures.nosync/benchmarking/FFFS/FFFS-UBC Enabled-hist.pdf}
+	\end{center}
+	\caption{Performance comparison of different file sizes for FFFS with the UBC enabled}
 \end{figure}
 
 \begin{figure}[!htb]
-	\label{fig:bench_ffs_re_write}
+	\label{fig:bench_fffs_without_cache}
 	\begin{center}
-		\includegraphics[width=1.0\textwidth]{figures.nosync/benchmarking/old/ffs/Re-Write.pdf}
+		\includegraphics[width=1.0\textwidth]{figures.nosync/benchmarking/FFFS/FFFS-UBC Disabled-hist.pdf}
 	\end{center}
-	\caption{IOZone output for FFS \mbox{Re-Write}}
+	\caption{Performance comparison of different file sizes for FFFS with the UBC disabled}
+\end{figure}
+
+
+
+
+\begin{figure}[!htb]
+	\label{fig:bench_apfs_with_cache}
+	\begin{center}
+		\includegraphics[width=1.0\textwidth]{figures.nosync/benchmarking/APFS/APFS-UBC Enabled-hist.pdf}
+	\end{center}
+	\caption{Performance comparison of different file sizes for APFS with the UBC enabled}
 \end{figure}
 
 \begin{figure}[!htb]
-	\label{fig:bench_ffs_rnd_read}
+	\label{fig:bench_apfs_without_cache}
 	\begin{center}
-		\includegraphics[width=1.0\textwidth]{figures.nosync/benchmarking/old/ffs/Random read.pdf}
+		\includegraphics[width=1.0\textwidth]{figures.nosync/benchmarking/APFS/APFS-UBC Disabled-hist.pdf}
 	\end{center}
-	\caption{IOZone output for FFS Random read}
+	\caption{Performance comparison of different file sizes for APFS with the UBC disabled}
 \end{figure}
 
-\begin{figure}[!htb]
-	\label{fig:bench_ffs_rnd_write}
-	\begin{center}
-		\includegraphics[width=1.0\textwidth]{figures.nosync/benchmarking/old/ffs/Random write.pdf}
-	\end{center}
-	\caption{IOZone output for FFS Random write}
-\end{figure}
 
-\begin{figure}[!htb]
-	\label{fig:bench_fffs_read}
-	\begin{center}
-		\includegraphics[width=1.0\textwidth]{figures.nosync/benchmarking/old/fejk-ffs/Read.pdf}
-	\end{center}
-	\caption{IOZone output for Fejk FFS Read}
-\end{figure}
 
-\begin{figure}[!htb]
-	\label{fig:bench_fffs_write}
-	\begin{center}
-		\includegraphics[width=1.0\textwidth]{figures.nosync/benchmarking/old/fejk-ffs/Write.pdf}
-	\end{center}
-	\caption{IOZone output for Fejk FFS Write}
-\end{figure}
+% \begin{figure}[!htb]
+% 	\label{fig:bench_ffs_read}
+% 	\begin{center}
+% 		\includegraphics[width=1.0\textwidth]{figures.nosync/benchmarking/old/ffs/Read.pdf}
+% 	\end{center}
+% 	\caption{IOZone output for FFS Read}
+% \end{figure}
 
-\begin{figure}[!htb]
-	\label{fig:bench_fffs_re_read}
-	\begin{center}
-		\includegraphics[width=1.0\textwidth]{figures.nosync/benchmarking/old/fejk-ffs/Re-Read.pdf}
-	\end{center}
-	\caption{IOZone output for Fejk FFS \mbox{Re-Read}}
-\end{figure}
+% \begin{figure}[!htb]
+% 	\label{fig:bench_ffs_write}
+% 	\begin{center}
+% 		\includegraphics[width=1.0\textwidth]{figures.nosync/benchmarking/old/ffs/Write.pdf}
+% 	\end{center}
+% 	\caption{IOZone output for FFS Write}
+% \end{figure}
 
-\begin{figure}[!htb]
-	\label{fig:bench_fffs_re_write}
-	\begin{center}
-		\includegraphics[width=1.0\textwidth]{figures.nosync/benchmarking/old/fejk-ffs/Re-Write.pdf}
-	\end{center}
-	\caption{IOZone output for Fejk FFS \mbox{Re-Write}}
-\end{figure}
+% \begin{figure}[!htb]
+% 	\label{fig:bench_ffs_re_read}
+% 	\begin{center}
+% 		\includegraphics[width=1.0\textwidth]{figures.nosync/benchmarking/old/ffs/Re-Read.pdf}
+% 	\end{center}
+% 	\caption{IOZone output for FFS \mbox{Re-Read}}
+% \end{figure}
 
-\begin{figure}[!htb]
-	\label{fig:bench_fffs_rnd_read}
-	\begin{center}
-		\includegraphics[width=1.0\textwidth]{figures.nosync/benchmarking/old/fejk-ffs/Random read.pdf}
-	\end{center}
-	\caption{IOZone output for Fejk FFS Random read}
-\end{figure}
+% \begin{figure}[!htb]
+% 	\label{fig:bench_ffs_re_write}
+% 	\begin{center}
+% 		\includegraphics[width=1.0\textwidth]{figures.nosync/benchmarking/old/ffs/Re-Write.pdf}
+% 	\end{center}
+% 	\caption{IOZone output for FFS \mbox{Re-Write}}
+% \end{figure}
 
-\begin{figure}[!htb]
-	\label{fig:bench_fffs_rnd_write}
-	\begin{center}
-		\includegraphics[width=1.0\textwidth]{figures.nosync/benchmarking/old/fejk-ffs/Random write.pdf}
-	\end{center}
-	\caption{IOZone output for Fejk FFS Random write}
-\end{figure}
+% \begin{figure}[!htb]
+% 	\label{fig:bench_ffs_rnd_read}
+% 	\begin{center}
+% 		\includegraphics[width=1.0\textwidth]{figures.nosync/benchmarking/old/ffs/Random read.pdf}
+% 	\end{center}
+% 	\caption{IOZone output for FFS Random read}
+% \end{figure}
 
-\begin{figure}[!htb]
-	\label{fig:bench_gcsf_read}
-	\begin{center}
-		\includegraphics[width=1.0\textwidth]{figures.nosync/benchmarking/old/gcsf/Read.pdf}
-	\end{center}
-	\caption{IOZone output for GCSF Read}
-\end{figure}
+% \begin{figure}[!htb]
+% 	\label{fig:bench_ffs_rnd_write}
+% 	\begin{center}
+% 		\includegraphics[width=1.0\textwidth]{figures.nosync/benchmarking/old/ffs/Random write.pdf}
+% 	\end{center}
+% 	\caption{IOZone output for FFS Random write}
+% \end{figure}
 
-\begin{figure}[!htb]
-	\label{fig:bench_gcsf_write}
-	\begin{center}
-		\includegraphics[width=1.0\textwidth]{figures.nosync/benchmarking/old/gcsf/Write.pdf}
-	\end{center}
-	\caption{IOZone output for GCSF Write}
-\end{figure}
+% \begin{figure}[!htb]
+% 	\label{fig:bench_fffs_read}
+% 	\begin{center}
+% 		\includegraphics[width=1.0\textwidth]{figures.nosync/benchmarking/old/fejk-ffs/Read.pdf}
+% 	\end{center}
+% 	\caption{IOZone output for Fejk FFS Read}
+% \end{figure}
 
-\begin{figure}[!htb]
-	\label{fig:bench_gcsf_re_read}
-	\begin{center}
-		\includegraphics[width=1.0\textwidth]{figures.nosync/benchmarking/old/gcsf/Re-Read.pdf}
-	\end{center}
-	\caption{IOZone output for GCSF \mbox{Re-Read}}
-\end{figure}
+% \begin{figure}[!htb]
+% 	\label{fig:bench_fffs_write}
+% 	\begin{center}
+% 		\includegraphics[width=1.0\textwidth]{figures.nosync/benchmarking/old/fejk-ffs/Write.pdf}
+% 	\end{center}
+% 	\caption{IOZone output for Fejk FFS Write}
+% \end{figure}
 
-\begin{figure}[!htb]
-	\label{fig:bench_gcsf_re_write}
-	\begin{center}
-		\includegraphics[width=1.0\textwidth]{figures.nosync/benchmarking/old/gcsf/Re-Write.pdf}
-	\end{center}
-	\caption{IOZone output for GCSF \mbox{Re-Write}}
-\end{figure}
+% \begin{figure}[!htb]
+% 	\label{fig:bench_fffs_re_read}
+% 	\begin{center}
+% 		\includegraphics[width=1.0\textwidth]{figures.nosync/benchmarking/old/fejk-ffs/Re-Read.pdf}
+% 	\end{center}
+% 	\caption{IOZone output for Fejk FFS \mbox{Re-Read}}
+% \end{figure}
 
-\begin{figure}[!htb]
-	\label{fig:bench_gcsf_rnd_read}
-	\begin{center}
-		\includegraphics[width=1.0\textwidth]{figures.nosync/benchmarking/old/gcsf/Random read.pdf}
-	\end{center}
-	\caption{IOZone output for GCSF Random read}
-\end{figure}
+% \begin{figure}[!htb]
+% 	\label{fig:bench_fffs_re_write}
+% 	\begin{center}
+% 		\includegraphics[width=1.0\textwidth]{figures.nosync/benchmarking/old/fejk-ffs/Re-Write.pdf}
+% 	\end{center}
+% 	\caption{IOZone output for Fejk FFS \mbox{Re-Write}}
+% \end{figure}
 
-\begin{figure}[!htb]
-	\label{fig:bench_gcsf_rnd_write}
-	\begin{center}
-		\includegraphics[width=1.0\textwidth]{figures.nosync/benchmarking/old/gcsf/Random write.pdf}
-	\end{center}
-	\caption{IOZone output for GCSF Random write}
-\end{figure}
+% \begin{figure}[!htb]
+% 	\label{fig:bench_fffs_rnd_read}
+% 	\begin{center}
+% 		\includegraphics[width=1.0\textwidth]{figures.nosync/benchmarking/old/fejk-ffs/Random read.pdf}
+% 	\end{center}
+% 	\caption{IOZone output for Fejk FFS Random read}
+% \end{figure}
 
-\begin{figure}[!htb]
-	\label{fig:bench_apfs_read}
-	\begin{center}
-		\includegraphics[width=1.0\textwidth]{figures.nosync/benchmarking/old/local/Read.pdf}
-	\end{center}
-	\caption{IOZone output for \gls{APFS} Read}
-\end{figure}
+% \begin{figure}[!htb]
+% 	\label{fig:bench_fffs_rnd_write}
+% 	\begin{center}
+% 		\includegraphics[width=1.0\textwidth]{figures.nosync/benchmarking/old/fejk-ffs/Random write.pdf}
+% 	\end{center}
+% 	\caption{IOZone output for Fejk FFS Random write}
+% \end{figure}
 
-\begin{figure}[!htb]
-	\label{fig:bench_apfs_write}
-	\begin{center}
-		\includegraphics[width=1.0\textwidth]{figures.nosync/benchmarking/old/local/Write.pdf}
-	\end{center}
-	\caption{IOZone output for \gls{APFS} Write}
-\end{figure}
+% \begin{figure}[!htb]
+% 	\label{fig:bench_gcsf_read}
+% 	\begin{center}
+% 		\includegraphics[width=1.0\textwidth]{figures.nosync/benchmarking/old/gcsf/Read.pdf}
+% 	\end{center}
+% 	\caption{IOZone output for GCSF Read}
+% \end{figure}
 
-\begin{figure}[!htb]
-	\label{fig:bench_apfs_re_read}
-	\begin{center}
-		\includegraphics[width=1.0\textwidth]{figures.nosync/benchmarking/old/local/Re-Read.pdf}
-	\end{center}
-	\caption{IOZone output for \gls{APFS} \mbox{Re-Read}}
-\end{figure}
+% \begin{figure}[!htb]
+% 	\label{fig:bench_gcsf_write}
+% 	\begin{center}
+% 		\includegraphics[width=1.0\textwidth]{figures.nosync/benchmarking/old/gcsf/Write.pdf}
+% 	\end{center}
+% 	\caption{IOZone output for GCSF Write}
+% \end{figure}
 
-\begin{figure}[!htb]
-	\label{fig:bench_apfs_re_write}
-	\begin{center}
-		\includegraphics[width=1.0\textwidth]{figures.nosync/benchmarking/old/local/Re-Write.pdf}
-	\end{center}
-	\caption{IOZone output for \gls{APFS} \mbox{Re-Write}}
-\end{figure}
+% \begin{figure}[!htb]
+% 	\label{fig:bench_gcsf_re_read}
+% 	\begin{center}
+% 		\includegraphics[width=1.0\textwidth]{figures.nosync/benchmarking/old/gcsf/Re-Read.pdf}
+% 	\end{center}
+% 	\caption{IOZone output for GCSF \mbox{Re-Read}}
+% \end{figure}
 
-\begin{figure}[!htb]
-	\label{fig:bench_apfs_rnd_read}
-	\begin{center}
-		\includegraphics[width=1.0\textwidth]{figures.nosync/benchmarking/old/local/Random read.pdf}
-	\end{center}
-	\caption{IOZone output for \gls{APFS} Random read}
-\end{figure}
+% \begin{figure}[!htb]
+% 	\label{fig:bench_gcsf_re_write}
+% 	\begin{center}
+% 		\includegraphics[width=1.0\textwidth]{figures.nosync/benchmarking/old/gcsf/Re-Write.pdf}
+% 	\end{center}
+% 	\caption{IOZone output for GCSF \mbox{Re-Write}}
+% \end{figure}
 
-\begin{figure}[!htb]
-	\label{fig:bench_apfs_rnd_write}
-	\begin{center}
-		\includegraphics[width=1.0\textwidth]{figures.nosync/benchmarking/old/local/Random write.pdf}
-	\end{center}
-	\caption{IOZone output for \gls{APFS} Random write}
-\end{figure}
+% \begin{figure}[!htb]
+% 	\label{fig:bench_gcsf_rnd_read}
+% 	\begin{center}
+% 		\includegraphics[width=1.0\textwidth]{figures.nosync/benchmarking/old/gcsf/Random read.pdf}
+% 	\end{center}
+% 	\caption{IOZone output for GCSF Random read}
+% \end{figure}
+
+% \begin{figure}[!htb]
+% 	\label{fig:bench_gcsf_rnd_write}
+% 	\begin{center}
+% 		\includegraphics[width=1.0\textwidth]{figures.nosync/benchmarking/old/gcsf/Random write.pdf}
+% 	\end{center}
+% 	\caption{IOZone output for GCSF Random write}
+% \end{figure}
+
+% \begin{figure}[!htb]
+% 	\label{fig:bench_apfs_read}
+% 	\begin{center}
+% 		\includegraphics[width=1.0\textwidth]{figures.nosync/benchmarking/old/local/Read.pdf}
+% 	\end{center}
+% 	\caption{IOZone output for \gls{APFS} Read}
+% \end{figure}
+
+% \begin{figure}[!htb]
+% 	\label{fig:bench_apfs_write}
+% 	\begin{center}
+% 		\includegraphics[width=1.0\textwidth]{figures.nosync/benchmarking/old/local/Write.pdf}
+% 	\end{center}
+% 	\caption{IOZone output for \gls{APFS} Write}
+% \end{figure}
+
+% \begin{figure}[!htb]
+% 	\label{fig:bench_apfs_re_read}
+% 	\begin{center}
+% 		\includegraphics[width=1.0\textwidth]{figures.nosync/benchmarking/old/local/Re-Read.pdf}
+% 	\end{center}
+% 	\caption{IOZone output for \gls{APFS} \mbox{Re-Read}}
+% \end{figure}
+
+% \begin{figure}[!htb]
+% 	\label{fig:bench_apfs_re_write}
+% 	\begin{center}
+% 		\includegraphics[width=1.0\textwidth]{figures.nosync/benchmarking/old/local/Re-Write.pdf}
+% 	\end{center}
+% 	\caption{IOZone output for \gls{APFS} \mbox{Re-Write}}
+% \end{figure}
+
+% \begin{figure}[!htb]
+% 	\label{fig:bench_apfs_rnd_read}
+% 	\begin{center}
+% 		\includegraphics[width=1.0\textwidth]{figures.nosync/benchmarking/old/local/Random read.pdf}
+% 	\end{center}
+% 	\caption{IOZone output for \gls{APFS} Random read}
+% \end{figure}
+
+% \begin{figure}[!htb]
+% 	\label{fig:bench_apfs_rnd_write}
+% 	\begin{center}
+% 		\includegraphics[width=1.0\textwidth]{figures.nosync/benchmarking/old/local/Random write.pdf}
+% 	\end{center}
+% 	\caption{IOZone output for \gls{APFS} Random write}
+% \end{figure}

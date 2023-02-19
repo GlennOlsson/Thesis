@@ -1,15 +1,12 @@
 \section{Benchmarking}
 \label{sec:res_bench}
-This section presents the result from the IOZone benchmarking tests run on each filesystem. The benchmarking completed successfully for all file sizes for \gls{FFS}, \gls{FFFS}, and \gls{APFS}. For the biggest file size, \SI{262\,144}{\kilo\byte}, \gls{GCSF} crashed multiple times, but it succeeded for the other file sizes. Therefore, the results for the biggest file size was omitted from the tests of \gls{GCSF}. In total, 12 benchmarking tests were conducted on the six filesystems, 20 times with the \gls{UBC} enabled and 20 times with the \gls{UBC} disabled. Nine file sizes were used (eight file sizes for \gls{GCSF}) and up to 13 buffer sizes per file size. Each test per filesystem produces a table with nine rows (eight rows for \gls{GCSF}) and 13 columns, where each cell is the average performance of the 20 tests with the specific file size and buffer size on the filesystem. Each table for \gls{FFS}, \gls{FFFS}, and \gls{APFS} have 107 cells, while the table for \gls{GCSF} has 94 cells. See Appendix~\ref{app:bench_data} starting on page \pageref{app:bench_data} for the tables.
+This section presents the result from the IOZone benchmarking tests run on each filesystem. The benchmarking completed successfully for all file sizes for \gls{FFS}, \gls{FFFS}, and \gls{APFS}. For the biggest file size, \SI{262\,144}{\kilo\byte}, \gls{GCSF} crashed multiple times, but it succeeded for the other file sizes. Therefore, the results for the biggest file size was omitted from the tests of \gls{GCSF}. In total, each of the six filesystems were benchmarked 20 times with the \gls{UBC} enabled and 20 times with the \gls{UBC} disabled. Nine file sizes were used (eight file sizes for \gls{GCSF}) and up to 13 buffer sizes per file size. Each test per filesystem produced a table with nine rows (eight rows for \gls{GCSF}) and 13 columns, where each cell is the average performance of the 20 tests with the specific file size and buffer size on the filesystem. Each table for \gls{FFS}, \gls{FFFS}, and \gls{APFS} have 107 cells, while the table for \gls{GCSF} has 94 cells. See Appendix~\ref{app:bench_data} starting on page \pageref{app:bench_data} for the tables.
 
 The bandwidth used by the computer during the benchmarks was measured by Wireshark by capturing the number of bytes sent per ten second interval. Table~\ref{tbl:sniff-data} presents the bandwidth in kilobits per second recorded by Wireshark during the benchmarking of \gls{FFS} and \gls{GCSF}, with the \gls{UBC} enabled and disabled. Each data point is the incoming and outgoing bandwidth per ten second window. For instance, it can be seen that the minimum bandwidth of \gls{GCSF} is \SI[per-mode = symbol]{0.00}{\kilo\byte\per\second}, meaning that no data was sent or received over the internet on the network interface of the computer during at least one ten second window. It can be observed that the maximum bandwidth of either filesystem does not exceed \SI[per-mode = symbol]{26}{\mega\bit\per\second}. \SI[per-mode = symbol]{26}{\mega\bit\per\second} is higher than the upload bandwidth of the internet subscription (\SI[per-mode = symbol]{20}{\mega\bit\per\second}) but significantly lower than the download bandwidth of the subscription (\SI[per-mode = symbol]{100}{\mega\bit\per\second}).
 
 \input{figures.nosync/benchmarking/sniff-table}
 
-Combining all the data points of one benchmark result table, we get the overall performance of a test on a filesystem. With this data we can use a box plot to present the values in the table, and combining the results from all filesystems for a specific test, we can compare their box plots in one figure. Figure~\ref{fig:res_box_read} presents a box plot of the benchmarking results of the filesystems for the Read test. 
-
-% TODO: NEW TEXT	
-% It can be observed that the read operation performance of \gls{FFS} and \gls{GCSF} are in general worse than the performance for \gls{FFFS} and \gls{APFS}. \gls{FFS} has by far the biggest spread of values, and \gls{FFFS} has also a significant spread. The median performance of \gls{FFS} and \gls{GCSF} are similar. In contrast, the results for \gls{GCSF} and \gls{APFS} have less spread. The median performance of \gls{APFS} is significantly higher than the median performance of \gls{FFS}, \gls{FFFS}, and \gls{GCSF}. 
+Combining all the data points of one benchmark result table, we get the overall performance of a test on a filesystem. With this data we can use a box plot to present the values in the table, and combining the results from all filesystems for a specific test, we can compare their box plots in one figure. Figure~\ref{fig:res_box_read} presents a box plot of the benchmarking results of the filesystems for the Read test. It can be observed that the read operation performance of \gls{FFS} and \gls{GCSF} with the \gls{UBC} enabled are in general worse than the performance for \gls{FFFS} and \gls{APFS} with the \gls{UBC} enabled. With the \gls{UBC} disabled, the median performance of \gls{GCSF} is higher than the median value of \gls{APFS}, and the median performance of \gls{FFS} and \gls{FFFS} are significantly worse. \gls{APFS} has a high spread of values when the \gls{UBC} is disabled. All filesystems perform significantly better with the \gls{UBC} enabled.
 
 \begin{figure}[!ht]
 	\label{fig:res_box_read}
@@ -21,9 +18,7 @@ Combining all the data points of one benchmark result table, we get the overall 
 
 \FloatBarrier
 
-Figure~\ref{fig:res_box_write} presents a box plot of the benchmarking results of the filesystems of the Write test. 
-% TODO: NEW TEXT
-% \gls{APFS} has the best write performance of the four filesystems, followed by \gls{FFFS}. In contrast, the cloud-based filesystems \gls{FFS} and \gls{GCSF} have the worst median write performance, with \gls{FFS} having the worst performance of the filesystems. Comparing with the results of the Read test presented in Figure~\ref{fig:res_box_read}, it can also be noted that the write performance is significantly worse for the read operations for all filesystems. The average performance of the Write test for \gls{APFS} is 9.8\% of the Read performance. For \gls{FFFS}, \gls{GCSF}, and \gls{FFS} this percentage was 0.29\%, 0.17\%, and 0.06\%, respectively.
+Figure~\ref{fig:res_box_write} presents a box plot of the benchmarking results of the filesystems of the Write test. \gls{APFS} has the best write performance of the four filesystems, both when the \gls{UBC} is enabled and when it is disabled. \gls{FFFS} performs better than the \mbox{cloud-based} filesystems for both states of the \gls{UBC}. \gls{FFFS} and \gls{GCSF} have similar performance when the \gls{UBC} is enabled and when it is disabled, while \gls{FFS} and \gls{APFS} perform significantly better with the \gls{UBC} enabled.
 
 \begin{figure}[!ht]
 	\label{fig:res_box_write}
@@ -35,9 +30,7 @@ Figure~\ref{fig:res_box_write} presents a box plot of the benchmarking results o
 
 \FloatBarrier
 
-Figure~\ref{fig:res_box_reread} presents the result of the \mbox{Re-Read} test for the filesystems. 
-%TODO: NEW TEXT
-% The median performance of the filesystems are similar, with the performance of \gls{FFS} being lowest. The spread of the values for \gls{APFS} is greater than for the other filesystems but the filesystem still has the best median and average performance. While the average performance for the Re-Read test of \gls{APFS} is around \SI[per-mode = symbol]{5\,400\,000}{\kilo\byte\per\second}, the lowest performance was at \SI[per-mode = symbol]{422\,414}{\kilo\byte\per\second}, namely for \texttt{file size = 32\,768\,kB, buffer size = 8\,kB}. The spread of values is higher for \gls{FFS} than for \gls{FFFS} and \gls{GCSF}. \gls{FFFS} has a higher average and median performance than \gls{GCSF}.
+Figure~\ref{fig:res_box_reread} presents the result of the \mbox{Re-Read} test for the filesystems. \gls{FFS}, \gls{GCSF}, and \gls{FFFS} perform significantly better with the \gls{UBC} enabled compared to when it is disabled. \gls{APFS} also performs better with the \gls{UBC} enabled, but the performance difference compared to when the \gls{UBC} is disabled is not as large as for the other filesystems. When the \gls{UBC} is disabled, \gls{GCSF} performs better than \gls{FFS} and \gls{FFFS}. Although, when the \gls{UBC} is disabled, \gls{GCSF} has a greater spread of values with its worst performance being lower than the worst performance of \gls{FFS} and \gls{FFFS} when the \gls{UBC} is disabled.
 
 \begin{figure}[!ht]
 	\label{fig:res_box_reread}
@@ -50,8 +43,8 @@ Figure~\ref{fig:res_box_reread} presents the result of the \mbox{Re-Read} test f
 \FloatBarrier
 
 Figure~\ref{fig:res_box_rewrite} presents a box plot for the \mbox{Re-Write} test for the filesystems. 
-%TODO: NEW TEXT
-% Similar to the Write test results presented in Figure~\ref{fig:res_box_write}, \gls{APFS} has the best performance of the filesystems, followed by \gls{FFFS} and finally the two cloud-based filesystems. \gls{APFS} is the only filesystem that has a higher average and median performance for the \mbox{Re-Write} test compared to its Write test, with a 22\% better median performance. The other filesystems have worse average and median performance for the \mbox{Re-Write} compared to their Write test. The median performance of the \mbox{Re-Write} test for \gls{FFS}, \gls{FFFS}, and \gls{GCSF} are 85\%, 82\%, and 64\% of the median performance of their Write test, respectively. 
+
+Similar to the Write test results presented in Figure~\ref{fig:res_box_write}, \gls{APFS} has the best performance of the filesystems, both when the \gls{UBC} is enabled and when it is disabled. \gls{FFFS} performs better than the \mbox{cloud-based} filesystems for both states of the \gls{UBC}. \gls{FFS} has slightly better average performance compared to \gls{GCSF} when the \gls{UBC} is enabled, but worse median performance. \gls{GCSF} has better average and median performance than \gls{FFS} when the \gls{UBC} is disabled.
 
 \begin{figure}[!ht]
 	\label{fig:res_box_rewrite}
@@ -63,9 +56,7 @@ Figure~\ref{fig:res_box_rewrite} presents a box plot for the \mbox{Re-Write} tes
 
 \FloatBarrier
 
-Figure~\ref{fig:res_box_rndread} presents a box plot for the Random read test for the different filesystems. 
-% TODO: NEW TEXT
-% The results are similar to the results for the \mbox{Re-Read} test presented in Figure~\ref{fig:res_box_reread}, however, \gls{FFS} has a bigger spread of values than \gls{APFS} has in the \mbox{Re-Read} test. \gls{FFFS} has the best average performance of the filesystems, and \gls{APFS} has the best median performance. The median and average performance of \gls{FFS} is lower than the other filesystems.
+Figure~\ref{fig:res_box_rndread} presents a box plot for the Random read test for the different filesystems. The results are similar to the results for the \mbox{Re-Read} test presented in Figure~\ref{fig:res_box_reread}.
 
 \begin{figure}[!ht]
 	\label{fig:res_box_rndread}
@@ -77,9 +68,7 @@ Figure~\ref{fig:res_box_rndread} presents a box plot for the Random read test fo
 
 \FloatBarrier
 
-Figure~\ref{fig:res_box_rndwrite} presents a box plot for the Random read test for the different filesystems. 
-% TODO: New text
-%\gls{APFS} has the highest performance, followed by \gls{FFFS} and the cloud-based filesystems. \gls{GCSF} has better performance than \gls{FFS}. The performances are similar to the \mbox{Re-Write} for all filesystems.
+Figure~\ref{fig:res_box_rndwrite} presents a box plot for the Random read test for the different filesystems.The results are similar to the results for the \mbox{Re-Write} test presented in Figure~\ref{fig:res_box_rewrite}.
 
 \begin{figure}[!ht]
 	\label{fig:res_box_rndwrite}
@@ -91,11 +80,7 @@ Figure~\ref{fig:res_box_rndwrite} presents a box plot for the Random read test f
 
 \FloatBarrier
 
-% TODO: Fixme
-\gls{FFS} does not have the best performance in any of the box plots presented. \gls{GCSF} has better performance than \gls{FFS} for all tests run with the benchmarking.
-%  Following are diagrams presenting the performance of each benchmarking test per file size, for each filesystem. The raw data tables can be found in Appendix~\ref{app:bench_data}. Figure~\ref{fig:bench_ffs_read} to Figure~\ref{fig:bench_ffs_rnd_write} present the performances of the Read, Write, \mbox{Re-Read}, \mbox{Re-Write}, Random Read, and Random Write tests for \gls{FFS}. Figure~\ref{fig:bench_fffs_read} to Figure~\ref{fig:bench_fffs_rnd_write} present the performances of the Read, Write, \mbox{Re-Read}, \mbox{Re-Write}, Random Read, and Random Write tests for \gls{FFFS}.  Figure~\ref{fig:bench_gcsf_read} to Figure~\ref{fig:bench_gcsf_rnd_write} present the performances of the Read, Write, \mbox{Re-Read}, \mbox{Re-Write}, Random Read, and Random Write tests for \gls{GCSF}. Figure~\ref{fig:bench_apfs_read} to Figure~\ref{fig:bench_apfs_rnd_write} present the performances of the Read, Write, \mbox{Re-Read}, \mbox{Re-Write}, Random Read, and Random Write tests for \gls{APFS}.
-
-
+Following are histograms for each filesystem and each state of the \gls{UBC}. Each histogram presents the performance distribution for each file size in each file operation test. Figure~\ref{fig:bench_ffs_with_cache} and Figure~\ref{fig:bench_ffs_without_cache} presents the performance of \gls{FFS} with the \gls{UBC} enabled and disabled, respectively. Figure~\ref{fig:bench_gcsf_with_cache} and Figure~\ref{fig:bench_gcsf_without_cache} presents the performance of \gls{GCSF} with the \gls{UBC} enabled and disabled, respectively. Figure~\ref{fig:bench_fffs_with_cache} and Figure~\ref{fig:bench_fffs_without_cache} presents the performance of \gls{FFFS} with the \gls{UBC} enabled and disabled, respectively. Figure~\ref{fig:bench_apfs_with_cache} and Figure~\ref{fig:bench_apfs_without_cache} presents the performance of \gls{APFS} with the \gls{UBC} enabled and disabled, respectively.
 
 \begin{figure}[!htb]
 	\label{fig:bench_ffs_with_cache}

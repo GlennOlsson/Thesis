@@ -102,6 +102,39 @@ During the benchmarking of \gls{FFS} and \gls{GCSF}, the bandwidth used by the c
 
 Wireshark consumes a lot of memory to capture all packets sent and received by the computer, even when the filtering is applied. Due to the long benchmarking execution time of \gls{FFS} and \gls{GCSF}, Wireshark was configured to save its measurements in temporary files during the benchmarking so the computer would not exceed its memory limit. Each temporary file was configured to be a maximum of \SI{1}{\giga\byte} before a new temporary file was used. These files were summarized when the Wireshark measurement was ended. To avoid Wireshark competing for filesystems operations on \gls{APFS}, these temporary files were saved on an external hard drive.
 
+To benchmark \gls{FFS} and \gls{GCSF}, a script was created than ran three different processes during the benchmarking:
+\needspace{4\baselineskip}
+\begin{itemize}
+	\item One process running the filesystem process,
+	\item One process running the wireshark measurements, and
+	\item One process running the IOZone benchmarking against the filesystem
+\end{itemize}
+The benchmarking script would, for each benchmark iteration:
+\needspace{7\baselineskip}
+\begin{itemize}
+	\item Start a new process and mount the filesystem in this process,
+	\item Start a new process running the wireshark measurements,
+	\item Start the IOZone benchmark,
+	\item Wait until the benchmark had finished,
+	\item Kill the process running the wireshark measurement and saving the output, and
+	\item Kill the process running the filesystem and unmounting the filesystem.
+\end{itemize}
+During testing, \gls{FFS} and \gls{GCSF} were found to crash occasionally during benchmarking (due to, for instance, lost internet connection and undetected bugs). The benchmarking script was built to handle these failures and by killing the processes, unmounting the filesystem, and restarting the benchmark for the iteration. 
+
+\gls{GCSF} was benchmarked on a personal Google Drive account using a \mbox{free-tier} plan. The \mbox{free-tier} plan allowed up to \SI[per-mode = symbol]{15}{\giga\byte} of storage per user. When a file is deleted from Google Drive using \gls{GCSF}, the file is moved to the trash bin where the file is kept for 30 days\,\cite{googleDeleteRestoreFiles}. As each \gls{GCSF} benchmark creates:
+\begin{itemize}
+	\item 9 \SI[per-mode = symbol]{1024}{\kilo\byte} files,
+	\item 10 \SI[per-mode = symbol]{2048}{\kilo\byte} files,
+	\item 11 \SI[per-mode = symbol]{4096}{\kilo\byte} files,
+	\item 12 \SI[per-mode = symbol]{8192}{\kilo\byte} files,
+	\item 13 \SI[per-mode = symbol]{16384}{\kilo\byte} files,
+	\item 13 \SI[per-mode = symbol]{32768}{\kilo\byte} files,
+	\item 13 \SI[per-mode = symbol]{65536}{\kilo\byte} files, and
+	\item 13 \SI[per-mode = symbol]{131072}{\kilo\byte} files.
+\end{itemize}
+Per write test, each benchmark of \gls{GCSF} creates \SI[per-mode = symbol]{10.1}{\giga\byte} of files on Google Drive. As the trash bin is not excluded from the storage quota on Google Drive, the trash bin had to be emptied continuously during the benchmarking iterations of \gls{GCSF}. Otherwise, \gls{GCSF} crashed during the benchmarking.
+
+
 % TODO: Can we replace with wireshark instead? Filter on tcp and port 80 (to and from)
 %	- However, testing does not show same bandwidth for BBK and wireshark unless filtering by time span
 %	- Does this work well with ffs, gcsf etc? What is correct - wireshark or bbk?

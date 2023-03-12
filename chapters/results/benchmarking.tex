@@ -20,61 +20,61 @@ Combining all the data points from one benchmark test for a filesystem over all 
 
 Figure~\ref{fig:res_box_write} presents a box plot of the benchmarking results of the filesystems of the Write test. \gls{APFS} has the best write performance of the four filesystems, both when the \gls{UBC} is enabled and when it is disabled. \gls{FFFS} performs better than the \mbox{cloud-based} filesystems for both states of the \gls{UBC}. \gls{FFFS} and \gls{GCSF} have similar performance when the \gls{UBC} is enabled and when it is disabled, while \gls{FFS} and \gls{APFS} perform significantly better with the \gls{UBC} enabled.
 
-\begin{figure}[!ht]
+\begin{sidewaysfigure}[!ht]
 	\label{fig:res_box_write}
 	\begin{center}
 		\includegraphics[width=1.0\textwidth]{figures.nosync/benchmarking/Write-boxplot.pdf}
 	\end{center}
 	\caption[Box plot of the IOZone output for the Write test]{Box plot of the IOZone output for the Write test on the different filesystems}
-\end{figure}
+\end{sidewaysfigure}
 
 \FloatBarrier
 
 Figure~\ref{fig:res_box_reread} presents the result of the \mbox{Re-Read} test for the filesystems. \gls{FFS}, \gls{GCSF}, and \gls{FFFS} perform significantly better with the \gls{UBC} enabled compared to when it is disabled. \gls{APFS} also performs better with the \gls{UBC} enabled, but the performance difference compared to when the \gls{UBC} is disabled is not as large as for the other filesystems. When the \gls{UBC} is disabled, \gls{GCSF} performs better than \gls{FFS} and \gls{FFFS}. Although, when the \gls{UBC} is disabled, \gls{GCSF} has a greater spread of values with its worst performance being lower than the worst performance of \gls{FFS} and \gls{FFFS} when the \gls{UBC} is disabled.
 
-\begin{figure}[!ht]
+\begin{sidewaysfigure}[!ht]
 	\label{fig:res_box_reread}
 	\begin{center}
 		\includegraphics[width=1.0\textwidth]{figures.nosync/benchmarking/Re-Read-boxplot.pdf}
 	\end{center}
 	\caption[Box plot of the IOZone output for the Re-Read test]{Box plot of the IOZone output for the Re-Read test on the different filesystems}
-\end{figure}
+\end{sidewaysfigure}
 
 \FloatBarrier
 
 Figure~\ref{fig:res_box_rewrite} presents a box plot for the \mbox{Re-Write} test for the filesystems. Similar to the Write test results presented in Figure~\ref{fig:res_box_write}, \gls{APFS} has the best performance of the filesystems, both when the \gls{UBC} is enabled and when it is disabled. \gls{FFFS} performs better than the \mbox{cloud-based} filesystems for both states of the \gls{UBC}. \gls{FFS} has slightly better average performance compared to \gls{GCSF} when the \gls{UBC} is enabled, but worse median performance. \gls{GCSF} has better average and median performance than \gls{FFS} when the \gls{UBC} is disabled.
 
-\begin{figure}[!ht]
+\begin{sidewaysfigure}[!ht]
 	\label{fig:res_box_rewrite}
 	\begin{center}
 		\includegraphics[width=1.0\textwidth]{figures.nosync/benchmarking/Re-Write-boxplot.pdf}
 	\end{center}
 	\caption[Box plot of the IOZone output for the Re-Write test]{Box plot of the IOZone output for the Re-Write test on the different filesystems}
-\end{figure}
+\end{sidewaysfigure}
 
 \FloatBarrier
 
 Figure~\ref{fig:res_box_rndread} presents a box plot for the Random read test for the different filesystems. The results are similar to the results for the \mbox{Re-Read} test presented in Figure~\ref{fig:res_box_reread}.
 
-\begin{figure}[!ht]
+\begin{sidewaysfigure}[!ht]
 	\label{fig:res_box_rndread}
 	\begin{center}
 		\includegraphics[width=1.0\textwidth]{figures.nosync/benchmarking/Random read-boxplot.pdf}
 	\end{center}
 	\caption[Box plot of the IOZone output for the Random read test]{Box plot of the IOZone output for the Random read test on the different filesystems}
-\end{figure}
+\end{sidewaysfigure}
 
 \FloatBarrier
 
 Figure~\ref{fig:res_box_rndwrite} presents a box plot for the Random read test for the different filesystems.The results are similar to the results for the \mbox{Re-Write} test presented in Figure~\ref{fig:res_box_rewrite}.
 
-\begin{figure}[!ht]
+\begin{sidewaysfigure}[!ht]
 	\label{fig:res_box_rndwrite}
 	\begin{center}
 		\includegraphics[width=1.0\textwidth]{figures.nosync/benchmarking/Random write-boxplot.pdf}
 	\end{center}
 	\caption[Box plot of the IOZone output for the Random write test]{Box plot of the IOZone output for the Random write test on the different filesystems}
-\end{figure}
+\end{sidewaysfigure}
 
 \FloatBarrier
 \clearpage

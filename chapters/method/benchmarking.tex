@@ -141,7 +141,7 @@ During testing, \gls{FFS} and \gls{GCSF} were found to crash occasionally during
 	\item 13 \SI[per-mode = symbol]{65536}{\kilo\byte} files, and
 	\item 13 \SI[per-mode = symbol]{131072}{\kilo\byte} files.
 \end{itemize}
-Per write test, each benchmark of \gls{GCSF} creates \SI[per-mode = symbol]{10.1}{\giga\byte} of files on Google Drive. As the trash bin is not excluded from the storage quota on Google Drive, the trash bin had to be emptied continuously during the benchmarking iterations of \gls{GCSF}. Otherwise, \gls{GCSF} crashed during the benchmarking.
+Per write test, each benchmark of \gls{GCSF} creates \SI[per-mode = symbol]{10.1}{\giga\byte} of files on Google Drive. As the trash bin is not excluded from the storage quota on Google Drive, the trash bin had to be emptied manually repeatedly during the benchmarking iterations of \gls{GCSF}. Otherwise, \gls{GCSF} crashed during the benchmarking. The trash bin was emptied by manually signing in to the Google Drive account on another device and empty the trash bin.
 
 
 % TODO: Can we replace with wireshark instead? Filter on tcp and port 80 (to and from)

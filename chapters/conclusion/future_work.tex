@@ -11,8 +11,6 @@ To further increase the storage capacity, \gls{FFS} could take advantage of stor
 
 If the \gls{OWS} would pursue identifying \gls{FFS} images stored on their service to remove them, this would be a problem for \gls{FFS}. Even removing a single image could remove the full functionality of the filesystem. Future work should include finding evasion techniques to hide the encoded data even further. For instance, hiding less data per image is a possibility that could enable the images to look like actual images, such as photographs. This is similar to the idea of CovertFS\,\cite{baliga2007web} where a maximum of \SI[per-mode = symbol]{4}{\kilo\byte} per image would be used. However, this would significantly decrease the storage capacity of \gls{FFS}. Part of future work is to explore if more data could be stored in the images, or if multiple \glspl{OWS} could be used to overcome the decreased storage capacity. 
 
-The benchmark tests showed visible patterns, seemingly distinct between filesystems. Future work includes analyzing these patterns to create fingerprints that could be used to identify filesystems based on their benchmark data.
-
 % TODO: To get bandwidth of each filesystem: 
 %	Record all requests
 %	When filtering, look at all DNS requests to google.com/flickr.com

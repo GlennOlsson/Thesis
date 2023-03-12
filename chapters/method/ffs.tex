@@ -177,7 +177,7 @@ where $t_\text{ffs}$ is the time that \gls{FFS} takes, for example, for a read o
 	\item finding the file in the inode table,
 	\item decoding and decrypting the image data,
 	\item reading the specified amount of data, and,
-	\item to output the data.
+	\item to write the data to the read buffer.
 \end{itemize}
 This time will be approximately constant for the same request for the same file size. However, memory cache misses/hits and process scheduling, among other factors, can vary the value of $t_\text{ffs}$. In contrast, $t_\text{ows}$ is the total time required to complete all requests to the \gls{OWS} for a filesystem operation. For instance, for a similar read operation as above, this consists of:
 \needspace{4\baselineskip}

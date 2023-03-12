@@ -5,14 +5,19 @@
 
 % \todo[inline]{State the goal/goals of this degree project.}
 
-The project aims to create a secure, deniable filesystem that stores its data on online web services by taking advantage of the storage provided to its users. This can be split into the following subgoals:
+The project aims to create a secure, deniable filesystem that stores its data on \glspl{OWS} by taking advantage of the storage provided to its users. This can be split into the following subgoals:
 \needspace{7\baselineskip}
 \begin{enumerate}
-\item to create a mountable filesystem where files and directories can be stored, read, and deleted,
-\item for the filesystem to store all the data on online web services rather than on the local disk,
-\item for the system to be secure in the sense that even with access to the uploaded files and the software, the \mbox{plain-text} data is unreadable without the correct decryption key, 
-\item to provide the user of the filesystem with plausible deniability of its data in the sense that it is not possible to associate the user with an instance \gls{FFS} if the filesystem is not mounted,
-\item to analyze the write and read speed, storage capacity, and reliability of the filesystem and compare it to commercial \mbox{cloud-based} filesystems and local filesystems, and,
+\item to create a mountable filesystem where files and directories can be stored, read, and deleted;
+
+\item for the filesystem to store all the data on \glspl{OWS} rather than on the local disk;
+
+\item for the system to be secure in the sense that even with access to the uploaded files and the software, the \mbox{plain-text} data is unreadable without the correct decryption key;
+
+\item to provide the user of the filesystem with plausible deniability of their data in the sense that it is not possible to associate the user with an \gls{FFS} instance -- if the filesystem is not mounted;
+
+\item to analyze the write and read speed, storage capacity, and reliability of the filesystem and compare it to commercial \mbox{cloud-based} filesystems and local filesystems; and
+
 \item to analyze and discuss environmental and ethical aspects of the filesystem.
 \end{enumerate}
 

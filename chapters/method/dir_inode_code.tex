@@ -1,0 +1,38 @@
+%\chapter[Directory, InodeTable, and InodeEntry class and attributes representation]{Directory, InodeTable, and\\InodeEntry class and attributes\\representation}
+%This chapter presents \mbox{pseudo-code} of the different data structures used by \gls{FFS}. 
+\Cref{lst:dir_itable_classes} presents \mbox{pseudo-code} of the different data structures used by \gls{FFS}. Each C++ class instance is encoded into a binary representation of the object when it is serialized before being uploaded to the \gls{OWS}. When an object is deserialized, the corresponding C++ class instances are generated \mbox{in-memory}. These serialized representations are described in \Cref{app:binary_rep}.
+
+\Needspace*{39\baselineskip}
+%\label{app:inode_dir_code}
+\begin{lstlisting}[language=python, caption={Classes representing directories and the inode table in \gls{FFS}}, label=lst:dir_itable_classes,breaklines=true]
+
+# typedef inode_id = uint32_t
+
+# Represents a directory in FFS. Keeps track of the filename and inode of each file
+class Directory
+	# Map of (filename, inode id) representing the content of the directory
+	map<string, inode_id> entries
+
+# Represents an entry in the inode table, representing a file or directory
+class InodeEntry
+	# The size of the file (not used for directories) 
+	uint32_t length
+
+	# True if the entry describes a directory, false if it describes a file
+	uint8_t is_dir
+
+	# When the file first was created
+	uint64_t time_created
+	# When the file was last accessed
+	uint64_t time_accessed
+	# When the file was last modified
+	uint64_t time_modified
+
+	# A list representing the posts of the file or directory. 
+	string[] post_ids
+
+# Represents the inode table of the filesystem. The table consists of multiple inode entries
+class InodeTable
+	# Map of (inode id, inode entry) for each file and directory in the filesystem
+	map<inode_t, InodeEntry> entries
+\end{lstlisting}

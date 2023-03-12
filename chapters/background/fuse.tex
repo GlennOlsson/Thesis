@@ -1,6 +1,6 @@
 \section{FUSE}
 \label{sec:fuse}
-\gls{FUSE} is a library that provides an interface to create filesystems in userspace rather than in kernel space which is otherwise often considered the standard when writing commercial filesystems\,\cite{Libfuse2021}. The reason to implement a filesystem in kernel space is that it leads to faster system calls than when writing a filesystem in userspace. However, while filesystems using \gls{FUSE} are generally slower than \mbox{kernel-based} filesystems, using \gls{FUSE} simplifies the process of creating filesystems.
+\gls{FUSE} is a library that provides an interface to create filesystems in userspace rather than in kernel space\,\cite{Libfuse2021}. Commercial filesystems are often written kernel space. The reason to implement a filesystem in kernel space is that it leads to faster system calls than when writing a filesystem in userspace. However, while filesystems using \gls{FUSE} are generally slower than \mbox{kernel-based} filesystems, using \gls{FUSE} simplifies the process of creating filesystems.
 
 macFUSE is a port of \gls{FUSE} that runs on Apple's macOS operating system and it extends the \gls{FUSE} \gls{API}\,\cite{HomeMacFUSE}. macFUSE provides an \gls{API} for C and Objective C.  As macFUSE is an extension of the \gls{FUSE} library, there is a possibility that it is easy to port the macFUSE filesystems to the normal \gls{FUSE} gls{API} and mount them on, for instance, a Linux operating system. However, information about this has not been found. No experiments have been conducted to see if filesystems developed using macFUSE can be mounted on \mbox{non-macOS} operating systems.
 
@@ -14,6 +14,6 @@ macFUSE is a port of \gls{FUSE} that runs on Apple's macOS operating system and 
 	\label{fig:fuse_desc}
 \end{figure}
 
-Figure~\ref{fig:fuse_desc} also shows a kernel cache, also known as the \gls{UBC}\cite{Silvers2000}. The data stored in a macFUSE filesystem can be cached by the kernel to provide faster filesystem operations\,\cite{vangoorFUSENotFUSE2017, fleischerMountOptionsOsxfuse2020, gowdappaExperiencesFUSEReal2019}. This can be disabled, for instance, when the filesystem can be modified independently of filesystem operations on the computer, such as for a distributed filesystem where changes can be made by another user at any time.
+Figure~\ref{fig:fuse_desc} also shows a kernel cache, also known as the \gls{UBC}\cite{silversUBCEfficientUnified2000}. The data stored in a macFUSE filesystem can be cached by the kernel to provide faster filesystem operations\,\cite{vangoorFUSENotFUSE2017, fleischerMountOptionsOsxfuse2020, gowdappaExperiencesFUSEReal2019}. This can be disabled, for instance, when the filesystem can be modified independently of filesystem operations on the computer, such as for a distributed filesystem where changes can be made by another user at any time.
 
 \gls{FUSE} allows large files in the filesystems. The file operation offset, used to read or write at a byte location inside a file, is an unsigned 64-bit integer; thus, the filesystem operations can read and write to files as large as \SI{18}{\exbi\byte} bytes. 

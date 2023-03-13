@@ -5,6 +5,11 @@
 \newif\ifdigitaloutput
 \DeclareOption{digitaloutput}{\digitaloutputtrue}
 
+% Add optional nomenclature pages following glossary
+\newif\ifnomenclature
+\DeclareOption{nomenclature}{\nomenclaturetrue}
+\nomenclaturefalse
+
 \newif\ifinswedish
 \DeclareOption{english}{}
 \DeclareOption{swedish}{\inswedishtrue}
@@ -13,6 +18,7 @@
 \DeclareOption{a4paper}{}
 \DeclareOption{g5paper}{\gfivepapertrue}
 
+% options for bachelor or master thesis - not currently used
 \newif\ifbachelor
 \DeclareOption{bachelor}{\bachelortrue}
 \DeclareOption{master}{}
@@ -35,13 +41,6 @@
 % to do string comparison
 \usepackage{xstring}
 
-% Make it possible to conditionally depend on the TeX-engine used
-\RequirePackage{ifxetex}
-\RequirePackage{ifluatex}
-\newif\ifxeorlua
-\ifxetex\xeorluatrue\fi
-\ifluatex\xeorluatrue\fi
-
 %% Load other packages
 
 \ifxeorlua
@@ -49,10 +48,19 @@
   \ifinswedish
     \setmainlanguage{swedish}
     \setotherlanguage[variant=us]{english}
-    \setotherlanguages{french,spanish,italian,norsk,german,danish,dutch,estonian}
+    \setotherlanguage[variant=french, frenchpart=false]{french}
+    \setotherlanguage[variant=spanish]{spanish}
+    %\setotherlanguages{italian,norsk,german,danish,dutch,estonian}
+    \setotherlanguages{italian,norsk,german,danish,dutch,estonian, finnish}
+
   \else
     \setmainlanguage[variant=us]{english}
-    \setotherlanguages{swedish,french,spanish,italian,norsk,german,danish,dutch,estonian}
+    \setotherlanguage[variant=french, frenchpart=false]{french}
+    \setotherlanguage[variant=spanish]{spanish}
+    \setotherlanguage[variant=bokmal]{norwegian}
+    \setotherlanguage[variant=german, spelling=new]{german}
+    %\setotherlanguages{swedish,italian,danish,dutch,estonian}
+    \setotherlanguages{swedish,italian,danish,dutch,estonian, finnish}
     %\setotherlanguage{swedish}
   \fi
 \else
@@ -95,7 +103,7 @@
   % Package titlsecon is on version 2.10.0 or lower, nothing to do %
  }%
 }
-% === End ot titlesec patch
+% === End of titlesec patch
 
 \ifxeorlua
   \RequirePackage{fontspec}
@@ -134,6 +142,9 @@
 \titleformat{\subsection}
   {\normalfont\sffamily\large\bfseries}
   {\thesubsection}{1em}{}
+\titleformat{\subsubsection}
+  {\normalfont\sffamily\normalsize\bfseries}
+  {\thesubsubsection}{1em}{}
 
 \renewenvironment{abstract}{\section*{\abstractname}}
 
@@ -162,12 +173,36 @@
 \newcommand{\email}[1]{\def\@email{#1}}
 \let\@kthid\@empty
 \newcommand{\kthid}[1]{\def\@kthid{#1}}
-\let\@orcid\@empty
-\newcommand{\orcid}[1]{\def\@orcid{#1}}
+%\let\@orcid\@empty
+%\newcommand{\orcid}[1]{\def\@orcid{#1}}
 \let\@authorsSchool\@empty
 \newcommand{\authorsSchool}[1]{\def\@authorsSchool{#1}}
 \let\@authorsDepartment\@empty
 \newcommand{\authorsDepartment}[1]{\def\@authorsDepartment{#1}}
+% Information about the city and country for the acknowledgement
+\let\@authorCity\@empty
+\newcommand{\authorCity}[1]{\def\@authorCity{#1}}
+\let\@authorCountry\@empty
+\newcommand{\authorCountry}[1]{\def\@authorCountry{#1}}
+\let\@authorCityCountryDate\@empty
+% Define the command so that if a date is not specified it will not output the comma; it only outputs the comma if there is a date.
+\ExplSyntaxOn
+\cs_set_eq:NN  \IfEmptyTF  \tl_if_blank:nTF
+\ExplSyntaxOff
+\NewDocumentCommand{\authorCityCountryDate}{m}{
+\def\@authorCityCountryDate{\ifx\@authorCity\@empty%
+    Stockholm%
+    \else%
+    \ifx\@authorCountry\@empty%
+    \@authorCity%
+    \else%
+    \@authorCity, \@authorCountry%
+    \fi%
+    \fi%
+    \IfEmptyTF{#1}{}{, #1}%
+    }%
+}
+\authorCityCountryDate{\MONTH\enspace\the\year} % default month and year for the acknowledgement signature
 
 % Second author's information
 \let\@secondAuthorsLastname\@empty
@@ -178,14 +213,32 @@
 \newcommand{\secondemail}[1]{\def\@secondemail{#1}}
 \let\@secondkthid\@empty
 \newcommand{\secondkthid}[1]{\def\@secondkthid{#1}}
-\let\@secondorcid\@empty
-\newcommand{\secondorcid}[1]{\def\@secondorcid{#1}}
+%\let\@secondorcid\@empty
+%\newcommand{\secondorcid}[1]{\def\@secondorcid{#1}}
 \let\@secondAuthorsSchool\@empty
 \newcommand{\secondAuthorsSchool}[1]{\def\@secondAuthorsSchool{#1}}
 \let\@secondAuthorsDepartment\@empty
 \newcommand{\secondAuthorsDepartment}[1]{\def\@secondAuthorsDepartment{#1}}
-
-
+% Information about the city and country for the acknowledgement
+\let\@secondAuthorCity\@empty
+\newcommand{\secondAuthorCity}[1]{\def\@secondAuthorCity{#1}}
+\let\@secondAuthorCountry\@empty
+\newcommand{\secondAuthorCountry}[1]{\def\@secondAuthorCountry{#1}}
+\let\@secondAuthorCityCountryDate\@empty
+% Define the command so if a date is not specified it will not output the comma; it only outputs the comma if there is a date.
+\NewDocumentCommand{\secondAuthorCityCountryDate}{m}{
+\def\@secondAuthorCityCountryDate{\ifx\@secondAuthorCity\@empty%
+    Stockholm%
+    \else%
+    \ifx\@secondAuthorCountry\@empty%
+    \@secondAuthorCity%
+    \else%
+    \@secondAuthorCity, \@secondAuthorCountry%
+    \fi%
+    \fi%
+    \IfEmptyTF{#1}{}{, #1}%%
+    }%
+}
 
 \let\@supervisorAsLastname\@empty
 \newcommand{\supervisorAsLastname}[1]{\def\@supervisorAsLastname{#1}}
@@ -324,6 +377,10 @@
 \newcommand{\secondedProgram}[1]{%
 \def\@secondedProgram{#1}}
 
+% to store the user's choice of copyright or copyleft
+\let\@copyrightleft\@empty
+% note that the command has to change the definition of \@copyrightleft globally, hence \gdef and not \def
+\newcommand{\thesiscopyrightleft}[1]{\gdef\@copyrightleft{#1}}
 
 % get all of the information about the school codes and program codes
 \input{templates/kth/lib/schools_and_programs.ins}
@@ -394,7 +451,7 @@
 \ifgfivepaper
   \newgeometry{top=65mm,bottom=30mm,left=62mm,right=18mm}
 \else
-  \newgeometry{top=56mm,bottom=30mm,left=74pt, right=35mm}
+  \newgeometry{top=56mm,bottom=30mm,left=74pt, right=35mm} % formerly {top=56mm,bottom=30mm,left=74pt, right=35mm}
 \fi
 
 \thispagestyle{empty}
@@ -403,23 +460,26 @@
 \ifinswedish
 \null
 \else
-\begin{textblock*}{85pt}(481.748pt, 28pt) % {block width} (coords) 
-\noindent{\fontsize{8}{9}\coverbfont
-    \textcolor{black!80!}{KTH ROYAL INSTITUTE}
-}
+\begin{textblock*}{100pt}(451.559pt, 33.88pt) % {block width} (coords) - formerly 481.748pt, 28pt
+\includegraphics{templates/kth/KTH_ROYAL_INSTITUTE_OF_TECHNOLOGY_logotype.png} % formerly width=76.2pt, height=76.2pt
+%\noindent{\fontsize{9.5}{10}\coverbfont
+%    \textcolor{black}{KTH ROYAL INSTITUTE} % formerly     \textcolor{black!80!}{KTH ROYAL INSTITUTE}
+%}
 \end{textblock*}
-\begin{textblock*}{85pt}(481.748pt, 38pt) % {block width} (coords) 
-\noindent{\fontsize{8}{9}\coverbfont
-    \textcolor{black!80!}{OF TECHNOLOGY}
-}
-\end{textblock*}
+%\begin{textblock*}{85pt}(451.559pt, 44.22pt) % {block width} (coords) -formerly 481.748pt, 38pt
+%\noindent{\fontsize{9.5}{10}\coverbfont
+%    \textcolor{black}{OF TECHNOLOGY}
+%}
+%\end{textblock*}
 \fi
 
-\begin{textblock*}{76.2pt}(20pt, 40pt)
-\includegraphics[width=76.2pt, height=76.2pt, keepaspectratio]{templates/kth/kth_logo.png}
+\begin{textblock*}{72.85pt}(20pt, 33.88pt) % formerly 20pt, 40pt
+\includegraphics[width=72.85pt, height=72.85pt, keepaspectratio]{templates/kth/kth_logo.png} % formerly width=76.2pt, height=76.2pt
 \end{textblock*}
 \begin{flushleft}
 
+% look for a second subject
+\ifx\@secondSubjectArea\@empty
 {\coverlfont \fontsize{12}{13}
   \ifinswedish
   Examensarbete inom \@subjectArea\\
@@ -490,6 +550,49 @@
   \fi
     
 }
+\else
+{\coverlfont \fontsize{12}{13}
+  \ifinswedish
+      \ifthenelse{\equal{\@subjectArea}{\@secondSubjectArea}}
+    {Examensarbete inom teknikområdet och huvudområdet \@subjectArea\\}
+    {Examensarbete inom teknikområdet \@subjectArea\ och huvudområdet \@secondSubjectArea\\}%
+%  \IfEqCase{\@degreeName}{%
+%    {Both}{Examensarbete inom teknikområdet \@subjectArea\ och huvudområdet \@secondSubjectArea\\}%
+%    {Same}{Examensarbete inom teknikområdet och huvudområdet \@subjectArea\\}%
+%  }[\typeout{unknown degree name in case for both Masters degrees}]
+  \addvspace{8pt}
+  \IfEqCase{\@courseCycle}{%
+    {1}{Grundnivå,}%
+    {2}{Avancerad nivå,}%
+  }[\typeout{unknown cycle}]
+~\IfEqCase{\@courseCredits}{%
+    {15.0}{15}%
+    {30.0}{30}%
+    }[\typeout{unknown credits}]%
+~hp\\
+  \else
+  \ifthenelse{\equal{\@subjectArea}{\@secondSubjectArea}}
+    {Degree Project in the Field of Technology and the Main Field of Study \@subjectArea\\}
+    {Degree Project in the Field of Technology \@subjectArea\ and the Main Field of Study \@secondSubjectArea\\}%
+%    \IfEqCase{\@degreeName}{%
+%    {Both}{Degree Project in the Field of Technology \@subjectArea\ and the Main Field of Study \@secondSubjectArea\\}%
+%    {Same}{Degree Project in the Field of Technology and the Main Field of Study \@subjectArea\\}%
+%  }[\typeout{unknown degree name in case for both Masters degrees}]
+  
+  \addvspace{8pt}
+  \IfEqCase{\@courseCycle}{%
+    {1}{First cycle,}%
+    {2}{Second cycle,}%
+  }[\typeout{unknown cycle}]
+\,\IfEqCase{\@courseCredits}{%
+    {15.0}{15}%
+    {30.0}{30}%
+    }[\typeout{unknown credits}]%
+~credits\\
+  \fi
+    
+}
+\fi
 \addvspace{40pt}
 {\fontsize{26}{30}\coverbfont \@title \par }
 
@@ -509,14 +612,14 @@
     }
 \end{flushleft}
 \vfill
-\begin{textblock*}{510pt}(44pt, {\paperheight - 46pt}) % {block width} (coords) 
+\begin{textblock*}{510pt}(38.83pt, {\paperheight - 46pt}) % {block width} (coords) 
 \ifinswedish
 \noindent{\fontsize{8}{10}\coverlfont Stockholm, Sverige, \the\year{}}\\
   \else
 \noindent{\fontsize{8}{10}\coverlfont Stockholm, Sweden, \the\year{}}\\
   \fi
 \end{textblock*}
-\begin{textblock*}{510pt}(44pt, {\paperheight - 34pt}) % {block width} (coords) 
+\begin{textblock*}{510pt}(37.7pt, {\paperheight - 34pt}) % {block width} (coords) 
 %\vspace*{-22pt}
 \begin{tikzpicture}
 \draw[kth-blue, line width=1.0 pt] (0pt,0pt) -- (510pt,0pt);
@@ -531,13 +634,13 @@
 \ifgfivepaper
   \newgeometry{top=65mm,bottom=30mm,left=62mm,right=18mm}
 \else
-  \newgeometry{top=65mm,bottom=30mm,left=66.3714pt, right=35mm}
+  \newgeometry{top=65mm,bottom=30mm,left=74pt, right=35mm}
 \fi
 
 \thispagestyle{empty}
 
 % Generate the back cover with the TRITA number and the fixed graphical elements
-\begin{textblock*}{5cm}(44pt, {\paperheight - 72pt}) % {block width} (coords) 
+\begin{textblock*}{5cm}(38.83pt, {\paperheight - 72pt}) % {block width} (coords) 
 \noindent{\fontsize{10}{12}\coverlfont 
     \ifx\@thesisSeries\@empty %\relax
         TRITA xxxx:yyy
@@ -550,12 +653,12 @@
     \fi\\
 }
 \end{textblock*}
-\begin{textblock*}{5cm}(44pt, {\paperheight - 44pt}) % {block width} (coords) 
+\begin{textblock*}{5cm}(38.83pt, {\paperheight - 44pt}) % {block width} (coords)  - was 44pt
 \noindent{\fontsize{8}{9}\coverlfont
     \textcolor{kth-blue}{www.kth.se}
 }
 \end{textblock*}
-\begin{textblock*}{510pt}(24.634pt, {\paperheight - 34pt}) % {block width} (coords) 
+\begin{textblock*}{510pt}(19pt, {\paperheight - 34pt}) % {block width} (coords) - was 24.634pt
 %\vspace*{-22pt}
 \begin{tikzpicture}
 \draw[kth-blue, line width=1.0 pt] (0pt,0pt) -- (510pt,0pt);
@@ -570,7 +673,7 @@
 \ifgfivepaper
   \newgeometry{top=65mm,bottom=30mm,left=62mm,right=18mm}
 \else
-  \newgeometry{top=65mm,bottom=30mm,left=50mm,right=35mm}
+  \newgeometry{top=65mm,bottom=30mm,left=74pt,right=35mm} % formerly left=50mm
 \fi
 
 \thispagestyle{empty}
@@ -614,7 +717,7 @@
 %    \ifx\@secondProgramcode och \programmecode{\@secondProgramcode} \par \fi  % for a second program
     \@prgmcode\par
     \ifx\@prgmcode och \@secondprgmcode \par  \fi   % for a second program
-    \ifx\@date\@empty\relax\else Datum: \@date\vspace{5mm} \fi
+    \ifx\@date\@empty\relax\else Datum: \@date\\ \vspace{5mm} \fi
     \ifx\@supervisorCsLastname\@empty
     \ifx\@supervisorBsLastname\@empty
     Handledare: \@supervisorAsFirstname\space\@supervisorAsLastname
@@ -626,7 +729,7 @@
             \@supervisorCsFirstname\space\@supervisorCsLastname
     \par
     \fi
-    Examinator: \@examiner\par
+    Examinator: \@examinersFirstname\space\@examinersLastname\par
     \quad\@examinersSchool\par
     \ifx\@hostcompany\@empty\relax\else Uppdragsgivare: \@hostcompany \par \fi
     \ifx\@hostorganization\@empty\relax\else Uppdragsgivare: \@hostorganization \par \fi
@@ -672,7 +775,7 @@
 \ifgfivepaper
   \newgeometry{top=140mm,bottom=30mm,left=12.25mm,right=35mm}
 \else
-  \newgeometry{top=250mm,bottom=30mm,left=50mm,right=35mm}
+  \newgeometry{top=250mm,bottom=30mm,left=74pt,right=35mm}
 \fi
 \thispagestyle{empty}
 \begin{flushleft}
@@ -687,23 +790,126 @@
     \fi
   \fi
 \end{flushleft}
+\thesiscopyrightleft{copyright}
+% make the following code conditional upon the package hyperxmp being used
+\ltx@ifpackageloaded{hyperxmp}{
+\newcommand{\mycopyright}{%
+  {Copyright (c)}\ \the\year\ \@authorsFirstname\ \@authorsLastname %
+  \ifx\@secondAuthorsLastname\@empty\relax%
+  \else%
+    \ifinswedish%
+      \  och\ \@secondAuthorsFirstname\ \@secondAuthorsLastname%
+    \else%
+      \  and\ \@secondAuthorsFirstname\ \@secondAuthorsLastname%
+    \fi%
+  \fi%
+}
+\hypersetup{
+     pdfcopyright={\mycopyright} 
+}
+}{}% end of ifpackage conditional
 \restoregeometry
 \clearpage
 }
 
-\newcommand{\acknowlegmentssignature}{
-  \begin{flushleft}
-    Amsterdam, The Netherlands \MONTH\enspace\the\year\\
-    \@authorsFirstname\space\@authorsLastname
-    \ifx\@secondAuthorsLastname\@empty\relax
+% bookinfo page with CC license
+% CC BY (Attribution)
+% CC BY-NC (Attribution + Non-commercial)
+% CC BY-ND (Attribution + No derivatives)
+% CC BY-NC-ND (Attribution + Non-commercial + No derivatives)
+% CC BY-SA (Attribution + ShareAlike)
+% CC BY-NC-SA (Attribution + Non-commercial + ShareAlike)
+% CC0 (Zero)
+\newcommand{\bookinfopageCC}{
+\ifgfivepaper
+  \newgeometry{top=130mm,bottom=30mm,left=12.25mm,right=35mm}
+\else
+  \newgeometry{top=220mm,bottom=30mm,left=74pt,right=35mm}
+\fi
+\thispagestyle{empty}
+\begin{flushleft}
+  \sffamily
+  \IfEqCase{\doclicense@modifier}{%
+    {by}{CC BY}%
+    {by-nc}{CC BY-NC}%
+    {by-nd}{CC BY-ND}%
+    {by-nc-nd}{CC BY-NC-ND}%
+    {by-sa}{CC BY-SA}%
+    {by-nc-sa}{CC BY-NC-SA}%
+    {zero}{CC0}%
+  }[\typeout{Creative Commons code  \doclicense@modifier not found}\copyright]
+  \enspace\the\year\quad\@authorsFirstname\space\@authorsLastname 
+  \ifx\@secondAuthorsLastname\@empty\relax
+  \else
+    \ifinswedish
+      \enspace och\enspace\@secondAuthorsFirstname\space\@secondAuthorsLastname \\
     \else
-       \ifinswedish
-       \enspace och\enspace\@secondAuthorsFirstname\space\@secondAuthorsLastname \\
-       \else
-       \enspace and\enspace\@secondAuthorsFirstname\space\@secondAuthorsLastname \\
-       \fi
+      \enspace and\enspace\@secondAuthorsFirstname\space\@secondAuthorsLastname \\
     \fi
-  \end{flushleft}
+  \fi
+  \doclicenseThis
+\end{flushleft}
+\thesiscopyrightleft{\doclicense@modifier}
+% make the following code conditional upon the package hyperxmp being used
+\ltx@ifpackageloaded{hyperxmp}{
+\let\@myCC\@empty
+\ifdefstring{\doclicense@modifier}{by}{\def\@myCC{CC BY}}
+\ifdefstring{\doclicense@modifier}{by-nc}{\def\@myCC{CC BY-NC}}
+\ifdefstring{\doclicense@modifier}{by-nd}{\def\@myCC{CC BY-ND}}
+\ifdefstring{\doclicense@modifier}{by-nc-nd}{\def\@myCC{CC BY-NC-ND}}
+\ifdefstring{\doclicense@modifier}{by-sa}{\def\@myCC{CC BY-SA}}
+\ifdefstring{\doclicense@modifier}{by-nc-sa}{\def\@myCC{CC BY-NC-SA}}
+\ifdefstring{\doclicense@modifier}{zero}{\def\@myCC{CC0}}
+
+\newcommand{\mycopyright}{%
+ \@myCC\ \the\year\ \@authorsFirstname\ \@authorsLastname%
+  \ifx\@secondAuthorsLastname\@empty\relax%
+  \else%
+    \ifinswedish%
+      \  och\ \@secondAuthorsFirstname\ \@secondAuthorsLastname%
+    \else%
+      \ and\ \@secondAuthorsFirstname\ \@secondAuthorsLastname %
+    \fi%
+  \fi%
+}
+
+\hypersetup{
+     pdfcopyright={\mycopyright} 
+}
+}{}% end of ifpackage conditional
+\restoregeometry
+\clearpage
+}
+
+% If the doclicense pacakage is installed, then use the \bookinfoCC when encountering a \bookinfo command
+\AtBeginDocument{\@ifpackageloaded{doclicense}
+  {%
+    \renewcommand{\bookinfopage}{\bookinfopageCC}
+  }
+  {\relax}
+}
+
+\newcommand{\acknowlegmentssignature}{
+ \ifx\@secondAuthorsLastname\@empty
+ \begin{flushleft}
+\@authorCityCountryDate\\
+    \@authorsFirstname\space\@authorsLastname
+ \end{flushleft}
+\else
+\begin{flushleft}
+\begin{tabular}{l l}
+\@authorCityCountryDate & \@secondAuthorCityCountryDate \\
+    \@authorsFirstname\space\@authorsLastname &
+    \@secondAuthorsFirstname\space\@secondAuthorsLastname \\
+%       \ifinswedish
+%       \enspace & \enspace\@secondAuthorsFirstname\space\@secondAuthorsLastname \\
+%       \else
+%       \enspace and\enspace\@secondAuthorsFirstname\space\@secondAuthorsLastname \\
+%       \fi
+\end{tabular}
+\end{flushleft}
+\fi
+
 \cleardoublepage
 }
 
@@ -873,10 +1079,6 @@
      \else
      "E-mail": "\@email",\\
      \fi
-     \ifx\@orcid\@empty\relax
-     \else
-     "ORCiD": "\@orcid",\\
-     \fi
      \ifx\@authorsSchool\@empty\relax
      \else
      "organisation": \{"L1": "\@authorsSchool",\\
@@ -905,10 +1107,6 @@
             \else
         "E-mail": "\@secondemail",\\
         \fi
-        \ifx\@secondorcid\@empty\relax
-            \else
-        "ORCiD": "\@secondorcid",\\
-        \fi
         \ifx\@secondAuthorsSchool\@empty\relax
         \else
         "organisation": \{"L1": "\@secondAuthorsSchool",\\
@@ -919,19 +1117,20 @@
         \}\\
 		\fi
     \},\\
-        \ifx\@courseCycle\@empty\relax
-       \else
-       "Cycle": "\@courseCycle",\\
-       \fi
-        \ifx\@courseCode\@empty\relax
-       \else
-       "Course code": "\@courseCode",\\
-       \fi
-        \ifx\@courseCredits\@empty\relax
-       \else
-       "Credits": "\@courseCredits",\\
-       \fi
     \fi
+    \ifx\@courseCycle\@empty\relax
+    \else
+    "Cycle": "\@courseCycle",\\
+    \fi
+    \ifx\@courseCode\@empty\relax
+    \else
+    "Course code": "\@courseCode",\\
+    \fi
+    \ifx\@courseCredits\@empty\relax
+    \else
+    "Credits": "\@courseCredits",\\
+     \fi
+
        "Degree1": \{"Educational program": "\@prgmcode"\\ % 
        \ifx\@programcode\@empty\relax
        \else
@@ -1119,6 +1318,11 @@
     % \ifx\@hostorganization\@empty\relax\else Host organization: \@hostorganization\\\fi
     "Other information": \{"Year": "\the\year", "Number of pages": \char`\"\pageref{#1},\pageref{#2}\char`\"
     \},\\
+    \ifx\@copyrightleft\@empty
+    "Copyrightleft": "None",\\
+    \else
+    "Copyrightleft": "\@copyrightleft",\\
+    \fi
     "Series": \{
     \ifx\@thesisSeries\@empty\relax
         \else
@@ -1204,8 +1408,9 @@
      \@charrb
      \fi
 \@charrb,}
-\immediate\write\jsonfile{\ifx\@secondAuthorsLastname\@empty%\relax
-    \else
+\ifx\@secondAuthorsLastname\@empty\relax
+\else
+\immediate\write\jsonfile{
         "Author2": \@charlb \ifx\@secondAuthorsLastname\@empty%\relax
             \else
         "Last name": "\@secondAuthorsLastname",
@@ -1222,10 +1427,6 @@
             \else
         "E-mail": "\@secondemail",
         \fi
-        \ifx\@secondorcid\@empty%\relax
-            \else
-        "ORCiD": "\@secondorcid",
-        \fi
         \ifx\@secondAuthorsSchool\@empty%\relax
         \else
         "organisation": \@charlb"L1": "\@secondAuthorsSchool"
@@ -1236,6 +1437,7 @@
         \@charrb
 		\fi
 \@charrb,}
+\fi % end of conditional for secondAuthorsLastname
 \immediate\write\jsonfile{\ifx\@courseCycle\@empty%\relax
 \else
 "Cycle": "\@courseCycle",
@@ -1442,21 +1644,26 @@
 \immediate\write\jsonfile{"National Subject Categories": "\@nationalsubjectcategories",
 }
 \fi
-%\ifx\@hostorganization\@empty\relax
-%\else Host organization: \@hostorganization\\
-%\fi
-%"\pageref{pg:lastPageofPreface},\pageref%{pg:lastPageofMainmatter}" \@charrb,
+% \ifx\@hostorganization\@empty\relax\else Host organization: \@hostorganization\\\fi
+% "\pageref{pg:lastPageofPreface},\pageref{pg:lastPageofMainmatter}" \@charrb,
 \immediate\write\jsonfile{"Other information": \@charlb"Year": "\the\year", "Number of pages": 
     "\getpagerefnumber{pg:lastPageofPreface},\getpagerefnumber{pg:lastPageofMainmatter}" \@charrb,
 }
+\ifx\@copyrightleft\@empty
+\immediate\write\jsonfile{"Copyrightleft": "None",
+}
+\else
+\immediate\write\jsonfile{"Copyrightleft": "\@copyrightleft",
+}
+\fi
 \immediate\write\jsonfile{"Series": \@charlb
     \ifx\@thesisSeries\@empty\relax,
-    \else
-      "Title of series": "\@thesisSeries"
-      \ifx\@thesisSeriesNumber\@empty\relax
-      \else
-        , "No. in series": "\@thesisSeriesNumber"
-      \fi
+        \else
+        	"Title of series": "\@thesisSeries"
+        	\ifx\@thesisSeriesNumber\@empty\relax
+            \else
+            , "No. in series": "\@thesisSeriesNumber"
+             \fi
     \fi
     \@charrb,
 }
@@ -1521,7 +1728,9 @@
 \fi % end of the ifxeorlua
 
     \immediate\write\jsonfile{\@charrb} % end the JSON dict
+
     \closeout\jsonfile
+
 }
 
 \makeatother
@@ -1548,5 +1757,15 @@
 {
 \__scontents_getfrom_seq:nn {#1} {#2}
 }
+
+\NewDocumentCommand{\replaceBS}{mm}
+ {
+  \tl_set_eq:NN #2 #1
+  \tl_replace_all:NVn #2 \c_backslash_other_tl { ¢ }
+ }
+\tl_const:Nx \c_backslash_other_tl { \cs_to_str:N \\ }
+\cs_generate_variant:Nn \tl_replace_all:Nnn { NV }
+
+\ExplSyntaxOff
 
 \endinput

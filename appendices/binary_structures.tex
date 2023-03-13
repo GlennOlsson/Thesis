@@ -1,5 +1,5 @@
 \renewcommand{\chaptermark}[1]{\markboth{Appendix \thechapter\relax:\thinspace\relax#1}{}}
-\chapter{Binary representation of \gls{FFS}\\images and Classes}
+\chapter[Binary representation of FFS images and Classes]{Binary representation of FFS images and Classes}
 \label{app:binary_rep}
 This appendix visualizes the binary structures produced when serializing the \texttt{InodeTable}, the \texttt{InodeEntry}, and the \texttt{Directory} objects, and the binary structure of the encoded \gls{FFS} images. The models are in terms of bytes, index $0$ indicating the first byte, index $1$ indicating the second byte, etc.
 
@@ -42,7 +42,7 @@ The \texttt{InodeTable}, \texttt{InodeEntry}, and the \texttt{Directory} class a
 	\end{bytefield}
 	\caption[Byte representation of the serialization of an \texttt{InodeEntry} object]{Byte representation of a serialized \texttt{InodeEntry}, representing a file or directory stored in \gls{FFS}. \texttt{length} is an unsigned integer representing the amount of data stored on \gls{FFS} by the file or directory, for instance the size of the file. \texttt{$is_d$} is a boolean with the value true ($\neq{0}$) if the inode entry represents a directory, and false ($= 0$) if the inode entry represents a file. $t_{created}$, $t_{accessed}$, and $t_{modified}$ are unsigned integers represents timestamps of when the file or directory was created, last accessed and last modified, respectively. \texttt{\#~Posts} is an unsigned integer representing the amount of posts the file or directory is stored in on the \gls{OWS}. Following are \texttt{\#~Posts} \mbox{NULL-terminated} strings representing each post ID in the \gls{OWS}. The size of this field depends on the \gls{OWS} used, for instance does Flickr often generate \mbox{11-byte} post IDs. However, as the strings are \mbox{NULL-terminated}, the deserializer can read the bytes until the \mbox{NULL-character} is found}
 \end{figure}
-
+\FloatBarrier
 
 \begin{figure}[!htb]
 	\label{fig:app_bin_dir}
@@ -61,6 +61,7 @@ The \texttt{InodeTable}, \texttt{InodeEntry}, and the \texttt{Directory} class a
 	\end{bytefield}
 	\caption[Byte representation of the serialization of an \texttt{Directory} object]{Byte representation of a serialized \texttt{Directory}. \texttt{\#~Entries} is an unsigned integer representing the amount of entries in the directory. Following are \texttt{\#~Entries} \mbox{inode-filename} pairs. The \texttt{Inode} is an integer representing the inode of the file or directory, corresponding to the file's or directory's entry in the inode table. The filename is a \mbox{NULL-terminated} strings representing the filename of the file or directory in \gls{FFS}. The size of this field can vary from filename to filename, but the maximum size of the field is \SI{129}{\byte} (128 characters + NULL character). As the strings are \mbox{NULL-terminated}, the deserializer can read the bytes until the \mbox{NULL-character} is found}
 \end{figure}
+\FloatBarrier
 
 \section{FFS Images}
 An \gls{FFS} image consists of multiple binary structures, including the \gls{FFS} header and the encrypted data. This section visualizes these binary structures. Figure~\ref{fig:app_bin_ffs_header} visualizes binary format of the \gls{FFS} header. Figure~\ref{fig:app_bin_pixels} visualizes the \gls{PCD} of \gls{FFS} images stored on the \gls{OWS}.
@@ -79,11 +80,11 @@ An \gls{FFS} image consists of multiple binary structures, including the \gls{FF
 	\end{bytefield}
 	\caption[Byte representation of the \gls{FFS} image header]{\texttt{'F'} and \texttt{'S'} are the literal letters F and S in ASCII code. \texttt{V} is an integer representing the version of the \gls{FFS} image produced. \texttt{Timestamp} is an unsigned integer representing the number of milliseconds since Unix epoch when the image was encoded. \texttt{Data length} is an unsigned integer representing the number of bytes stored after the header. Following the heder is \texttt{Data length} bytes, containing the actual data stored in the image.}
 \end{figure}
-
+\FloatBarrier
 \begin{figure}[!htb]
 	\label{fig:app_bin_pixels}
 	\centering
-    \textbf{\acrlong{PCD} in \gls{FFS} images}\par\medskip
+    \textbf{\glsxtrlong{PCD} in \gls{FFS} images}\par\medskip
 
 	% bitwidth = 1/32 * textwidth
 	\begin{bytefield}[bitwidth=0.0312\textwidth]{32}
@@ -93,17 +94,18 @@ An \gls{FFS} image consists of multiple binary structures, including the \gls{FF
 			\bitheader[lsb=4]{4,35} \\
 			\wordbox[lrt]{1}{} \\
 			\wordbox[lrb]{1}{Salt} \\
-			\bitbox{12}{\acrfull{IV}} & \bitbox[ltr]{20}{}\\
+			\bitbox{12}{\glsxtrlong{IV}} & \bitbox[ltr]{20}{}\\
 			\wordbox[lr]{1}{} \\
 			\wordbox[lr]{1}{Encrypted cipher text} \\
 			\skippedwords \\
 			\wordbox[lr]{1}{} \\
 			\bitbox[lb]{16}{} & \bitbox{16}{Authentication Tag}
 		\end{rightwordgroup} \\
-		\wordbox[lr]{1}{} \\
+		%\wordbox[lr]{1}{} \\
 		\wordbox[lr]{1}{Filler bytes} \\
 		\skippedwords \\
 		\wordbox[blr]{1}{} \\
 	\end{bytefield}
-	\caption[Byte representation of the data stored as \gls{PCD} in \gls{FFS} images]{Byte representation of the data stored as \gls{PCD} in \gls{FFS} images. \texttt{LCED} is an unsigned integer representing the Length of the \gls{CED}. The \texttt{Salt} is a \mbox{64-byte} randomized vector used to derive the encryption and decryption key. The \texttt{IV} is a \mbox{12-byte} randomized vector used as the initial state of the encryption and decryption methods. Following is the \texttt{Encrypted cipher text} of variable size, depending on the size of the unencrypted data. The \gls{FFS} header and the data to be stored, for instance the data of a file, is what is encrypted to become the \texttt{Encrypted cipher text}. The \texttt{Authentication Tag} is a \mbox{16-byte} vector produced by the authenticated encryption method, and verified by the decryption method, to ensure data integrity has been upheld. Following is a number of filler bytes, depending on the size of the preceding data, to ensure the image has enough number of pixels for its calculated dimensions.}
+	\caption[Byte representation of the data stored as \gls{PCD} in \gls{FFS} images]{Byte representation of the data stored as \gls{PCD} in \gls{FFS} images. \texttt{LCED} is an unsigned integer representing the Length of the \gls{CED}. \texttt{Salt} is a \mbox{64-byte} random vector used to derive the encryption and decryption key. \texttt{IV} is a \mbox{12-byte} random vector used as the initial state of the encryption and decryption methods. Next is the \texttt{Encrypted cipher text} of variable size, depending on the size of the unencrypted data. The \gls{FFS} header and the data to be stored, for instance, the data of a file, is encrypted to become the \texttt{Encrypted cipher text}. \texttt{Authentication Tag} is a \mbox{16-byte} vector produced by the authenticated encryption method and verified by the decryption method to ensure data integrity. Finally, a number of filler bytes, depending on the size of the preceding data, to ensure the image has enough pixels for its calculated dimensions.}
 \end{figure}
+\FloatBarrier

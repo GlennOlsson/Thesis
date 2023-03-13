@@ -7,6 +7,13 @@
 %% translation of English headings into Swedish as the addition of Swedish
 %% text. Original body text is deliberately left in English.
 
+% Make it possible to conditionally depend on the TeX engine used
+\RequirePackage{ifxetex}
+\RequirePackage{ifluatex}
+\newif\ifxeorlua
+\ifxetex\xeorluatrue\fi
+\ifluatex\xeorluatrue\fi
+
 %% Conventions for todo notes:
 % \todo[inline]{Comments/directions/... in English}
 % \todo[inline, backgroundcolor=kth-lightblue]{Text på svenska}
@@ -16,15 +23,17 @@
 % set the default language to english or swedish by passing an option to the documentclass - this handles the inside tile page
 % To optimize for digital output (this changes the color palette add the option: digitaloutput
 % To use bibtex or biblatex - include one of these as an option
-% \documentclass[english, bibtex]{templates/kth/kththesis}
+%\documentclass[english, bibtex]{templates/kth/kththesis}
 \documentclass[english, biblatex]{templates/kth/kththesis}
 
 % \usepackage[style=numeric,sorting=none,backend=biber]{biblatex}
 \ifbiblatex
     %\usepackage[language=english,bibstyle=authoryear,citestyle=authoryear, maxbibnames=99]{biblatex}
     %  \usepackage[natbib=true,bibstyle=authoryear,citestyle=authoryear, maxbibnames=99,language=english,backend=bibtex]{biblatex}
-    \usepackage[natbib,maxcitenames=3,mincitenames=11,style=ieee,citestyle=numeric-comp,sorting=none,backend=biber,maxbibnames=99]{biblatex}
+    %% GQMJr the min and max were backward
+    \usepackage[natbib,maxcitenames=11,mincitenames=3,style=ieee,citestyle=numeric-comp,sorting=none,backend=biber,maxbibnames=99]{biblatex}
     \addbibresource{bibliography.bib}
+    \addbibresource{additional_bib_entries.bib}
     %\DeclareLanguageMapping{norsk}{norwegian}
 \else
     % The line(s) below are for BibTeX
@@ -89,7 +98,9 @@
 % note that nomain - does not produce a main glossary, this only acronyms will be in the glossary
 % note that nopostdot - will present there being a period at the end of each entry
 \usepackage[acronym, section=section, nonumberlist, nomain, nopostdot]{glossaries}
-\usepackage[automake]{glossaries-extra}
+%% GQMJr changed to not pass the automake option - for Overleaf
+\usepackage[]{glossaries-extra}
+%\usepackage[automake]{glossaries-extra}
 \ifinswedish
     %\usepackage{glossaries-swedish}
 \fi
@@ -133,10 +144,12 @@
 \input{templates/kth/custom_configuration}
 
 \input{extras/title}
+% \title{FFS: A cryptographic \mbox{cloud-based} deniable filesystem through exploitation of online web services}
 \subtitle{Store your sensitive data in plain sight}
 
 % give the alternative title - i.e., if the thesis is in English, then give a Swedish title
 \input{extras/title-swe}
+% \alttitle{FFS: Ett kryptografiskt molnbaserat förnekningsbart filsystem genom utnyttjande av onlinebaserade webtjänster}
 \altsubtitle{Lagra din känsliga data öppet}
 % alternative, if the thesis is in Swedish, then give an English title
 %\alttitle{This is the English translation of the title}
@@ -150,15 +163,15 @@
 
 %%%%% For the oral presentation
 %% Add this information once your examiner has scheduled your oral presentation
-\presentationDateAndTimeISO{2022-03-15 13:00}
+\presentationDateAndTimeISO{2023-03-20 16:00}
 \presentationLanguage{eng}
-\presentationRoom{via Zoom https://kth-se.zoom.us/j/ddddddddddd}
+\presentationRoom{via Zoom https://kth-se.zoom.us/j/63695419495}
 \presentationAddress{Isafjordsgatan 22 (Kistagången 16)}
 \presentationCity{Stockholm}
 
 % When there are multiple opponents, separate their names with '\&'
 % Opponent's information
-\opponentsNames{A. B. Normal \& A. X. E. Normalè}
+\opponentsNames{Arnar Pétursson}
 
 % Once a thesis is approved by the examiner, add the TRITA number
 % for entering the TRITA number for a thesis
@@ -177,8 +190,8 @@
 	citecolor   = \refscolor,
 	anchorcolor = black
 }
-
-
+%% GQMJr increased header height to avoid warniing from fancyhdr
+\setlength{\headheight}{25.89253pt}
 \begin{document}
 %\selectlanguage{swedish}
 %
@@ -206,9 +219,8 @@ eng
 %%% entry of the meta data for your thesis.
 %%% These page(s) will be removed before the thesis is inserted into DiVA.
 \begin{scontents}[store-env=abstracts,print-env=true]
-
 \input{extras/abstract}
-
+% Many \glspl{OWS} today, such as Flickr and Twitter, provide users with the possibility to post images that are stored on the platform for free. This thesis explores creating a cryptographically secure filesystem that stores its data on an online web service by encoding the encrypted data as images. Images have been selected as the target as more data can usually be stored in image posts than text posts on \glspl{OWS}. The proposed filesystem, named \gls{FFS}, provides users with free, deniable, and cryptographic storage by exploiting the storage provided by online web services. The thesis analyzes and compares the performance of \gls{FFS} against two other filesystems and a version of \gls{FFS} that does not use an \gls{OWS}. While \gls{FFS} has performance limitations that make it non-viable as a general-purpose filesystem, such as a substitute for the local filesystem on a computer; however, \gls{FFS} provides security benefits compared to other cloud-based filesystems specifically by providing end-to-end encryption, authenticated encryption, and plausible deniability of the data. Furthermore, being a cloud-based filesystem, \gls{FFS} can be mounted on any computer with the same operating system, given the correct secrets. 
 \end{scontents}
 % \todo[inline, backgroundcolor=kth-lightgreen]{The following are some notes about what can be included (in terms of LaTeX) in your abstract.}
 % Choice of typeface with \textbackslash textit, \textbackslash textbf, and \textbackslash texttt:  \textit{x}, \textbf{x}, and \texttt{x}
@@ -258,9 +270,8 @@ eng
 swe
 \end{scontents}
 \begin{scontents}[store-env=abstracts,print-env=true]
-
 \input{extras/abstract_swe}
-
+%Flertalet webbtjänster idag, så som Flickr och Twitter, tillhandahåller möjligheten att lägga upp bilder som lagras på tjänsten utan kostnad. Denna avhandling utforskar en ide om att skapa ett kryptografiskt säkert filsystem som lagrar sin data på webbtjänster med hjälp av kodade och krypterade bilder. Mer data kan ofta lagras i bildinlägg än i textinlägg på webbtjänsterna. Filsystemet, döpt Fejk Filesystem (FFS), tillhandahåller användare med gratis, förnekningsbar, och kryptografisk lagring genom att utnyttja det lagringsutrymme som tillhandahålls av dessa webbtjänster. Avhandlingen analyserar och jämför prestandan hos FFS med två andra filsystem, samt en version av FFS som inte använder en webbtjänst. En slutsats som kan dras är att FFS har begränsningar i prestanda, vilket gör det ohållbart som ett generellt-ändamålsfilssystem, till exempel som ersättare för det lokala filsystemet på en dator. Däremot tillhandahåller det säkerhetsförmåner jämfört med andra molnbaserade filsystem, så som början-till-slutetkryptering, autentiserad kryptering, samt sannolik förnekningsbarhet av datan. Dessutom, som ett molnbaserat filsystem kan FFS monteras på vilken dator som helst med samma operativsystem, givet de korrekta nycklarna. 
 \end{scontents}
 \subsection*{Nyckelord}
 \begin{scontents}[store-env=keywords,print-env=true]

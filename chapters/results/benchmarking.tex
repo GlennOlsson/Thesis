@@ -177,3 +177,389 @@ If we for each filesystem, each state of the \gls{UBC}, and each file operation 
 \FloatBarrier
 \input{figures.nosync/benchmarking/APFS/stat-table-ubc_disabled}
 \FloatBarrier
+
+Plotting a scatter plot of the performance for each test per filesystem, we can visualize the distribution of values dependant on the buffer size and file size, using one axis the buffer size and the color of the scatter points as the file size. \Cref{fig:bench_ffs_ubc_scatter_read,fig:bench_ffs_ubc_scatter_write,fig:bench_ffs_ubc_scatter_re-read,fig:bench_ffs_ubc_scatter_re-write,fig:bench_ffs_ubc_scatter_rnd_read,fig:bench_ffs_ubc_scatter_rnd_write} presents a scatter plot for the Write, Read, Re-Write, Re-Read, Random Write and Random Read tests for \gls{FFS} with the \gls{UBC} enabled, respectively. \Cref{fig:bench_gcsf_ubc_scatter_read,fig:bench_gcsf_ubc_scatter_write,fig:bench_gcsf_ubc_scatter_re-read,fig:bench_gcsf_ubc_scatter_re-write,fig:bench_gcsf_ubc_scatter_rnd_read,fig:bench_gcsf_ubc_scatter_rnd_write} presents a scatter plot for the Write, Read, Re-Write, Re-Read, Random Write and Random Read tests for \gls{GCSF} with the \gls{UBC} enabled, respectively. \Cref{fig:bench_fffs_ubc_scatter_read,fig:bench_fffs_ubc_scatter_write,fig:bench_fffs_ubc_scatter_re-read,fig:bench_fffs_ubc_scatter_re-write,fig:bench_fffs_ubc_scatter_rnd_read,fig:bench_fffs_ubc_scatter_rnd_write} presents a scatter plot for the Write, Read, Re-Write, Re-Read, Random Write and Random Read tests for \gls{FFFS} with the \gls{UBC} enabled, respectively. \Cref{fig:bench_apfs_ubc_scatter_read,fig:bench_apfs_ubc_scatter_write,fig:bench_apfs_ubc_scatter_re-read,fig:bench_apfs_ubc_scatter_re-write,fig:bench_apfs_ubc_scatter_rnd_read,fig:bench_apfs_ubc_scatter_rnd_write} presents a scatter plot for the Write, Read, Re-Write, Re-Read, Random Write and Random Read tests for \gls{APFS} with the \gls{UBC} enabled, respectively. \Cref{fig:bench_ffs_no_ubc_scatter_read,fig:bench_ffs_no_ubc_scatter_write,fig:bench_ffs_no_ubc_scatter_re-read,fig:bench_ffs_no_ubc_scatter_re-write,fig:bench_ffs_no_ubc_scatter_rnd_read,fig:bench_ffs_no_ubc_scatter_rnd_write} presents a scatter plot for the Write, Read, Re-Write, Re-Read, Random Write and Random Read tests for \gls{FFS} with the \gls{UBC} disabled, respectively. \Cref{fig:bench_gcsf_no_ubc_scatter_read,fig:bench_gcsf_no_ubc_scatter_write,fig:bench_gcsf_no_ubc_scatter_re-read,fig:bench_gcsf_no_ubc_scatter_re-write,fig:bench_gcsf_no_ubc_scatter_rnd_read,fig:bench_gcsf_no_ubc_scatter_rnd_write} presents a scatter plot for the Write, Read, Re-Write, Re-Read, Random Write and Random Read tests for \gls{GCSF} with the \gls{UBC} disabled, respectively. \Cref{fig:bench_fffs_no_ubc_scatter_read,fig:bench_fffs_no_ubc_scatter_write,fig:bench_fffs_no_ubc_scatter_re-read,fig:bench_fffs_no_ubc_scatter_re-write,fig:bench_fffs_no_ubc_scatter_rnd_read,fig:bench_fffs_no_ubc_scatter_rnd_write} presents a scatter plot for the Write, Read, Re-Write, Re-Read, Random Write and Random Read tests for \gls{FFFS} with the \gls{UBC} disabled, respectively. \Cref{fig:bench_apfs_no_ubc_scatter_read,fig:bench_apfs_no_ubc_scatter_write,fig:bench_apfs_no_ubc_scatter_re-read,fig:bench_apfs_no_ubc_scatter_re-write,fig:bench_apfs_no_ubc_scatter_rnd_read,fig:bench_apfs_no_ubc_scatter_rnd_write} presents a scatter plot for the Write, Read, Re-Write, Re-Read, Random Write and Random Read tests for \gls{APFS} with the \gls{UBC} disabled, respectively.
+
+\clearpage
+\begin{figure}[!htb]
+	\label{fig:bench_ffs_ubc_scatter_read}
+	\begin{center}
+		\includegraphics[width=0.8\textwidth]{figures.nosync/benchmarking/FFS/scatter-UBC Enabled-Read.pdf}
+	\end{center}
+	\caption[Comparison of Read performance for file size and buffer size for FFS with the UBC enabled]{Performance comparison of different file sizes and buffer sizes for FFS Read with the UBC enabled}
+\end{figure}
+\begin{figure}[!htb]
+	\label{fig:bench_ffs_ubc_scatter_write}
+	\begin{center}
+		\includegraphics[width=0.8\textwidth]{figures.nosync/benchmarking/FFS/scatter-UBC Enabled-Write.pdf}
+	\end{center}
+	\caption[Comparison of Write performance for file size and buffer size for FFS with the UBC enabled]{Performance comparison of different file sizes and buffer sizes for FFS Write with the UBC enabled}
+\end{figure}
+\clearpage
+\begin{figure}[!htb]
+	\label{fig:bench_ffs_ubc_scatter_re-read}
+	\begin{center}
+		\includegraphics[width=0.8\textwidth]{figures.nosync/benchmarking/FFS/scatter-UBC Enabled-Re-Read.pdf}
+	\end{center}
+	\caption[Comparison of Re-Read performance for file size and buffer size for FFS with the UBC enabled]{Performance comparison of different file sizes and buffer sizes for FFS Re-Read with the UBC enabled}
+\end{figure}
+\begin{figure}[!htb]
+	\label{fig:bench_ffs_ubc_scatter_re-write}
+	\begin{center}
+		\includegraphics[width=0.8\textwidth]{figures.nosync/benchmarking/FFS/scatter-UBC Enabled-Re-Write.pdf}
+	\end{center}
+	\caption[Comparison of Re-Write performance for file size and buffer size for FFS with the UBC enabled]{Performance comparison of different file sizes and buffer sizes for FFS Re-Write with the UBC enabled}
+\end{figure}
+\clearpage
+\begin{figure}[!htb]
+	\label{fig:bench_ffs_ubc_scatter_rnd_read}
+	\begin{center}
+		\includegraphics[width=0.8\textwidth]{figures.nosync/benchmarking/FFS/scatter-UBC Enabled-Random read.pdf}
+	\end{center}
+	\caption[Comparison of Random Read performance for file size and buffer size for FFS with the UBC enabled]{Performance comparison of different file sizes and buffer sizes for FFS Random Read with the UBC enabled}
+\end{figure}
+\begin{figure}[!htb]
+	\label{fig:bench_ffs_ubc_scatter_rnd_write}
+	\begin{center}
+		\includegraphics[width=0.8\textwidth]{figures.nosync/benchmarking/FFS/scatter-UBC Enabled-Random write.pdf}
+	\end{center}
+	\caption[Comparison of Random Write performance for file size and buffer size for FFS with the UBC enabled]{Performance comparison of different file sizes and buffer sizes for FFS Random Write with the UBC enabled}
+\end{figure}
+\clearpage
+
+
+
+\begin{figure}[!htb]
+	\label{fig:bench_gcsf_ubc_scatter_read}
+	\begin{center}
+		\includegraphics[width=0.8\textwidth]{figures.nosync/benchmarking/GCSF/scatter-UBC Enabled-Read.pdf}
+	\end{center}
+	\caption[Comparison of Read performance for file size and buffer size for GCSF with the UBC enabled]{Performance comparison of different file sizes and buffer sizes for GCSF Read with the UBC enabled}
+\end{figure}
+\begin{figure}[!htb]
+	\label{fig:bench_gcsf_ubc_scatter_write}
+	\begin{center}
+		\includegraphics[width=0.8\textwidth]{figures.nosync/benchmarking/GCSF/scatter-UBC Enabled-Write.pdf}
+	\end{center}
+	\caption[Comparison of Write performance for file size and buffer size for GCSF with the UBC enabled]{Performance comparison of different file sizes and buffer sizes for GCSF Write with the UBC enabled}
+\end{figure}
+\clearpage
+\begin{figure}[!htb]
+	\label{fig:bench_gcsf_ubc_scatter_re-read}
+	\begin{center}
+		\includegraphics[width=0.8\textwidth]{figures.nosync/benchmarking/GCSF/scatter-UBC Enabled-Re-Read.pdf}
+	\end{center}
+	\caption[Comparison of Re-Read performance for file size and buffer size for GCSF with the UBC enabled]{Performance comparison of different file sizes and buffer sizes for GCSF Re-Read with the UBC enabled}
+\end{figure}
+\begin{figure}[!htb]
+	\label{fig:bench_gcsf_ubc_scatter_re-write}
+	\begin{center}
+		\includegraphics[width=0.8\textwidth]{figures.nosync/benchmarking/GCSF/scatter-UBC Enabled-Re-Write.pdf}
+	\end{center}
+	\caption[Comparison of Re-Write performance for file size and buffer size for GCSF with the UBC enabled]{Performance comparison of different file sizes and buffer sizes for GCSF Re-Write with the UBC enabled}
+\end{figure}
+\clearpage
+\begin{figure}[!htb]
+	\label{fig:bench_gcsf_ubc_scatter_rnd_read}
+	\begin{center}
+		\includegraphics[width=0.8\textwidth]{figures.nosync/benchmarking/GCSF/scatter-UBC Enabled-Random read.pdf}
+	\end{center}
+	\caption[Comparison of Random Read performance for file size and buffer size for GCSF with the UBC enabled]{Performance comparison of different file sizes and buffer sizes for GCSF Random Read with the UBC enabled}
+\end{figure}
+\begin{figure}[!htb]
+	\label{fig:bench_gcsf_ubc_scatter_rnd_write}
+	\begin{center}
+		\includegraphics[width=0.8\textwidth]{figures.nosync/benchmarking/GCSF/scatter-UBC Enabled-Random write.pdf}
+	\end{center}
+	\caption[Comparison of Random Write performance for file size and buffer size for GCSF with the UBC enabled]{Performance comparison of different file sizes and buffer sizes for GCSF Random Write with the UBC enabled}
+\end{figure}
+\clearpage
+
+
+
+\begin{figure}[!htb]
+	\label{fig:bench_fffs_ubc_scatter_read}
+	\begin{center}
+		\includegraphics[width=0.8\textwidth]{figures.nosync/benchmarking/FFFS/scatter-UBC Enabled-Read.pdf}
+	\end{center}
+	\caption[Comparison of Read performance for file size and buffer size for FFFS with the UBC enabled]{Performance comparison of different file sizes and buffer sizes for FFFS Read with the UBC enabled}
+\end{figure}
+\begin{figure}[!htb]
+	\label{fig:bench_fffs_ubc_scatter_write}
+	\begin{center}
+		\includegraphics[width=0.8\textwidth]{figures.nosync/benchmarking/FFFS/scatter-UBC Enabled-Write.pdf}
+	\end{center}
+	\caption[Comparison of Write performance for file size and buffer size for FFFS with the UBC enabled]{Performance comparison of different file sizes and buffer sizes for FFFS Write with the UBC enabled}
+\end{figure}
+\clearpage
+\begin{figure}[!htb]
+	\label{fig:bench_fffs_ubc_scatter_re-read}
+	\begin{center}
+		\includegraphics[width=0.8\textwidth]{figures.nosync/benchmarking/FFFS/scatter-UBC Enabled-Re-Read.pdf}
+	\end{center}
+	\caption[Comparison of Re-Read performance for file size and buffer size for FFFS with the UBC enabled]{Performance comparison of different file sizes and buffer sizes for FFFS Re-Read with the UBC enabled}
+\end{figure}
+\begin{figure}[!htb]
+	\label{fig:bench_fffs_ubc_scatter_re-write}
+	\begin{center}
+		\includegraphics[width=0.8\textwidth]{figures.nosync/benchmarking/FFFS/scatter-UBC Enabled-Re-Write.pdf}
+	\end{center}
+	\caption[Comparison of Re-Write performance for file size and buffer size for FFFS with the UBC enabled]{Performance comparison of different file sizes and buffer sizes for FFFS Re-Write with the UBC enabled}
+\end{figure}
+\clearpage
+\begin{figure}[!htb]
+	\label{fig:bench_fffs_ubc_scatter_rnd_read}
+	\begin{center}
+		\includegraphics[width=0.8\textwidth]{figures.nosync/benchmarking/FFFS/scatter-UBC Enabled-Random read.pdf}
+	\end{center}
+	\caption[Comparison of Random Read performance for file size and buffer size for FFFS with the UBC enabled]{Performance comparison of different file sizes and buffer sizes for FFFS Random Read with the UBC enabled}
+\end{figure}
+\begin{figure}[!htb]
+	\label{fig:bench_fffs_ubc_scatter_rnd_write}
+	\begin{center}
+		\includegraphics[width=0.8\textwidth]{figures.nosync/benchmarking/FFFS/scatter-UBC Enabled-Random write.pdf}
+	\end{center}
+	\caption[Comparison of Random Write performance for file size and buffer size for FFFS with the UBC enabled]{Performance comparison of different file sizes and buffer sizes for FFFS Random Write with the UBC enabled}
+\end{figure}
+\clearpage
+
+
+
+\begin{figure}[!htb]
+	\label{fig:bench_apfs_ubc_scatter_read}
+	\begin{center}
+		\includegraphics[width=0.8\textwidth]{figures.nosync/benchmarking/APFS/scatter-UBC Enabled-Read.pdf}
+	\end{center}
+	\caption[Comparison of Read performance for file size and buffer size for APFS with the UBC enabled]{Performance comparison of different file sizes and buffer sizes for APFS Read with the UBC enabled}
+\end{figure}
+\begin{figure}[!htb]
+	\label{fig:bench_apfs_ubc_scatter_write}
+	\begin{center}
+		\includegraphics[width=0.8\textwidth]{figures.nosync/benchmarking/APFS/scatter-UBC Enabled-Write.pdf}
+	\end{center}
+	\caption[Comparison of Write performance for file size and buffer size for APFS with the UBC enabled]{Performance comparison of different file sizes and buffer sizes for APFS Write with the UBC enabled}
+\end{figure}
+\clearpage
+\begin{figure}[!htb]
+	\label{fig:bench_apfs_ubc_scatter_re-read}
+	\begin{center}
+		\includegraphics[width=0.8\textwidth]{figures.nosync/benchmarking/APFS/scatter-UBC Enabled-Re-Read.pdf}
+	\end{center}
+	\caption[Comparison of Re-Read performance for file size and buffer size for APFS with the UBC enabled]{Performance comparison of different file sizes and buffer sizes for APFS Re-Read with the UBC enabled}
+\end{figure}
+\begin{figure}[!htb]
+	\label{fig:bench_apfs_ubc_scatter_re-write}
+	\begin{center}
+		\includegraphics[width=0.8\textwidth]{figures.nosync/benchmarking/APFS/scatter-UBC Enabled-Re-Write.pdf}
+	\end{center}
+	\caption[Comparison of Re-Write performance for file size and buffer size for APFS with the UBC enabled]{Performance comparison of different file sizes and buffer sizes for APFS Re-Write with the UBC enabled}
+\end{figure}
+\clearpage
+\begin{figure}[!htb]
+	\label{fig:bench_apfs_ubc_scatter_rnd_read}
+	\begin{center}
+		\includegraphics[width=0.8\textwidth]{figures.nosync/benchmarking/APFS/scatter-UBC Enabled-Random read.pdf}
+	\end{center}
+	\caption[Comparison of Random Read performance for file size and buffer size for APFS with the UBC enabled]{Performance comparison of different file sizes and buffer sizes for APFS Random Read with the UBC enabled}
+\end{figure}
+\begin{figure}[!htb]
+	\label{fig:bench_apfs_ubc_scatter_rnd_write}
+	\begin{center}
+		\includegraphics[width=0.8\textwidth]{figures.nosync/benchmarking/APFS/scatter-UBC Enabled-Random write.pdf}
+	\end{center}
+	\caption[Comparison of Random Write performance for file size and buffer size for APFS with the UBC enabled]{Performance comparison of different file sizes and buffer sizes for APFS Random Write with the UBC enabled}
+\end{figure}
+\clearpage
+
+
+
+\begin{figure}[!htb]
+	\label{fig:bench_ffs_no_ubc_scatter_read}
+	\begin{center}
+		\includegraphics[width=0.8\textwidth]{figures.nosync/benchmarking/FFS/scatter-UBC Enabled-Read.pdf}
+	\end{center}
+	\caption[Comparison of Read performance for file size and buffer size for FFS with the UBC disabled]{Performance comparison of different file sizes and buffer sizes for FFS Read with the UBC enabled}
+\end{figure}
+\begin{figure}[!htb]
+	\label{fig:bench_ffs_no_ubc_scatter_write}
+	\begin{center}
+		\includegraphics[width=0.8\textwidth]{figures.nosync/benchmarking/FFS/scatter-UBC Enabled-Write.pdf}
+	\end{center}
+	\caption[Comparison of Write performance for file size and buffer size for FFS with the UBC disabled]{Performance comparison of different file sizes and buffer sizes for FFS Write with the UBC enabled}
+\end{figure}
+\clearpage
+\begin{figure}[!htb]
+	\label{fig:bench_ffs_no_ubc_scatter_re-read}
+	\begin{center}
+		\includegraphics[width=0.8\textwidth]{figures.nosync/benchmarking/FFS/scatter-UBC Enabled-Re-Read.pdf}
+	\end{center}
+	\caption[Comparison of Re-Read performance for file size and buffer size for FFS with the UBC disabled]{Performance comparison of different file sizes and buffer sizes for FFS Re-Read with the UBC enabled}
+\end{figure}
+\begin{figure}[!htb]
+	\label{fig:bench_ffs_no_ubc_scatter_re-write}
+	\begin{center}
+		\includegraphics[width=0.8\textwidth]{figures.nosync/benchmarking/FFS/scatter-UBC Enabled-Re-Write.pdf}
+	\end{center}
+	\caption[Comparison of Re-Write performance for file size and buffer size for FFS with the UBC disabled]{Performance comparison of different file sizes and buffer sizes for FFS Re-Write with the UBC enabled}
+\end{figure}
+\clearpage
+\begin{figure}[!htb]
+	\label{fig:bench_ffs_no_ubc_scatter_rnd_read}
+	\begin{center}
+		\includegraphics[width=0.8\textwidth]{figures.nosync/benchmarking/FFS/scatter-UBC Enabled-Random read.pdf}
+	\end{center}
+	\caption[Comparison of Random Read performance for file size and buffer size for FFS with the UBC disabled]{Performance comparison of different file sizes and buffer sizes for FFS Random Read with the UBC enabled}
+\end{figure}
+\begin{figure}[!htb]
+	\label{fig:bench_ffs_no_ubc_scatter_rnd_write}
+	\begin{center}
+		\includegraphics[width=0.8\textwidth]{figures.nosync/benchmarking/FFS/scatter-UBC Enabled-Random write.pdf}
+	\end{center}
+	\caption[Comparison of Random Write performance for file size and buffer size for FFS with the UBC disabled]{Performance comparison of different file sizes and buffer sizes for FFS Random Write with the UBC enabled}
+\end{figure}
+\clearpage
+
+
+
+\begin{figure}[!htb]
+	\label{fig:bench_gcsf_no_ubc_scatter_read}
+	\begin{center}
+		\includegraphics[width=0.8\textwidth]{figures.nosync/benchmarking/GCSF/scatter-UBC Enabled-Read.pdf}
+	\end{center}
+	\caption[Comparison of Read performance for file size and buffer size for GCSF with the UBC disabled]{Performance comparison of different file sizes and buffer sizes for GCSF Read with the UBC enabled}
+\end{figure}
+\begin{figure}[!htb]
+	\label{fig:bench_gcsf_no_ubc_scatter_write}
+	\begin{center}
+		\includegraphics[width=0.8\textwidth]{figures.nosync/benchmarking/GCSF/scatter-UBC Enabled-Write.pdf}
+	\end{center}
+	\caption[Comparison of Write performance for file size and buffer size for GCSF with the UBC disabled]{Performance comparison of different file sizes and buffer sizes for GCSF Write with the UBC enabled}
+\end{figure}
+\clearpage
+\begin{figure}[!htb]
+	\label{fig:bench_gcsf_no_ubc_scatter_re-read}
+	\begin{center}
+		\includegraphics[width=0.8\textwidth]{figures.nosync/benchmarking/GCSF/scatter-UBC Enabled-Re-Read.pdf}
+	\end{center}
+	\caption[Comparison of Re-Read performance for file size and buffer size for GCSF with the UBC disabled]{Performance comparison of different file sizes and buffer sizes for GCSF Re-Read with the UBC enabled}
+\end{figure}
+\begin{figure}[!htb]
+	\label{fig:bench_gcsf_no_ubc_scatter_re-write}
+	\begin{center}
+		\includegraphics[width=0.8\textwidth]{figures.nosync/benchmarking/GCSF/scatter-UBC Enabled-Re-Write.pdf}
+	\end{center}
+	\caption[Comparison of Re-Write performance for file size and buffer size for GCSF with the UBC disabled]{Performance comparison of different file sizes and buffer sizes for GCSF Re-Write with the UBC enabled}
+\end{figure}
+\clearpage
+\begin{figure}[!htb]
+	\label{fig:bench_gcsf_no_ubc_scatter_rnd_read}
+	\begin{center}
+		\includegraphics[width=0.8\textwidth]{figures.nosync/benchmarking/GCSF/scatter-UBC Enabled-Random read.pdf}
+	\end{center}
+	\caption[Comparison of Random Read performance for file size and buffer size for GCSF with the UBC disabled]{Performance comparison of different file sizes and buffer sizes for GCSF Random Read with the UBC enabled}
+\end{figure}
+\begin{figure}[!htb]
+	\label{fig:bench_gcsf_no_ubc_scatter_rnd_write}
+	\begin{center}
+		\includegraphics[width=0.8\textwidth]{figures.nosync/benchmarking/GCSF/scatter-UBC Enabled-Random write.pdf}
+	\end{center}
+	\caption[Comparison of Random Write performance for file size and buffer size for GCSF with the UBC disabled]{Performance comparison of different file sizes and buffer sizes for GCSF Random Write with the UBC enabled}
+\end{figure}
+\clearpage
+
+
+
+\begin{figure}[!htb]
+	\label{fig:bench_fffs_no_ubc_scatter_read}
+	\begin{center}
+		\includegraphics[width=0.8\textwidth]{figures.nosync/benchmarking/FFFS/scatter-UBC Enabled-Read.pdf}
+	\end{center}
+	\caption[Comparison of Read performance for file size and buffer size of FFFS with the UBC disabled]{Performance comparison of different file sizes and buffer sizes for FFFS Read with the UBC enabled}
+\end{figure}
+\begin{figure}[!htb]
+	\label{fig:bench_fffs_no_ubc_scatter_write}
+	\begin{center}
+		\includegraphics[width=0.8\textwidth]{figures.nosync/benchmarking/FFFS/scatter-UBC Enabled-Write.pdf}
+	\end{center}
+	\caption[Comparison of Write performance for file size and buffer size of FFFS with the UBC disabled]{Performance comparison of different file sizes and buffer sizes for FFFS Write with the UBC enabled}
+\end{figure}
+\clearpage
+\begin{figure}[!htb]
+	\label{fig:bench_fffs_no_ubc_scatter_re-read}
+	\begin{center}
+		\includegraphics[width=0.8\textwidth]{figures.nosync/benchmarking/FFFS/scatter-UBC Enabled-Re-Read.pdf}
+	\end{center}
+	\caption[Comparison of Re-Read performance for file size and buffer size of FFFS with the UBC disabled]{Performance comparison of different file sizes and buffer sizes for FFFS Re-Read with the UBC enabled}
+\end{figure}
+\begin{figure}[!htb]
+	\label{fig:bench_fffs_no_ubc_scatter_re-write}
+	\begin{center}
+		\includegraphics[width=0.8\textwidth]{figures.nosync/benchmarking/FFFS/scatter-UBC Enabled-Re-Write.pdf}
+	\end{center}
+	\caption[Comparison of Re-Write performance for file size and buffer size of FFFS with the UBC disabled]{Performance comparison of different file sizes and buffer sizes for FFFS Re-Write with the UBC enabled}
+\end{figure}
+\clearpage
+\begin{figure}[!htb]
+	\label{fig:bench_fffs_no_ubc_scatter_rnd_read}
+	\begin{center}
+		\includegraphics[width=0.8\textwidth]{figures.nosync/benchmarking/FFFS/scatter-UBC Enabled-Random read.pdf}
+	\end{center}
+	\caption[Comparison of Random Read performance for file size and buffer size of FFFS with the UBC disabled]{Performance comparison of different file sizes and buffer sizes for FFFS Random Read with the UBC enabled}
+\end{figure}
+\begin{figure}[!htb]
+	\label{fig:bench_fffs_no_ubc_scatter_rnd_write}
+	\begin{center}
+		\includegraphics[width=0.8\textwidth]{figures.nosync/benchmarking/FFFS/scatter-UBC Enabled-Random write.pdf}
+	\end{center}
+	\caption[Comparison of Random Write performance for file size and buffer size of FFFS with the UBC disabled]{Performance comparison of different file sizes and buffer sizes for FFFS Random Write with the UBC enabled}
+\end{figure}
+\clearpage
+
+
+
+\begin{figure}[!htb]
+	\label{fig:bench_apfs_no_ubc_scatter_read}
+	\begin{center}
+		\includegraphics[width=0.8\textwidth]{figures.nosync/benchmarking/APFS/scatter-UBC Enabled-Read.pdf}
+	\end{center}
+	\caption[Comparison of Read performance for file size and buffer size of APFS with the UBC disabled]{Performance comparison of different file sizes and buffer sizes for APFS Read with the UBC enabled}
+\end{figure}
+\begin{figure}[!htb]
+	\label{fig:bench_apfs_no_ubc_scatter_write}
+	\begin{center}
+		\includegraphics[width=0.8\textwidth]{figures.nosync/benchmarking/APFS/scatter-UBC Enabled-Write.pdf}
+	\end{center}
+	\caption[Comparison of Write performance for file size and buffer size of APFS with the UBC disabled]{Performance comparison of different file sizes and buffer sizes for APFS Write with the UBC enabled}
+\end{figure}
+\clearpage
+\begin{figure}[!htb]
+	\label{fig:bench_apfs_no_ubc_scatter_re-read}
+	\begin{center}
+		\includegraphics[width=0.8\textwidth]{figures.nosync/benchmarking/APFS/scatter-UBC Enabled-Re-Read.pdf}
+	\end{center}
+	\caption[Comparison of Re-Read performance for file size and buffer size of APFS with the UBC disabled]{Performance comparison of different file sizes and buffer sizes for APFS Re-Read with the UBC enabled}
+\end{figure}
+\begin{figure}[!htb]
+	\label{fig:bench_apfs_no_ubc_scatter_re-write}
+	\begin{center}
+		\includegraphics[width=0.8\textwidth]{figures.nosync/benchmarking/APFS/scatter-UBC Enabled-Re-Write.pdf}
+	\end{center}
+	\caption[Comparison of Re-Write performance for file size and buffer size of APFS with the UBC disabled]{Performance comparison of different file sizes and buffer sizes for APFS Re-Write with the UBC enabled}
+\end{figure}
+\clearpage
+\begin{figure}[!htb]
+	\label{fig:bench_apfs_no_ubc_scatter_rnd_read}
+	\begin{center}
+		\includegraphics[width=0.8\textwidth]{figures.nosync/benchmarking/APFS/scatter-UBC Enabled-Random read.pdf}
+	\end{center}
+	\caption[Comparison of Random Read performance for file size and buffer size of APFS with the UBC disabled]{Performance comparison of different file sizes and buffer sizes for APFS Random Read with the UBC enabled}
+\end{figure}
+\begin{figure}[!htb]
+	\label{fig:bench_apfs_no_ubc_scatter_rnd_write}
+	\begin{center}
+		\includegraphics[width=0.8\textwidth]{figures.nosync/benchmarking/APFS/scatter-UBC Enabled-Random write.pdf}
+	\end{center}
+	\caption[Comparison of Random Write performance for file size and buffer size of APFS with the UBC disabled]{Performance comparison of different file sizes and buffer sizes for APFS Random Write with the UBC enabled}
+\end{figure}
+\clearpage
+

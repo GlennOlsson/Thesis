@@ -191,7 +191,7 @@
 \ExplSyntaxOff
 \NewDocumentCommand{\authorCityCountryDate}{m}{
 \def\@authorCityCountryDate{\ifx\@authorCity\@empty%
-    Stockholm%
+    Amsterdam%
     \else%
     \ifx\@authorCountry\@empty%
     \@authorCity%

@@ -7,7 +7,7 @@ This section presents how several filesystems used today are structured. \Cref{s
 A \mbox{Unix-like} filesystem uses a data structure called an \textit{inode}. These inodes are found in an inode table and each inode keeps track of a file's size, blocks used for the file's data, and metadata for the files in the filesystem. A directory simply contains a mapping between filenames and inodes for both the files and directories in a given directory. Given an inode, the filesystem can find information about the file or directory using the inode table. Each inode can contain metadata that might be relevant for the filesystem, such as creation time and last update time. 
 
 \Needspace*{4\baselineskip}
-\Cref{fig:inode_diag} shows an example inode filesystem and how it can be visualized. The blocks of an inode entry indicate where in the storage device the data is stored, each block is generally defined as being a certain number of bytes\footnote{typically, 1, 2, 4, or \SI{8}{\kibi\byte}}. \Cref{lst:inode_fs} gives pseudo-code for a simple implementation of an inode, an inode table, and directory entries. 
+\Cref{fig:inode_diag} shows an example inode filesystem and how it can be visualized. The blocks of an inode entry indicate where in the storage device the data is stored, and each block is generally defined as being a certain number of bytes\footnote{typically, 1, 2, 4, or \SI{8}{\kibi\byte}}. \Cref{lst:inode_fs} gives pseudo-code for a simple implementation of an inode, an inode table, and directory entries. 
 
 \begin{figure}[!ht]
 	\begin{center}

@@ -1023,6 +1023,22 @@
   file = {/Users/glenn/Zotero/storage/8UU4QTQQ/united-states-data-retention-laws.html}
 }
 
+@inproceedings{leeBufferCacheLevel2007,
+  title = {Buffer {{Cache Level Encryption}} for {{Embedded Secure Operating System}}},
+  booktitle = {Embedded and {{Ubiquitous Computing}}},
+  author = {Lee, Jaeheung and Heo, Junyoung and Park, Jaemin and Cho, Yookun and Hong, Jiman and Park, Minkyu},
+  date = {2007},
+  pages = {346--355},
+  publisher = {{Springer, Berlin, Heidelberg}},
+  doi = {10.1007/978-3-540-77092-3_30},
+  url = {https://link.springer.com/chapter/10.1007/978-3-540-77092-3_30},
+  urldate = {2023-03-23},
+  abstract = {A cryptographic file system is the representative way of assuring confidentiality of files in operating systems. For secure embedded operating systems, the cryptographic file system could be a practical technique. In general, cryptographic file systems are...},
+  eventtitle = {International {{Conference}} on {{Embedded}} and {{Ubiquitous Computing}}},
+  langid = {english},
+  file = {/Users/glenn/Zotero/storage/ZQBKEVTV/Lee m. fl. - 2007 - Buffer Cache Level Encryption for Embedded Secure .pdf}
+}
+
 @software{Libfuse2021,
   title = {Libfuse},
   date = {2021-10-26},
@@ -1795,12 +1811,29 @@
   shorttitle = {Cryptfs},
   author = {Zadok, Erez and Badulescu, Ion and Shender, Alex},
   date = {1998},
+  journaltitle = {Buffer Cache Level Encryption for Embedded Secure Operating System},
   doi = {10.7916/D82N5935},
   url = {https://doi.org/10.7916/D82N5935},
   urldate = {2022-03-04},
   abstract = {Data encryption has become an increasingly important factor in everyday work. Users seek a method of securing their data with maximum comfort and minimum additional requirements on their part; they want a security system that protects any files used by any of their applications, without resorting to application-specific encryption methods. Performance is an important factor to users since encryption can be time consuming. Operating system vendors want to provide this functionality but without incurring the large costs of developing a new file system. This paper describes the design and implementation of Cryptfs -- a file system that was designed as a stackable Vnode layer loadable kernel module. Cryptfs operates by 'encapsulating' a client file system with a layer of encryption transparent to the user. Being kernel resident, Cryptfs performs better than user-level or NFS based file servers such as CFS and TCFS. It is 2 to 37 times faster on micro-benchmarks such as read and write; this translates to 12-52\textbackslash\%application speedup, as exemplified by a large build. Cryptfs offers stronger security by basing its keys on process session IDs as well as user IDs, and by the fact that kernel memory is harder to access. Working at and above the vnode level, Cryptfs is more portable than a file system which works directly with native media such as disks and networks. Cryptfs can operate on top of any other native file system such as UFS/FFS and NFS. Finally, Cryptfs requires no changes to client file systems or remote servers.},
   langid = {english},
   file = {/Users/glenn/Zotero/storage/2L7RSL3J/Badulescu m. fl. - 1998 - Cryptfs A Stackable Vnode Level Encryption File S.pdf;/Users/glenn/Zotero/storage/NHTXNRM8/D82N5935.html}
+}
+
+@techreport{zadokCryptfsStackableVnode1998a,
+  title = {Cryptfs: {{A Stackable Vnode Level Encryption File System}}},
+  shorttitle = {Cryptfs},
+  author = {Zadok, Erez and Badulescu, Ion and Shender, Alex},
+  date = {1998},
+  number = {CUCS-021-98},
+  publisher = {{Columbia University}},
+  doi = {10.7916/D82N5935},
+  url = {https://academiccommons.columbia.edu/doi/10.7916/D82N5935},
+  urldate = {2023-03-23},
+  abstract = {Data encryption has become an increasingly important factor in everyday work. Users seek a method of securing their data with maximum comfort and minimum additional requirements on their part; they want a security system that protects any files used by any of their applications, without resorting to application-specific encryption methods. Performance is an important factor to users since encryption can be time consuming. Operating system vendors want to provide this functionality but without incurring the large costs of developing a new file system. This paper describes the design and implementation of Cryptfs -- a file system that was designed as a stackable Vnode layer loadable kernel module. Cryptfs operates by 'encapsulating' a client file system with a layer of encryption transparent to the user. Being kernel resident, Cryptfs performs better than user-level or NFS based file servers such as CFS and TCFS. It is 2 to 37 times faster on micro-benchmarks such as read and write; this translates to 12-52\textbackslash\%application speedup, as exemplified by a large build. Cryptfs offers stronger security by basing its keys on process session IDs as well as user IDs, and by the fact that kernel memory is harder to access. Working at and above the vnode level, Cryptfs is more portable than a file system which works directly with native media such as disks and networks. Cryptfs can operate on top of any other native file system such as UFS/FFS and NFS. Finally, Cryptfs requires no changes to client file systems or remote servers.},
+  editora = {{Columbia University. Computer Science}},
+  editoratype = {collaborator},
+  keywords = {Computer science}
 }
 
 @online{zadokFiSTStackableFile,

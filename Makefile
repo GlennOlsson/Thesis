@@ -11,6 +11,7 @@ out/calpoly: | out
 # As to not clash with directories
 kth: | out/kth
 	-latexmk -pdf -f -jobname=out/kth/kth -interaction=nonstopmode kth.tex
+# -latexmk -pdf -pdflatex=lualatex -f -jobname=out/kth/kth -interaction=nonstopmode kth.tex
 	mv out/kth/kth.pdf .
 	notify Compiled KTH
 
